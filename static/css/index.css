@@ -1,0 +1,159 @@
+#div3, #div4, #div2-1, #div2-2-behind
+{
+	border: 1%;
+	box-shadow: 5px 5px 15px #888888;
+}
+
+#selected
+{
+	position: absolute;
+	bottom: 0%;
+	left: 22%;
+}
+
+#div2
+{
+	
+	width: 53%;
+	height: 80%;
+	position: absolute;
+	top: 16%;
+	left: 10%;
+}
+
+#div2-1
+{
+	height: 75%;
+	width: 100%;
+}
+
+#div2-1 img
+{
+	width: 100%;
+	height: 100%;
+}
+
+#div2-2-front, #div2-2-behind
+{
+	background-color: #e32524;
+	height: 25%;
+	width: 100%;
+	position: absolute;
+}
+
+#div2-2-front-aboutustitle, #div2-2-behind-aboutustitle
+{
+	margin: 0;
+	padding-left: 2%;
+	padding-top: 1%;
+	color: white;
+}
+
+#div2-2-front-aboutus, #div2-2-behind-aboutus
+{
+	margin: 0;
+	padding-left: 2%;
+	padding-right: 2%;
+	color: white;
+	font-size: .9em
+}
+
+#div3
+{
+	background-color: #e5e5e5;
+	width: 23%;
+	height: 58%;
+	position: absolute;
+	top: 16%;
+	left: 65%;
+	color: white;
+}
+
+#div3 h1
+{
+	text-align: center;
+	color: #3f4643;
+}
+
+tr:nth-child(even)
+{
+	background-color: #958e82;
+}
+
+td
+{
+	padding: 2%;
+	
+}
+
+table
+{
+	width: 100%;
+	background-color: #3f4643;
+}
+
+#div3-1
+{
+	background-color: gray;
+	overflow:hidden;
+	overflow-y:scroll;
+	width: 90%;
+	height: 70%;
+	margin: auto;
+}
+
+#div4
+{
+	background-color: #3f4643;
+	width: 23%;
+	height: 20%;
+	position: absolute;
+	top: 76%;
+	left: 65%;
+	color: white;
+}
+
+#div4 h1
+{
+	font-size: 140%;
+	margin: 0;
+	padding-left: 3%;
+	padding-top: 3%;
+	color: white;
+}
+#div4 p
+{
+	font-size: .7em;
+	margin: 0;
+	padding-left: 3%;
+	padding-top: 3%;
+	color: white;
+}
+
+#div2-1 img
+{
+	width: 100%;
+	height: 75%;
+	position: absolute;
+}
+
+#div3 img
+{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+}
+
+#username
+{
+	top: 33px;
+	right: 50px;
+	position: fixed;
+}
+
+#logoutButton
+{
+	top: 50px;
+	right: 8px;
+	position: fixed;
+}

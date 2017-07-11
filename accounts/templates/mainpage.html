@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        {% load staticfiles %}
+		<title>
+			Bormaheco Inc.
+		</title>
+        <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+        <script src="{% static 'js/login.js' %}"></script>
+		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+		<link rel="stylesheet" href="{% static 'css/index.css' %}">
+		<link rel="icon" href="{% static 'images/icon.png' %}">
+	</head>
+
+	<body>
+		<div id="div1">
+
+			<img id="navbar" src="{% static 'images/navbar.png' %}">
+			<a id="home" href="/"><h1>Home</h1></a>
+			<a id="equipment" href="equipment/"><h1>Equipment</h1></a>
+			<a id="transactions"><h1>Transactions</h1></a>
+            {% if request.user.is_authenticated %}
+                <h1 id="username">{{ request.user.username }}</h1>
+                <a href="logout" id="logoutButton">
+                    <img style="height: 25px" src="{% static 'images/logoutbutton.png' %}">
+                </a>
+            {% else %}
+                <form>
+                    <label for="username_input">Username:</label>
+                    <input id="username_input" type="text">
+                    <label for="password_input">Password:</label>
+                    <input id="password_input" type="password">
+                    <button type="button" id="login">Login</button>
+			    </form>
+            {% endif %}
+			
+			<div id="div5-1">
+				<div class="tooltip">
+				<img id="cart" src="{% static 'images/cart.png' %}">
+				<span class="tooltiptext">
+					<div class="equipview">
+						<img id="remove" src="{% static 'images/remove.png' %}">
+						<img src="{% static 'images/excavator.png' %}">
+						<h1>Excavator</h1>
+					</div>
+					<div class="equipview">
+						<img id="remove" src="{% static 'images/remove.png' %}">
+						<img src="{% static 'images/payloader.png' %}">
+						<h1>Payloader</h1>
+					</div>
+					<div class="equipview">
+						<img id="remove" src="{% static 'images/remove.png' %}">
+						<img src="{% static 'images/bulldozer.png' %}">
+						<h1>Bulldozer</h1>
+					</div>
+					<div class="equipview">
+						<img id="remove" src="{% static 'images/remove.png' %}">
+						<img src="{% static 'images/forklift.png' %}">
+						<h1>Forklift</h1>
+					</div>
+					<div class="equipview">
+						<img id="remove" src="{% static 'images/remove.png' %}">
+						<img src="{% static 'images/primemover.png' %}">
+						<h1>Prime Mover</h1>
+					</div>
+				</span>
+			</div>
+			</div>	
+		</div>
+
+        <div>
+            <div id="div2">
+                <div id="div2-1">
+                    <img src="" id="behind">
+                    <img src="" id="front">
+                </div>
+                <div id="div2-2-behind">
+                    <h1 id="div2-2-behind-aboutustitle"></h1>
+                    <p id="div2-2-behind-aboutus"></p>
+                </div>
+                <div id="div2-2-front">
+                    <h1 id="div2-2-front-aboutustitle"></h1>
+                    <p id="div2-2-front-aboutus"></p>
+                </div>
+            </div>
+            <div id="div3">
+                <img src="" id="behind2">
+                <img src="" id="front2">
+            </div>
+            <div id="div4">
+                <h1>Contact Us</h1>
+                <p>1191 Pablo Ocampo Sr. Extension in Makati City, Philippines.</p>
+                <p>Tel. : +63 2 897-0932</p>
+                <p>Fax : +63 2 897-1378</p>
+            </div>
+            <script>
+                $(document).ready(function(){
+                    var forklift = "{% static 'images/forklift.png' %}";
+                    var bulldozer = "{% static 'images/bulldozer.png' %}";
+                    var payloader = "{% static 'images/payloader.png' %}";
+                    var primemover = "{% static 'images/primemover.png' %}";
+                    var excavator = "{% static 'images/excavator.png' %}";
+
+                    var aboutus1 = '{% static 'images/aboutus1.png' %}';
+                    var aboutus2 = '{% static 'images/aboutus2.png' %}';
+                    var aboutus3 = '{% static 'images/aboutus3.png' %}';
+                    var aboutus4 = '{% static 'images/aboutus4.png' %}';
+
+                    var listequip = [forklift, bulldozer, payloader, primemover, excavator];
+                    var listpics = [aboutus3, aboutus2, aboutus4, aboutus1];
+
+                    var listtitle = ["About Us",
+                                     "Red Cross Training Program",
+                                     "The Future is in The Hands of The Youth","Bormaheco"];
+                    var listabout = ["Now, Bormaheco, Inc. is one of the biggest machineries and heavy equipment suppliers " +
+                                     "in the Philippines.  It caters to the requirements of the mining, logging, " +
+                                     "agricultural, construction and real estate industries.","In line with the company's goal " +
+                                     " for \"Safety awareness\", we sent Edvenzer \"Ed\" M. Reyes and Meriame \"Ann\" G. " +
+                                     "Hofilena to attend the “Basic Life Support and First-Aid” seminar from November 11 to " +
+                                     "16, 2013 at the Philippine Red Cross Makati City Branch of the Rizal Chapter.","A few " +
+                                     "months ago, we accepted another batch of young trainees from Don Bosco, TESDA, and The " +
+                                     "University of Makati.They are currently undergoing hands-on conditioning  under the " +
+                                     "close supervision of our service personnel. In our experience, exposing them to units " +
+                                     "actually being used in the field has proven to be a good training ground for " +
+                                     "youngsters like these.","Bormaheco, Inc. was incorporated on October 16, 1950 and the " +
+                                     "Certificate of Registration was issued by the Securities and Exchange Commission on" +
+                                     " February 23, 1951 and has been in existence in the Machinery and Heavy Equipment" +
+                                     " business for almost 60 years."];
+
+                    var index = 0;
+                    var index2 = 0;
+
+                    $("#front").attr("src", listequip[0]);
+                    $("#behind").attr("src", listequip[3]);
+
+                    $("#div2-2-front-aboutustitle").text("Bormaheco");
+                    $("#div2-2-behind-aboutustitle").text("About Us");
+
+                    $("#div2-2-front-aboutus").text("Bormaheco, Inc. was incorporated on October 16, 1950 and the " +
+				                            "Certificate of Registration was issued by the Securities and Exchange " +
+				                            "Commission on February 23, 1951 and has been in existence in the " +
+				                            "Machinery and Heavy Equipment business for almost 60 years.");
+
+                    $("#div2-2-behind-aboutus").text("Now, Bormaheco, Inc. is one of the biggest machineries and heavy " +
+				                             "equipment suppliers in the Philippines.  It caters to the requirements " +
+				                             "of the mining, logging, agricultural, construction and real" +
+				                             " estate industries.");
+                    setInterval(function() {
+                        $("#div2-2-front").animate({opacity: 0}, {duration: 2000, complete: function() {}});
+                        }, 8000);
+
+                    setInterval(function() {
+                        $("#front").animate({opacity: 0}, {duration: 2000, complete: function() {
+                            $("#front").attr("src", listpics[index]);
+                            $("#behind").attr("src", listpics[(index + 1) % 4]);
+
+                            $("#div2-2-front-aboutustitle").text(listtitle[index]);
+                            $("#div2-2-front-aboutus").text(listabout[index]);
+
+                            $("#div2-2-behind-aboutustitle").text(listtitle[(index + 1) % 4]);
+                            $("#div2-2-behind-aboutus").text(listabout[(index + 1) % 4]);
+
+                            $("#front, #div2-2-front").css("opacity", 1);
+
+                            index = (index + 1) % 4;
+                        }});
+                        }, 8000);
+
+                    $("#front2").attr("src", listpics[3]);
+                    $("#behind2").attr("src", listpics[0]);
+
+                    setInterval(function() {
+                        $("#front2").animate({opacity: 0}, {duration: 1000, complete: function() {
+                            $("#front2").attr("src", listequip[index2]);
+                            $("#behind2").attr("src", listequip[(index2 + 1) % 5]);
+                            $("#front2").css("opacity", 1);
+                            index2 = (index2 + 1) % 5;
+                        }});
+                        }, 4000);});
+
+                </script>
+        </div>
+	</body>
+</html>

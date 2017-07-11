@@ -1,0 +1,214 @@
+@font-face
+{
+	font-family: fontOne;
+	src: url(../fonts/RobotoSlab-Bold.ttf);
+}
+
+@font-face
+{
+	font-family: fontTwo;
+	src: url(../fonts/RobotoSlab-Light.ttf);
+}
+
+@font-face
+{
+	font-family: fontThree;
+	src: url(../fonts/Gravity-Book.otf);
+}
+
+body
+{
+	margin: 0;
+	background-color: #f5f6fb;
+
+}
+
+h1
+{
+	font-family: fontOne;
+}
+
+h2
+{
+	font-family: fontTwo;
+}
+
+p, a
+{
+	font-family: fontThree;
+	font-size: .6;
+}
+
+#header
+{
+	background-color: #e5e5e5;
+}
+
+#div1
+{
+	height: 6%;
+	width: 100%;
+	margin: auto;
+	position: relative;
+	color: #3f4643;
+	z-index: 1;
+	height: 88px; 
+}
+
+#navbar
+{
+	width: 100%;
+	box-shadow: 0px 0px 15px #888888;
+}
+
+#div1 h1
+{
+	margin-top: 9px;
+	margin-bottom: 9px;
+}
+
+#home
+{
+	font-size: .65em;
+	position: absolute;
+	left: 19.5%;
+	top: 45%;
+}
+
+#transactions
+{
+	font-size: .65em;
+	position: absolute;
+	left: 38.5%;
+	top: 45%;
+}
+
+#equipment
+{
+	font-size: .65em;
+	position: absolute;
+	left: 27%;
+	top: 45%;
+}
+
+a:link, a:visited, a:active, a:hover
+{
+    color: #3f4643;
+	text-decoration: none;
+}
+
+#div1 form
+{
+	position: absolute;
+	font-family: fontThree;
+	font-size: .8em;
+	top: 58%;
+	right: 5%;
+
+}
+
+#div1 input
+{
+	border-color: #dca40c;
+	border-style: solid;
+	height: 20px;
+	width: 150px;
+}
+
+button#login
+{
+	border-color: #dca40c;
+	border-style: solid;
+	border-width: 2px;
+	height: 25px;
+	width: 100px;
+	font-family: fontThree;
+	color: #dca40c;
+	font-size: 1em;
+}
+
+.tooltip 
+{
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext 
+{
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+	font-family: fontThree;
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%; 
+    margin-left: -150px;
+	height: 400px;
+	width: 300px;
+	overflow:hidden;
+	overflow-y:scroll;
+}
+
+.tooltip:hover .tooltiptext 
+{
+    visibility: visible;
+}
+
+#div5-1
+{
+	position: absolute;
+	top: 5%;
+	left: 85%;
+}
+
+#cart
+{
+	
+	height: 30px;
+	width: 30px;
+	
+}
+
+.equipview
+{
+	height: 100px;
+	width: 290px;
+	padding: 5px;
+	position: relative;
+	font-size: .7em;
+}
+
+.equipview #remove
+{
+	height: 20px;
+	position: absolute;
+	left: 2%;
+	top: 39%;
+}
+
+.equipview img
+{
+	height: 100px;
+	position: absolute;
+	left: 11%;
+}
+
+.equipview h1
+{
+	position: absolute;
+	left: 42%;
+	top: 0%;
+}
+
+.equipview:hover
+{
+	background-color: #85878e;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
