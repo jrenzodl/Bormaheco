@@ -9,10 +9,21 @@
 	box-shadow: 0px 0px 15px #888888;
 }
 
+#addEquipment
+{
+	margin-top: 5%;
+	margin-left: 25%;
+}
+
+#div2 h1
+{
+	padding-left: 6%;
+	margin-bottom: 5px;
+}
+
 #div2 form
 {
-	padding-top: 10%;
-	padding-left: 8%;
+	padding-left: 15%;
 }
 
 #div2 h2

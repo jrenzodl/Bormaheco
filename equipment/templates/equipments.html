@@ -7,8 +7,9 @@
 		</title>
         <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
         <script src="{% static 'js/login.js' %}"></script>
-		<link rel="stylesheet" href="{% static 'css/equipment.css' %}">
+        <script src="{% static 'js/equipment.js' %}"></script>
 		<link rel="stylesheet" href="{% static 'css/main.css' %}">
+        <link rel="stylesheet" href="{% static 'css/equipment.css' %}">
 		<link rel="icon" href="{% static 'images/icon.png' %}">
 	</head>
 
@@ -17,7 +18,7 @@
 			<img id="navbar" src="{% static 'images/navbar.png' %}">
 			<a id="home" href="/"><h1>Home</h1></a>
 			<a id="equipment" href="equipment/"><h1>Equipment</h1></a>
-			<a id="transactions"><h1>Transactions</h1></a>
+			<a id="transactions" href="#"><h1>Transactions</h1></a>
             {% if request.user.is_authenticated %}
                 <h1 id="username">{{ request.user.username }}</h1>
                 <a href="logout" id="logoutButton">
@@ -67,56 +68,36 @@
             </div>
         </div>
         <div id="div2">
-			<form action="">
-			<h2>Type</h2>
-				<select name="equipmenttype">
-					<option value="">Air Compressor</option>
-					<option value="">Backhoe Loader</option>
-					<option value="">Breaker</option>
-					<option value="">Bulldozer</option>
-					<option value="">Crane</option>
-					<option value="">Dump Trucks</option>
-					<option value="">Excavator</option>
-					<option value="">Flatbed trucks</option>
-					<option value="">Forklifts</option>
-					<option value="">Generating Sets</option>
-					<option value="">Low Bed Trailer</option>
-					<option value="">Manlift Trucks</option>
-					<option value="">Motorcycles</option>
-					<option value="">Payloader</option>
-					<option value="">Prime Mover</option>
-					<option value="">Road Grader</option>
-					<option value="">Road Roller</option>
-					<option value="">Skidsteer Loader</option>
-				</select><br>
-			<h2>Brand</h2>
-				<select name="brand">
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-					<option value=""></option>
-				</select><br>
-				<input type="submit" value="FILTER" name="filter">
-
-			</form>
+            <h1 id="filterheader">Type</h1>
+                <form id="equipmentfilter">
+                    <label><input type="radio" name="equipmenttype" value="AC">Air Compressor</label><br>
+                    <label><input type="radio" name="equipmenttype" value="BL">Backhoe Loader</label><br>
+                    <label><input type="radio" name="equipmenttype" value="BR">Breaker</label><br>
+                    <label><input type="radio" name="equipmenttype" value="BD">Bulldozer</label><br>
+                    <label><input type="radio" name="equipmenttype" value="CR">Crane</label><br>
+                    <label><input type="radio" name="equipmenttype" value="DT">Dump Truck</label><br>
+                    <label><input type="radio" name="equipmenttype" value="EX">Excavator</label><br>
+                    <label><input type="radio" name="equipmenttype" value="FT">Flatbed Trucks</label><br>
+                    <label><input type="radio" name="equipmenttype" value="FL">Forklifts</label><br>
+                    <label><input type="radio" name="equipmenttype" value="GS">Generating Sets</label><br>
+                    <label><input type="radio" name="equipmenttype" value="LB">Low Bed Trailer</label><br>
+                    <label><input type="radio" name="equipmenttype" value="MT">Manlift Trucks</label><br>
+                    <label><input type="radio" name="equipmenttype" value="MC">Motorcycles</label><br>
+                    <label><input type="radio" name="equipmenttype" value="PL">Payloader</label><br>
+                    <label><input type="radio" name="equipmenttype" value="PM">Prime Mover</label><br>
+                    <label><input type="radio" name="equipmenttype" value="RG">Road Grader</label><br>
+                    <label><input type="radio" name="equipmenttype" value="RR">Road Roller</label><br>
+                    <label><input type="radio" name="equipmenttype" value="SL">Skidsteer Loader</label><br>
+                    <label><input type="radio" name="equipmenttype" value="OT">Other</label>
+                </form>
+            {% if request.user.is_superuser %}
+                <button type="button" id="addEquipment">Add Equipment</button>
+            {% endif %}
 		</div>
+
 		<div id="div3">
             {% for unit in equipment %}
-                <div class="equip">
+                <div class="equip" id="equipment{{ unit.id }}">
                     <img src="{% static unit.image.url %}">
                     <h1>{{ unit.name }}</h1>
                     <a><p>ADD TO CART</p></a>
@@ -125,4 +106,47 @@
 		</div>
 		</div>
 	</body>
+<script>
+    $(document).ready(function(){
+        $("input[type='radio']").on('change', function() {
+        var selected = $("[name='equipmenttype']:checked").val();
+
+        $.ajax
+        (
+            {
+                type: 'POST',
+                url: 'filterequipment/' + selected + '/',
+                data:{
+                    selected: selected
+                },
+                success:[ function(data)
+                {
+                    if(data.length === 0)
+                    {
+                        $("#div3").empty();
+                        $("#div3").append('<h1>No results</h1>');
+                    }
+                    else
+                    {
+                        $("#div3").empty();
+                        for(var i = 0; i < data.length; i++ )
+                        {
+                            var datum = data[i];
+                            var MEDIA_URL = "/static/media/" + datum.fields.image;
+
+                            $("#div3").append('\
+                                <div class="equip" id="equipment' + JSON.stringify(datum.pk) +'">\
+                                    <img src="' + MEDIA_URL  +'">\
+                                    <h1>'+ datum.fields.name +'</h1>\
+                                    <a><p>ADD TO CART</p></a>\
+                                </div>');
+                            console.log(datum.fields.image)
+                        }
+                    }
+                }]
+            }
+        );
+        });
+    });
+</script>
 </html>

@@ -212,3 +212,17 @@ button#login
 ::-webkit-scrollbar { 
     display: none; 
 }
+
+#username
+{
+	top: 33px;
+	right: 50px;
+	position: fixed;
+}
+
+#logoutButton
+{
+	top: 50px;
+	right: 8px;
+	position: fixed;
+}

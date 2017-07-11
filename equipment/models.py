@@ -10,37 +10,51 @@ class Equipment(models.Model):
     acquisition_date = models.DateField()
     details = models.CharField(max_length=2000)
     TYPE_CODES = (
-        ('EX', 'Excavator'),
+        ('AC', 'Air Compressor'),
         ('BL', 'Backhoe Loader'),
         ('BR', 'Breaker'),
-        ('SL', 'Skidsteer Loader'),
-        ('RR', 'Road Roller'),
-        ('RG', 'Road Grader'),
-        ('PL', 'Payloader'),
         ('BD', 'Bulldozer'),
         ('CR', 'Crane'),
-        ('AC', 'Air Compressor'),
-        ('GS', 'Genarating Sets'),
-        ('FL', 'Forklifts'),
-        ('FT', 'Flatebed Trucks'),
         ('DT', 'Dump Truck'),
+        ('EX', 'Excavator'),
+        ('FT', 'Flatbed Trucks'),
+        ('FL', 'Forklifts'),
+        ('GS', 'Genarating Sets'),
         ('LB', 'Low Bed Trailer'),
-        ('PM', 'Prime Mover'),
         ('MT', 'Manlift Trucks'),
         ('MC', 'Motorcycles'),
+        ('PL', 'Payloader'),
+        ('PM', 'Prime Mover'),
+        ('RG', 'Road Grader'),
+        ('RR', 'Road Roller'),
+        ('SL', 'Skidsteer Loader'),
         ('OT', 'Other'),
     )
     type = models.CharField(max_length=2, choices=TYPE_CODES)
     STATUS_CODES = (
         ('IE', 'In Engagement'),
         ('AV', 'Available'),
-        ('UM', 'Under Maintenance'))
+        ('UM', 'Under Maintenance'),
+        ('US', 'Unserviceable'))
     status = models.CharField(max_length=2, choices=STATUS_CODES)
     hourly_service_rate = models.DecimalField(max_digits=12, decimal_places=2)
-    image = models.ImageField(upload_to="equipmentimages", default='../static/images/defaultequipment.png')
+    image = models.ImageField(upload_to="equipmentimages", default='../media/equipmentimages/defaultequipment.png')
 
     def __str__(self):
         return '{}: {}'.format(self.type, self.name)
+
+    def as_dict(self):
+        return {
+            'brand': self.brand,
+            'name': self.name,
+            'acquisitioncost': self.acquisition_cost,
+            'acquisitiondate': self.acquisition_date,
+            'details': self.details,
+            'type': self.type,
+            'status': self.status,
+            'hourly_service_rate': self.hourly_service_rate,
+            'imageurl': self.image.url,
+        }
 
 
 class EquipmentEngagement(models.Model):
