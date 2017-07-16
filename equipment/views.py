@@ -13,6 +13,9 @@ def equipment_index(request):
 
 
 def filter_equipment(request, types):
-    list_of_equipment = Equipment.objects.filter(type=types)
+    if types == "AL":
+        list_of_equipment = Equipment.objects.order_by('name')
+    else:
+        list_of_equipment = Equipment.objects.filter(type=types)
     list_of_equipment = serializers.serialize('json', list_of_equipment)
     return HttpResponse(list_of_equipment, content_type="application/json")

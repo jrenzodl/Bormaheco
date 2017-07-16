@@ -17,19 +17,19 @@
 		<div id="div1">
 			<img id="navbar" src="{% static 'images/navbar.png' %}">
 			<a id="home" href="/"><h1>Home</h1></a>
-			<a id="equipment" href="equipment/"><h1>Equipment</h1></a>
+			<a id="equipment" href="/equipment"><h1>Equipment</h1></a>
 			<a id="transactions" href="#"><h1>Transactions</h1></a>
             {% if request.user.is_authenticated %}
                 <h1 id="username">{{ request.user.username }}</h1>
-                <a href="logout" id="logoutButton">
+                <a href="../logout" id="logoutButton">
                     <img style="height: 25px" src="{% static 'images/logoutbutton.png' %}">
                 </a>
             {% else %}
                 <form>
-                    <label for="username_input">Username:</label>
-                    <input id="username_input" type="text">
-                    <label for="password_input">Password:</label>
-                    <input id="password_input" type="password">
+                    <label for="login_username_input" >Username:</label>
+                    <input id="login_username_input" type="text" placeholder="Username">
+                    <label for="login_password_input" >Password:</label>
+                    <input id="login_password_input" type="password" placeholder="Password">
                     <button type="button" id="login">Login</button>
 			    </form>
             {% endif %}
@@ -70,6 +70,7 @@
         <div id="div2">
             <h1 id="filterheader">Type</h1>
                 <form id="equipmentfilter">
+                    <label><input type="radio" name="equipmenttype" value="AL" checked="checked">All</label><br>
                     <label><input type="radio" name="equipmenttype" value="AC">Air Compressor</label><br>
                     <label><input type="radio" name="equipmenttype" value="BL">Backhoe Loader</label><br>
                     <label><input type="radio" name="equipmenttype" value="BR">Breaker</label><br>
@@ -105,6 +106,8 @@
             {% endfor %}
 		</div>
 		</div>
+
+    <div id="loginerror" hidden>Username or Password is Incorrect</div>
 	</body>
 <script>
     $(document).ready(function(){
@@ -124,7 +127,7 @@
                     if(data.length === 0)
                     {
                         $("#div3").empty();
-                        $("#div3").append('<h1>No results</h1>');
+                        $("#div3").append('<h1 style="right:35%; top:50%; position:fixed;">No results</h1>');
                     }
                     else
                     {

@@ -1,0 +1,96 @@
+@font-face
+{
+	font-family: fontOne;
+	src: url(../fonts/RobotoSlab-Bold.ttf);
+}
+
+@font-face
+{
+	font-family: fontTwo;
+	src: url(../fonts/RobotoSlab-Light.ttf);
+}
+
+@font-face
+{
+	font-family: fontThree;
+	src: url(../fonts/Gravity-Book.otf);
+}
+
+body
+{
+	margin: 0;
+	background-color: #f5f6fb;
+}
+
+nav.navbar-fixed-top
+{
+    background-color: #F4B50C;
+    height: 80px;
+    box-shadow: 0 0 10px #888888;
+    border: 2px;
+    border-color: #DEA60C;
+    border-style: solid;
+}
+
+.navbar-nav > li > a#navlink:hover
+{
+    background-color: #F4B50C;
+    -webkit-filter:brightness(97%)
+}
+
+.navbar-nav > li > a#navlink
+{
+    font-family: fontOne, serif;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    border-style: solid;
+    border-width: 0 2px 0 2px;
+    margin-right: -2px;
+    border-color:#DEA60C;
+    color: #3f4643;
+    font-size: 1.6em;
+}
+
+.dropdown
+{
+    padding: 20px 0 24px 0;
+    border-left-style: solid;
+    border-color: #DEA60C;
+    border-width: 2px;
+}
+
+.navbar-nav > li > .dropdown > a#userbutton
+{
+    color: #3F4643;
+    padding: 21px 25px 24px 24px;;
+    font-size: 1.6em;
+    font-family: fontOne, serif;
+    border-left-color: #DEA60C;
+    text-decoration: none;
+}
+
+.nav .open > a, .nav .open > a:hover{
+    background-color: #F4B50C;
+}
+
+.navbar-nav  > li > .dropdown > a:hover
+{
+    cursor: pointer;
+    text-decoration: none;
+     background-color: #F4B50C;
+    -webkit-filter:brightness(97%)
+}
+
+.dropdown-menu{padding:5px 7px 5px 7px;}
+
+.navbar-nav > li > #cart:hover{background-color: #F4B50C;}
+
+#login{margin-top: 5px}
+
+.navbar-nav > li > #cart
+{
+    cursor: pointer;
+    padding: 25px 35px;
+    font-size: 1.6em;
+    color: #3F4643;
+}

@@ -18,6 +18,7 @@ from django.contrib import admin
 from accounts import views
 from django.contrib.auth.views import logout
 from django.conf import settings
+from django.views.generic import TemplateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

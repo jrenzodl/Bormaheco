@@ -1,184 +1,196 @@
 <!DOCTYPE html>
-<html>
-	<head>
-        {% load staticfiles %}
-		<title>
-			Bormaheco Inc.
-		</title>
-        <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
-        <script src="{% static 'js/login.js' %}"></script>
-		<link rel="stylesheet" href="{% static 'css/main.css' %}">
-		<link rel="stylesheet" href="{% static 'css/index.css' %}">
-		<link rel="icon" href="{% static 'images/icon.png' %}">
-	</head>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>Bormaheco Inc.</title>
 
-	<body>
-		<div id="div1">
+    <!-- Imports JQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
 
-			<img id="navbar" src="{% static 'images/navbar.png' %}">
-			<a id="home" href="/"><h1>Home</h1></a>
-			<a id="equipment" href="equipment/"><h1>Equipment</h1></a>
-			<a id="transactions"><h1>Transactions</h1></a>
-            {% if request.user.is_authenticated %}
-                <h1 id="username">{{ request.user.username }}</h1>
-                <a href="logout" id="logoutButton">
-                    <img style="height: 25px" src="{% static 'images/logoutbutton.png' %}">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="icon" href="{% static 'images/icon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mainpage.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <img style="height: 250%" src="{% static 'images/bormaheco.png' %}">
                 </a>
-            {% else %}
-                <form>
-                    <label for="username_input">Username:</label>
-                    <input id="username_input" type="text">
-                    <label for="password_input">Password:</label>
-                    <input id="password_input" type="password">
-                    <button type="button" id="login">Login</button>
-			    </form>
-            {% endif %}
-			
-			<div id="div5-1">
-				<div class="tooltip">
-				<img id="cart" src="{% static 'images/cart.png' %}">
-				<span class="tooltiptext">
-					<div class="equipview">
-						<img id="remove" src="{% static 'images/remove.png' %}">
-						<img src="{% static 'images/excavator.png' %}">
-						<h1>Excavator</h1>
-					</div>
-					<div class="equipview">
-						<img id="remove" src="{% static 'images/remove.png' %}">
-						<img src="{% static 'images/payloader.png' %}">
-						<h1>Payloader</h1>
-					</div>
-					<div class="equipview">
-						<img id="remove" src="{% static 'images/remove.png' %}">
-						<img src="{% static 'images/bulldozer.png' %}">
-						<h1>Bulldozer</h1>
-					</div>
-					<div class="equipview">
-						<img id="remove" src="{% static 'images/remove.png' %}">
-						<img src="{% static 'images/forklift.png' %}">
-						<h1>Forklift</h1>
-					</div>
-					<div class="equipview">
-						<img id="remove" src="{% static 'images/remove.png' %}">
-						<img src="{% static 'images/primemover.png' %}">
-						<h1>Prime Mover</h1>
-					</div>
-				</span>
-			</div>
-			</div>	
-		</div>
-
-        <div>
-            <div id="div2">
-                <div id="div2-1">
-                    <img src="" id="behind">
-                    <img src="" id="front">
-                </div>
-                <div id="div2-2-behind">
-                    <h1 id="div2-2-behind-aboutustitle"></h1>
-                    <p id="div2-2-behind-aboutus"></p>
-                </div>
-                <div id="div2-2-front">
-                    <h1 id="div2-2-front-aboutustitle"></h1>
-                    <p id="div2-2-front-aboutus"></p>
-                </div>
             </div>
-            <div id="div3">
-                <img src="" id="behind2">
-                <img src="" id="front2">
-            </div>
-            <div id="div4">
-                <h1>Contact Us</h1>
-                <p>1191 Pablo Ocampo Sr. Extension in Makati City, Philippines.</p>
-                <p>Tel. : +63 2 897-0932</p>
-                <p>Fax : +63 2 897-1378</p>
-            </div>
-            <script>
-                $(document).ready(function(){
-                    var forklift = "{% static 'images/forklift.png' %}";
-                    var bulldozer = "{% static 'images/bulldozer.png' %}";
-                    var payloader = "{% static 'images/payloader.png' %}";
-                    var primemover = "{% static 'images/primemover.png' %}";
-                    var excavator = "{% static 'images/excavator.png' %}";
-
-                    var aboutus1 = '{% static 'images/aboutus1.png' %}';
-                    var aboutus2 = '{% static 'images/aboutus2.png' %}';
-                    var aboutus3 = '{% static 'images/aboutus3.png' %}';
-                    var aboutus4 = '{% static 'images/aboutus4.png' %}';
-
-                    var listequip = [forklift, bulldozer, payloader, primemover, excavator];
-                    var listpics = [aboutus1, aboutus2, aboutus3, aboutus4];
-
-                    var listtitle = ["About Us",
-                                     "Red Cross Training Program",
-                                     "The Future is in The Hands of The Youth","Bormaheco"];
-                    var listabout = ["Now, Bormaheco, Inc. is one of the biggest machineries and heavy equipment suppliers " +
-                                     "in the Philippines.  It caters to the requirements of the mining, logging, " +
-                                     "agricultural, construction and real estate industries.","In line with the company's goal " +
-                                     " for \"Safety awareness\", we sent Edvenzer \"Ed\" M. Reyes and Meriame \"Ann\" G. " +
-                                     "Hofilena to attend the “Basic Life Support and First-Aid” seminar from November 11 to " +
-                                     "16, 2013 at the Philippine Red Cross Makati City Branch of the Rizal Chapter.","A few " +
-                                     "months ago, we accepted another batch of young trainees from Don Bosco, TESDA, and The " +
-                                     "University of Makati.They are currently undergoing hands-on conditioning  under the " +
-                                     "close supervision of our service personnel. In our experience, exposing them to units " +
-                                     "actually being used in the field has proven to be a good training ground for " +
-                                     "youngsters like these.","Bormaheco, Inc. was incorporated on October 16, 1950 and the " +
-                                     "Certificate of Registration was issued by the Securities and Exchange Commission on" +
-                                     " February 23, 1951 and has been in existence in the Machinery and Heavy Equipment" +
-                                     " business for almost 60 years."];
-
-                    var index = 0;
-                    var index2 = 0;
-
-                    $("#front").attr("src", listequip[0]);
-                    $("#behind").attr("src", listequip[3]);
-
-                    $("#div2-2-front-aboutustitle").text("Bormaheco");
-                    $("#div2-2-behind-aboutustitle").text("About Us");
-
-                    $("#div2-2-front-aboutus").text("Bormaheco, Inc. was incorporated on October 16, 1950 and the " +
-				                            "Certificate of Registration was issued by the Securities and Exchange " +
-				                            "Commission on February 23, 1951 and has been in existence in the " +
-				                            "Machinery and Heavy Equipment business for almost 60 years.");
-
-                    $("#div2-2-behind-aboutus").text("Now, Bormaheco, Inc. is one of the biggest machineries and heavy " +
-				                             "equipment suppliers in the Philippines.  It caters to the requirements " +
-				                             "of the mining, logging, agricultural, construction and real" +
-				                             " estate industries.");
-                    setInterval(function() {
-                        $("#div2-2-front").animate({opacity: 0}, {duration: 2000, complete: function() {}});
-                        }, 8000);
-
-                    setInterval(function() {
-                        $("#front").animate({opacity: 0}, {duration: 2000, complete: function() {
-                            $("#front").attr("src", listpics[index]);
-                            $("#behind").attr("src", listpics[(index + 1) % 4]);
-
-                            $("#div2-2-front-aboutustitle").text(listtitle[index]);
-                            $("#div2-2-front-aboutus").text(listabout[index]);
-
-                            $("#div2-2-behind-aboutustitle").text(listtitle[(index + 1) % 4]);
-                            $("#div2-2-behind-aboutus").text(listabout[(index + 1) % 4]);
-
-                            $("#front, #div2-2-front").css("opacity", 1);
-
-                            index = (index + 1) % 4;
-                        }});
-                        }, 8000);
-
-                    $("#front2").attr("src", listpics[3]);
-                    $("#behind2").attr("src", listpics[0]);
-
-                    setInterval(function() {
-                        $("#front2").animate({opacity: 0}, {duration: 1000, complete: function() {
-                            $("#front2").attr("src", listequip[index2]);
-                            $("#behind2").attr("src", listequip[(index2 + 1) % 5]);
-                            $("#front2").css("opacity", 1);
-                            index2 = (index2 + 1) % 5;
-                        }});
-                        }, 4000);});
-
-                </script>
+            <ul class="nav navbar-nav">
+                <li><a href="/" id="navlink">Home</a></li>
+                <li><a href="equipment" id="navlink">Equipment</a></li>
+                <li><a href="#" id="navlink">Transactions</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a id="cart"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                    </li>
+                {% if request.user.is_authenticated %}
+                    <li>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="userbutton" type="button" data-toggle="dropdown">
+                                {{ request.user.username }}
+                                <span id="arrow" class="glyphicon glyphicon-triangle-bottom"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">HTML</a></li>
+                                <li><a href="#">CSS</a></li>
+                                <li><a href="logout">Logout</a></li>
+                            </ul>
+                        </div></li>
+                {% else %}
+                    <li>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="userbutton" type="button" data-toggle="dropdown">
+                                Login
+                                <span id="arrow" class="glyphicon glyphicon-triangle-bottom"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><label for="login_username_input">Username:</label>
+                                <input placeholder="Username" class="form-control" id="login_username_input"
+                                       type="text"></li>
+                                <li><label for="login_password_input">Password:</label>
+                                <input placeholder="Password" class="form-control" id="login_password_input"
+                                       type="password"></li>
+                                <li><button class="btn btn-default center-block" type="button"
+                                            id="login">Login</button></li>
+                            </ul>
+                        </div></li>
+                {% endif %}
+            </ul>
         </div>
-	</body>
+    </nav>
+
+    <div class="row" id="mainpagebody">
+        <div class="container-fluid">
+            <span class="col-md-1"></span>
+            <div class="col-md-4">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                        <li data-target="#myCarousel" data-slide-to="3"></li>
+                    </ol>
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="{% static 'images/aboutus1.png' %}" alt="Forklift" style="width:100%;">
+                            <p id="carouselheader">About Us</p>
+                            <p id="carouselbody">Now, Bormaheco, Inc. is one of the biggest machineries and heavy
+                            equipment suppliers in the Philippines.  It caters to the requirements of the mining,
+                            logging, agricultural, construction and real estate industries.</p>
+                        </div>
+
+                        <div class="item">
+                            <img src="{% static 'images/aboutus2.png' %}" alt="Bulldozer" style="width:100%;">
+                            <p id="carouselheader">Red Cross Training Program</p>
+                            <p id="carouselbody">In line with the company's goal for "Safety awareness", we sent
+                            Edvenzer "Ed" M. Reyes and Meriame "Ann" G. Hofilena to attend the “Basic Life
+                            Support and First-Aid” seminar from November 11 to 16, 2013 at the Philippine Red Cross
+                            Makati City Branch of the Rizal Chapter.</p>
+                        </div>
+                        <div class="item">
+                            <img src="{% static 'images/aboutus3.png'%}" alt="Payloader" style="width:100%;">
+                            <p id="carouselheader">The Future is in The Hands of The Youth</p>
+                            <p id="carouselbody">A few months ago, we accepted another batch of young trainees from
+                            Don Bosco, TESDA, and The University of Makati.They are currently undergoing hands-on
+                            conditioning  under the close supervision of our service personnel. In our experience,
+                            exposing them to units actually being used in the field has proven to be a good
+                            training ground for youngsters like these.</p>
+                        </div>
+
+                        <div class="item">
+                            <img src="{% static 'images/aboutus4.png'%}" alt="Primemover" style="width:100%;">
+                            <p id="carouselheader">Bormaheco</p>
+                            <p id="carouselbody">Bormaheco, Inc. was incorporated on October 16, 1950 and the
+                            Certificate of Registration was issued by the Securities and Exchange Commission on
+                            February 23, 1951 and has been in existence in the Machinery and Heavy Equipment
+                            business for almost 60 years.</p>
+                        </div>
+                    </div>
+
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+
+            <span class="col-md-2"></span>
+            <div class="col-md-3">
+                <div class="row">
+                    <div id="otherCarousel" class="carousel slide pull-right" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                            <li data-target="#otherCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#otherCarousel" data-slide-to="1"></li>
+                            <li data-target="#otherCarousel" data-slide-to="2"></li>
+                            <li data-target="#otherCarousel" data-slide-to="3"></li>
+                        </ol>
+
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img src="{% static 'images/payloader.png' %}" alt="Forklift" style="width:100%;">
+                            </div>
+
+                            <div class="item">
+                                <img src="{% static 'images/forklift.png' %}" alt="Bulldozer" style="width:100%;">
+                            </div>
+
+                            <div class="item">
+                                <img src="{% static 'images/primemover.png'%}" alt="Payloader" style="width:100%;">
+                            </div>
+
+                            <div class="item">
+                                <img src="{% static 'images/bulldozer.png'%}" alt="Primemover" style="width:100%;">
+                            </div>
+                        </div>
+
+                        <!-- Left and right controls -->
+                        <a class="left carousel-control" href="#otherCarousel" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+
+                        <a class="right carousel-control" href="#otherCarousel" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div id="contactus" class="pull-right">
+                        <p id="contactheader">Contact Us</p>
+                        <p id="contactbody">1191 Pablo Ocampo Sr. Extension in Makati City, Philippines.</p>
+                        <p id="contactbody">Tel. : +63 2 897-0932</p>
+                        <p id="contactbody">Fax : +63 2 897-1378</p>
+                    </div>
+                </div>
+
+            </div>
+            <span class="col-md-2"></span>
+        </div>
+    </div>
+</body>
 </html>

@@ -1,0 +1,86 @@
+#mainpagebody
+{
+    margin-top: 100px;
+}
+
+body
+{
+    overflow-x: hidden;
+}
+
+#myCarousel
+{
+    width: 700px;
+    height: 400px;
+}
+
+#otherCarousel
+{
+    height: 358px;
+    width: 300px;
+    box-shadow: 5px 5px 15px #888888;
+}
+
+#myCarousel .carousel-inner
+{
+    box-shadow: 5px 5px 15px #888888;
+    background-color: #E32524;
+    color: white;
+    height: 535px;
+}
+
+#carouselheader
+{
+    font-family: fontOne, serif;
+    font-size: 2.5em;
+    padding-left: 10px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+#carouselbody
+{
+    font-family: fontThree, sans-serif;
+    font-size: 1em;
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-top: -5px;
+    margin-bottom: 15px;
+}
+
+#myCarousel img
+{
+    height: 400px;
+}
+
+.carousel-control.left, .carousel-control.right
+{
+    background-image: none
+}
+
+#contactus
+{
+    box-shadow: 5px 5px 15px #888888;
+    background-color: #3F4643;
+    margin-top: 17px;
+    width: 300px;
+    height: 160px;
+    padding-left: 15px;
+    padding-top: 5px;
+}
+
+#contactheader
+{
+    font-family: fontOne, serif;
+    font-size: 1.7em;
+    color: white;
+}
+
+#contactbody
+{
+    font-family: fontThree, sans-serif;
+    color: white;
+    font-size: 0.8em;
+}
+
+.col-md-3{margin-left: 5px;}

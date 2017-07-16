@@ -37,13 +37,13 @@ $(document).ready(function () {
 
     $("#login").click(function()
     {
-        var username = $("#username_input").val();
-        var password = $("#password_input").val();
+        var username = $("#login_username_input").val();
+        var password = $("#login_password_input").val();
         $.ajax
         (
             {
                 type: 'POST',
-                url: 'login/',
+                url: '../login/',
                 data:{
                     username: username,
                     password: password
@@ -53,7 +53,12 @@ $(document).ready(function () {
                     if(data === "True")
                         window.location.reload();
                     else
-                        console.log("mali");
+                    {
+                        $("#loginerror").fadeIn();
+                        setTimeout(function() {
+                          $("#loginerror").fadeOut();
+                        }, 2000);
+                    }
                 }]
             }
         )
