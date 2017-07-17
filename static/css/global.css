@@ -81,16 +81,27 @@ nav.navbar-fixed-top
     -webkit-filter:brightness(97%)
 }
 
-.dropdown-menu{padding:5px 7px 5px 7px;}
+.dropdown-menu
+{
+    padding:5px 7px 5px 7px;
+    margin-right: 10px;
+}
 
 .navbar-nav > li > #cart:hover{background-color: #F4B50C;}
 
 #login{margin-top: 5px}
 
-.navbar-nav > li > #cart
+.navbar-nav > li > .dropdown > a#cart
 {
     cursor: pointer;
-    padding: 25px 35px;
+    padding: 27px 35px;
     font-size: 1.6em;
     color: #3F4643;
 }
+
+.navbar-right .dropdown-menu
+{
+    width: 300px;
+}
+
+h2{font-family: fontThree, sans-serif}

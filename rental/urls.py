@@ -15,21 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from accounts import views
 from django.contrib.auth.views import logout
 from django.conf import settings
+from . import views
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-
-    url(r'^equipment/', include('equipment.urls'), name='equipment'),
-
-    url(r'^rental/', include('rental.urls'), name='rental'),
-
-    url(r'^logout/', logout, {'next_page': settings.LOGIN_REDIRECT_URL}),
-
-    url(r'^login/', views.login_user, name='login'),
-
-    url(r'^$', views.homepage, name='mainpage')
+    url(r'^getcart/', views.get_cart, name='get_cart'),
 ]

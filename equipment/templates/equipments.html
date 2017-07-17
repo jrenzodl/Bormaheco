@@ -1,74 +1,91 @@
 <!DOCTYPE html>
-<html>
-	<head>
-        {% load staticfiles %}
-		<title>
-			Bormaheco Inc. | Equipment
-		</title>
-        <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
-        <script src="{% static 'js/login.js' %}"></script>
-        <script src="{% static 'js/equipment.js' %}"></script>
-		<link rel="stylesheet" href="{% static 'css/main.css' %}">
-        <link rel="stylesheet" href="{% static 'css/equipment.css' %}">
-		<link rel="icon" href="{% static 'images/icon.png' %}">
-	</head>
+<html lang="en">
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <title>Bormaheco Inc. | Equipment</title>
+    <!-- Imports JQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
 
-	<body>
-		<div id="div1">
-			<img id="navbar" src="{% static 'images/navbar.png' %}">
-			<a id="home" href="/"><h1>Home</h1></a>
-			<a id="equipment" href="/equipment"><h1>Equipment</h1></a>
-			<a id="transactions" href="#"><h1>Transactions</h1></a>
-            {% if request.user.is_authenticated %}
-                <h1 id="username">{{ request.user.username }}</h1>
-                <a href="../logout" id="logoutButton">
-                    <img style="height: 25px" src="{% static 'images/logoutbutton.png' %}">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Global Login -->
+    <script src="{% static 'js/login.js' %}"></script>
+
+    <link rel="icon" href="{% static 'images/icon.png' %}">
+    <link rel="stylesheet" href="{% static 'css/global.css' %}">
+	<link rel="stylesheet" href="{% static 'css/equipment.css'%}">
+</head>
+<body>
+    <nav class="navbar navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <img style="height: 250%" src="{% static 'images/bormaheco.png' %}">
                 </a>
-            {% else %}
-                <form>
-                    <label for="login_username_input" >Username:</label>
-                    <input id="login_username_input" type="text" placeholder="Username">
-                    <label for="login_password_input" >Password:</label>
-                    <input id="login_password_input" type="password" placeholder="Password">
-                    <button type="button" id="login">Login</button>
-			    </form>
-            {% endif %}
-
-			<div id="div5-1">
-				<div class="tooltip">
-				<img id="cart" src="{% static 'images/cart.png' %}">
-				<span class="tooltiptext">
-					<div class="equipview">
-						<img id="remove" src="{% static 'images/remove.png' %}">
-						<img src="{% static 'images/excavator.png' %}">
-						<h1>Excavator</h1>
-					</div>
-					<div class="equipview">
-						<img id="remove" src="{% static 'images/remove.png' %}">
-						<img src="{% static 'images/payloader.png' %}">
-						<h1>Payloader</h1>
-					</div>
-					<div class="equipview">
-						<img id="remove" src="{% static 'images/remove.png' %}">
-						<img src="{% static 'images/bulldozer.png' %}">
-						<h1>Bulldozer</h1>
-					</div>
-					<div class="equipview">
-						<img id="remove" src="{% static 'images/remove.png' %}">
-						<img src="{% static 'images/forklift.png' %}">
-						<h1>Forklift</h1>
-					</div>
-					<div class="equipview">
-						<img id="remove" src="{% static 'images/remove.png' %}">
-						<img src="{% static 'images/primemover.png' %}">
-						<h1>Prime Mover</h1>
-					</div>
-				</span>
-			</div>
             </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/" id="navlink">Home</a></li>
+                <li><a href="/equipment" id="navlink">Equipment</a></li>
+                <li><a href="#" id="navlink">Transactions</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <div class="dropdown">
+                            <a id="cart" type="button" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                            <ul class="dropdown-menu cart" id="cartDropdown">
+                            </ul>
+                        </div>
+                    </li>
+                {% if request.user.is_authenticated %}
+                    <li>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="userbutton" type="button" data-toggle="dropdown">
+                                {{ request.user.username }}
+                                <span id="arrow" class="glyphicon glyphicon-triangle-bottom"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% if request.user.is_superuser %}
+                                    <li><a href="../admin">Admin Page</a></li>
+                                {% endif %}
+                                <li><a href="#">CSS</a></li>
+                                <li><a href="../logout">Logout</a></li>
+                            </ul>
+                        </div></li>
+                {% else %}
+                    <li>
+                        <div class="dropdown" id="logindiv">
+                            <a class="dropdown-toggle" id="userbutton" type="button" data-toggle="dropdown">
+                                Login
+                                <span id="arrow" class="glyphicon glyphicon-triangle-bottom"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><label for="login_username_input">Username:</label>
+                                <input placeholder="Username" class="form-control" id="login_username_input"
+                                       type="text"></li>
+                                <li><label for="login_password_input">Password:</label>
+                                <input placeholder="Password" class="form-control" id="login_password_input"
+                                       type="password"></li>
+                                <li><button class="btn btn-default center-block" type="button"
+                                            id="login">Login</button></li>
+                            </ul>
+                        </div></li>
+                {% endif %}
+            </ul>
         </div>
-        <div id="div2">
-            <h1 id="filterheader">Type</h1>
+    </nav>
+
+    <div class="row" id="pagebody">
+        <div class="container-fluid">
+            <div class="col-md-2" id="div2">
+                <h1 id="filterheader">Type</h1>
                 <form id="equipmentfilter">
                     <label><input type="radio" name="equipmenttype" value="AL" checked="checked">All</label><br>
                     <label><input type="radio" name="equipmenttype" value="AC">Air Compressor</label><br>
@@ -91,65 +108,160 @@
                     <label><input type="radio" name="equipmenttype" value="SL">Skidsteer Loader</label><br>
                     <label><input type="radio" name="equipmenttype" value="OT">Other</label>
                 </form>
-            {% if request.user.is_superuser %}
-                <button type="button" id="addEquipment">Add Equipment</button>
-            {% endif %}
-		</div>
+                {% if request.user.is_superuser %}
+                    <button type="button" id="addEquipment">Add Equipment</button>
+                {% endif %}
+            </div>
 
-		<div id="div3">
-            {% for unit in equipment %}
-                <div class="equip" id="equipment{{ unit.id }}">
-                    <img src="{% static unit.image.url %}">
-                    <h1>{{ unit.name }}</h1>
-                    <a><p>ADD TO CART</p></a>
-                </div>
-            {% endfor %}
-		</div>
-		</div>
+            <div class="col-md-10" id="div3">
+                {% for unit in equipment %}
+                    <div class="col-md-3">
+                        <div class="panel panel-primary" id="equipment{{ unit.id }}">
+                            <div class="panel-heading">{{ unit.name }}</div>
+                            <div class="panel-body">
+                                <div class="thumbnail">
+                                    <img src="{% static unit.image.url %}" class="img-responsive"
+                                 style="width:100%" alt="Image"></div>
+                                </div>
+                            <div class="panel-footer text-center"><button type="button" data-toggle="modal"
+                                                                          data-target="#modal{{ unit.id }}"
+                                                                          class="btn btn-default">View Details
+                                <span class="glyphicon glyphicon-search">
+                            </span></button></div>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div id="modal{{ unit.id }}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">{{ unit.name }}</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <img class="img-responsive" alt="image" src="{% static unit.image.url %}"
+                                                 style="width: 200%">
+                                        </div>
+                                        <div class="col-md-4" id="right-modal">
+                                            <p id="info"><strong>Brand: </strong>{{ unit.brand }}</p>
+                                            <p id="info"><strong>Type: </strong>{{ unit.get_type_display }}</p>
+                                            <p id="info"><strong>Details: </strong>{{ unit.details }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default">Add to Cart</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-    <div id="loginerror" hidden>Username or Password is Incorrect</div>
-	</body>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</body>
+
 <script>
-    $(document).ready(function(){
-        $("input[type='radio']").on('change', function() {
-        var selected = $("[name='equipmenttype']:checked").val();
-
-        $.ajax
-        (
-            {
-                type: 'POST',
-                url: 'filterequipment/' + selected + '/',
-                data:{
-                    selected: selected
-                },
-                success:[ function(data)
-                {
-                    if(data.length === 0)
+    $(document).ready(function () {
+        $("#cart").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "../rental/getcart/",
+                success: function (data) {
+                    if(data === "0")
                     {
-                        $("#div3").empty();
-                        $("#div3").append('<h1 style="right:35%; top:50%; position:fixed;">No results</h1>');
+                        var cart = $("#cartDropdown");
+                        cart.empty();
+                        cart.append('<h2 class="text-center">Your cart is empty!</h2>');
                     }
-                    else
-                    {
-                        $("#div3").empty();
-                        for(var i = 0; i < data.length; i++ )
-                        {
-                            var datum = data[i];
-                            var MEDIA_URL = "/static/media/" + datum.fields.image;
+                }
+            });
+        });
 
-                            $("#div3").append('\
-                                <div class="equip" id="equipment' + JSON.stringify(datum.pk) +'">\
-                                    <img src="' + MEDIA_URL  +'">\
-                                    <h1>'+ datum.fields.name +'</h1>\
-                                    <a><p>ADD TO CART</p></a>\
+		$("input[type='radio']").on('change', function() {
+			var selected = $("[name='equipmenttype']:checked").val();
+
+			$.ajax
+			(
+				{
+					type: 'POST',
+					url: 'filterequipment/' + selected + '/',
+					data:{
+						selected: selected
+					},
+					success:[ function(data)
+					{
+						if(data.length === 0)
+						{
+							$("#div3").empty();
+							$("#div3").append('<h1 style="right:35%; top:50%; position:fixed;">No results</h1>');
+						}
+						else
+						{
+							$("#div3").empty();
+							for(var i = 0; i < data.length; i++ )
+							{
+								var datum = data[i];
+								var MEDIA_URL = "/static/media/" + datum.fields.image;
+
+								$('#div3').append('<div class="col-md-3">\
+                                    <div class="panel panel-primary" id="equipment' + JSON.stringify(datum.pk)+ '">\
+                                        <div class="panel-heading">' + datum.fields.name +'</div>\
+                                        <div class="panel-body">\
+                                            <div class="thumbnail">\
+                                                <img src="' + MEDIA_URL + '" class="img-responsive"\
+                                             style="width:100%" alt="Image"></div>\
+                                            </div>\
+                                        <div class="panel-footer text-center"><button type="button"  data-toggle="modal"\
+                                                                          data-target="#modal' + JSON.stringify(datum.pk)+ '"\
+                                                                                      class="btn btn-default">View Details\
+                                            <span class="glyphicon glyphicon-search">\
+                                        </span></button></div>\
+                                    </div>\
+                                </div>\
+                                \
+                                <!-- Modal -->\
+                                <div id="modal' + JSON.stringify(datum.pk)+ '" class="modal fade" role="dialog">\
+                                    <div class="modal-dialog">\
+                                        <!-- Modal content-->\
+                                        <div class="modal-content">\
+                                            <div class="modal-header">\
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>\
+                                                <h4 class="modal-title">' + datum.fields.name +'</h4>\
+                                            </div>\
+                                            <div class="modal-body">\
+                                                <div class="row">\
+                                                    <div class="col-md-8">\
+                                                        <img class="img-responsive" alt="image" src="'+ MEDIA_URL +'"\
+                                                             style="width: 200%">\
+                                                    </div>\
+                                                    <div class="col-md-4" id="right-modal">\
+                                                        <p id="info"><strong>Brand: </strong>' + datum.fields.brand +'</p>\
+                                                        <p id="info"><strong>Type: </strong>' + datum.fields.type +'</p>\
+                                                        <p id="info"><strong>Details: </strong>' + datum.fields.details +'</p>\
+                                                    </div>\
+                                                </div>\
+                                            </div>\
+                                            <div class="modal-footer">\
+                                                <button type="button" class="btn btn-default">Add to Cart</button>\
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
                                 </div>');
-                            console.log(datum.fields.image)
-                        }
-                    }
-                }]
-            }
-        );
+							}
+						}
+					}]
+				}
+			);
         });
     });
 </script>
+
 </html>

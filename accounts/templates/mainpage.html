@@ -4,7 +4,6 @@
     {% load staticfiles %}
     <meta charset="UTF-8">
     <title>Bormaheco Inc.</title>
-
     <!-- Imports JQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.js"
             integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
@@ -15,6 +14,10 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Global Login -->
+    <script src="{% static 'js/login.js' %}"></script>
+
     <link rel="icon" href="{% static 'images/icon.png' %}">
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
     <link rel="stylesheet" href="{% static 'css/mainpage.css' %}">
@@ -34,7 +37,12 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a id="cart"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                        <div class="dropdown">
+                            <a id="cart" type="button" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                            <ul class="dropdown-menu cart" id="cartDropdown">
+                            </ul>
+                        </div>
                     </li>
                 {% if request.user.is_authenticated %}
                     <li>
@@ -44,14 +52,16 @@
                                 <span id="arrow" class="glyphicon glyphicon-triangle-bottom"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">HTML</a></li>
+                                {% if request.user.is_superuser %}
+                                    <li><a href="../admin">Admin Page</a></li>
+                                {% endif %}
                                 <li><a href="#">CSS</a></li>
                                 <li><a href="logout">Logout</a></li>
                             </ul>
                         </div></li>
                 {% else %}
                     <li>
-                        <div class="dropdown">
+                        <div class="dropdown" id="logindiv">
                             <a class="dropdown-toggle" id="userbutton" type="button" data-toggle="dropdown">
                                 Login
                                 <span id="arrow" class="glyphicon glyphicon-triangle-bottom"></span>
@@ -193,4 +203,24 @@
         </div>
     </div>
 </body>
+
+<script>
+    $(document).ready(function () {
+        $("#cart").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "rental/getcart/",
+                success: function (data) {
+                    if(data === "0")
+                    {
+                        var cart = $("#cartDropdown");
+                        cart.empty();
+                        cart.append('<h2 class="text-center">Your cart is empty!</h2>');
+                    }
+                }
+            })
+        })
+    })
+</script>
+
 </html>
