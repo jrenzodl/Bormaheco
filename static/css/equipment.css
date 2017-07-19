@@ -6,6 +6,10 @@ input[type='radio']{margin-right: 5px}
 
 #pagebody{margin-top: 80px}
 
+.text-danger{padding: 5px 0 0 10px;}
+
+#datedate{width: 65%;}
+
 #div2
 {
 	background-color: #cfd2d7;
@@ -28,7 +32,7 @@ input[type='radio']{margin-right: 5px}
 	font-family: fontThree, sans-serif;
 }
 
-#div2 form
+#div2 form#equipmentfilter
 {
 	padding-left: 15%;
 }
@@ -80,13 +84,13 @@ input[type='radio']{margin-right: 5px}
 
 #div2 select
 {
-	width: 91%;
 	font-family: fontThree;
 	font-size: 1em;
-	border-color: black;
 	padding: 2px;
 	margin-top: 0;
 }
+
+.modal-dialog{width:850px}
 
 #div2 input[type="submit"]
 {

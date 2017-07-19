@@ -22,5 +22,7 @@ from django.conf import settings
 urlpatterns = [
     url(r'^$', views.equipment_index, name='mainpage'),
 
-    url(r'^filterequipment/(?P<types>\D\D)/', views.filter_equipment, name='filterequipment')
+    url(r'^filterequipment/(?P<types>\D\D)/', views.filter_equipment, name='filterequipment'),
+
+    url(r'^addequipment/', views.add_equipment, name='addequipment'),
 ]

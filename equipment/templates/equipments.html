@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     {% load staticfiles %}
+    {% load humanize %}
     <meta charset="UTF-8">
     <title>Bormaheco Inc. | Equipment</title>
     <!-- Imports JQuery -->
@@ -14,6 +15,19 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js">
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js">
+    </script>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
 
     <!-- Global Login -->
     <script src="{% static 'js/login.js' %}"></script>
@@ -33,7 +47,9 @@
             <ul class="nav navbar-nav">
                 <li><a href="/" id="navlink">Home</a></li>
                 <li><a href="/equipment" id="navlink">Equipment</a></li>
+                {% if request.user.is_authenticated %}
                 <li><a href="#" id="navlink">Transactions</a></li>
+                {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -87,6 +103,7 @@
             <div class="col-md-2" id="div2">
                 <h1 id="filterheader">Type</h1>
                 <form id="equipmentfilter">
+
                     <label><input type="radio" name="equipmenttype" value="AL" checked="checked">All</label><br>
                     <label><input type="radio" name="equipmenttype" value="AC">Air Compressor</label><br>
                     <label><input type="radio" name="equipmenttype" value="BL">Backhoe Loader</label><br>
@@ -108,8 +125,124 @@
                     <label><input type="radio" name="equipmenttype" value="SL">Skidsteer Loader</label><br>
                     <label><input type="radio" name="equipmenttype" value="OT">Other</label>
                 </form>
+
                 {% if request.user.is_superuser %}
-                    <button type="button" id="addEquipment">Add Equipment</button>
+                    <button type="button" data-toggle="modal"
+                            data-target="#addEquipModal" class="btn btn-warning" id="addEquipment">Add Equipment</button>
+                    <!-- Modal -->
+                    <div id="addEquipModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Add Equipment</h4>
+                                </div>
+                                <div class="modal-body form">
+
+                                        <div class="form-group" id="name_input">
+                                            <label class="control-label" for="eq_name_input">
+                                                Name:</label>
+                                                <input type="text" class="form-control" id="eq_name_input">
+                                                <span class="glyphicon glyphicon-remove form-control-feedback hidden">
+                                                </span>
+                                                <p class="text-danger" id="name_error" hidden></p>
+                                        </div>
+
+                                        <div class="form-group" id="brand_input">
+                                            <label class="control-label" for="eq_brand_input">
+                                                Brand:</label>
+                                                <input type="text" class="form-control" id="eq_brand_input">
+                                                <span class="glyphicon glyphicon-remove form-control-feedback hidden">
+                                                </span>
+                                                <p class="text-danger" id="brand_error" hidden></p>
+                                        </div>
+
+                                        <div class="form-group" id="cost_input">
+                                            <label class="control-label" for="eq_cost_input">
+                                                Acquisition Cost:</label>
+                                                <input type="text" class="form-control number" id="eq_cost_input">
+                                                <span class="glyphicon glyphicon-remove form-control-feedback hidden">
+                                                </span>
+                                                <p class="text-danger" id="cost_error" hidden></p>
+                                        </div>
+
+                                        <div class="form-group" id="details_input">
+                                            <label class="control-label" for="eq_details_input">
+                                                Details:</label>
+                                                <input type="text" class="form-control" id="eq_details_input">
+                                                <span class="glyphicon glyphicon-remove form-control-feedback hidden">
+                                                </span>
+                                                <p class="text-danger" id="details_error" hidden></p>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label" for="eq_type_input">
+                                                Type:</label>
+                                                <select class="form-control" id="eq_type_input" name="eq_type">
+                                                    <option value="AC">Air Compressor</option>
+                                                    <option value="BL">Backhoe Loader</option>
+                                                    <option value="BR">Breaker</option>
+                                                    <option value="BD">Bulldozer</option>
+                                                    <option value="CR">Crane</option>
+                                                    <option value="DT">Dumptruck</option>
+                                                    <option value="EX">Excavator</option>
+                                                    <option value="FT">Flatbed Truck</option>
+                                                    <option value="FL">Forklift</option>
+                                                    <option value="GS">Generating Set</option>
+                                                    <option value="LB">Low Bed Trailer</option>
+                                                    <option value="MT">Manlift Truck</option>
+                                                    <option value="MC">Motorcycle</option>
+                                                    <option value="PL">Payloader</option>
+                                                    <option value="PM">Prime Mover</option>
+                                                    <option value="RG">Road Grader</option>
+                                                    <option value="RR">Road Roller</option>
+                                                    <option value="SL">Skidsteer Loader</option>
+                                                    <option value="OT">Other</option>
+                                                </select>
+                                                <span class="glyphicon glyphicon-remove form-control-feedback hidden">
+                                                </span>
+                                                <p class="text-danger" hidden></p>
+                                        </div>
+
+                                        <div class="form-group" id="hsr_input">
+                                            <label class="control-label" for="eq_hsr_input">
+                                                Hourly Service Rate:</label>
+                                                <input type="text" class="form-control number" id="eq_hsr_input">
+                                                <span class="glyphicon glyphicon-remove form-control-feedback hidden">
+                                                </span>
+                                                <p class="text-danger" id="hsr_error" hidden></p>
+                                        </div>
+
+                                        <div class="form-group" id="img_input">
+                                                <label class="control-label" for="eq_img_input">
+                                                 Image:</label>
+                                                <input type="file" id="eq_img_input" accept=".jpg, .png, .jpeg">
+                                                <span class="glyphicon glyphicon-remove form-control-feedback hidden">
+                                                </span>
+                                                <p class="text-danger" id="img_error" hidden></p>
+                                        </div>
+
+                                        <div class="form-group" id="date_input">
+                                            <div id="dateInput">
+                                                <div class="input-group date">
+                                                    <label class="control-label" for="datedate">
+                                                        Acquisition Date:
+                                                    </label>
+                                                    <input type="text" class="form-control" id="datedate" readonly>
+                                                    <p class="text-danger" id="date_error" hidden></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-warning" id="submitEquipment">Add Equipment</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 {% endif %}
             </div>
 
@@ -149,11 +282,15 @@
                                             <p id="info"><strong>Brand: </strong>{{ unit.brand }}</p>
                                             <p id="info"><strong>Type: </strong>{{ unit.get_type_display }}</p>
                                             <p id="info"><strong>Details: </strong>{{ unit.details }}</p>
+                                            {% if request.user.is_superuser %}
+                                                <p id="info"><strong>Acquisition Cost: P</strong>{{ unit.acquisition_cost|intcomma }}</p>
+                                                <p id="info"><strong>Hourly Service Rate: P</strong>{{ unit.hourly_service_rate|intcomma }}/hr</p>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-default">Add to Cart</button>
+                                    <button type="button" class="btn btn-warning">Add to Cart</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
@@ -163,12 +300,43 @@
                 {% endfor %}
             </div>
         </div>
-
     </div>
 </body>
 
 <script>
     $(document).ready(function () {
+         /** CSRF FOR AJAX **/
+
+        function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+        }
+        var csrftoken = getCookie('csrftoken');
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        /** CSRF FOR AJAX **/
+
         $("#cart").click(function () {
             $.ajax({
                 type: "POST",
@@ -193,7 +361,8 @@
 					type: 'POST',
 					url: 'filterequipment/' + selected + '/',
 					data:{
-						selected: selected
+						selected: selected,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
 					},
 					success:[ function(data)
 					{
@@ -220,7 +389,7 @@
                                             </div>\
                                         <div class="panel-footer text-center"><button type="button"  data-toggle="modal"\
                                                                           data-target="#modal' + JSON.stringify(datum.pk)+ '"\
-                                                                                      class="btn btn-default">View Details\
+                                                                                      class="btn btn-warning">View Details\
                                             <span class="glyphicon glyphicon-search">\
                                         </span></button></div>\
                                     </div>\
@@ -249,7 +418,7 @@
                                                 </div>\
                                             </div>\
                                             <div class="modal-footer">\
-                                                <button type="button" class="btn btn-default">Add to Cart</button>\
+                                                <button type="button" class="btn btn-warning">Add to Cart</button>\
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\
                                             </div>\
                                         </div>\
@@ -261,7 +430,114 @@
 				}
 			);
         });
+
+        $("#submitEquipment").click(function(){
+            var eqname = $('#eq_name_input').val();
+            var brand = $('#eq_brand_input').val();
+            var acquisition = $('#eq_cost_input').val();
+            var details = $('#eq_details_input').val();
+            var type = $("#eq_type_input").find(":selected").val();
+            var service_rate = $('#eq_hsr_input').val();
+            var image = $('#eq_img_input').val();
+            var date = $('#datedate').val();
+
+
+            if(eqname === "")
+            {
+                $('#name_input').attr("class", 'form-group has-error');
+                $('#name_error').html("Please input name of equipment").removeAttr('hidden');
+            }
+
+            if(brand === "")
+            {
+                $('#brand_input').attr("class", 'form-group has-error');
+                $('#brand_error').html("Please input brand name of equipment").removeAttr('hidden');
+            }
+
+            if(acquisition === "")
+            {
+                $('#cost_input').attr("class", 'form-group has-error');
+                $('#cost_error').html("Please input acquisition cost of equipment").removeAttr('hidden');
+            }
+
+            if(details === "")
+            {
+                $('#details_input').attr("class", 'form-group has-error');
+                $('#details_error').html("Please input details of equipment").removeAttr('hidden');
+            }
+
+            if(service_rate === "")
+            {
+                $('#hsr_input').attr("class", 'form-group has-error');
+                $('#hsr_error').html("Please input hourly service cost of equipment").removeAttr('hidden');
+            }
+
+            if(image === "")
+            {
+                $('#img_input').attr("class", 'form-group has-error');
+                $('#img_error').html("Please input image of equipment").removeAttr('hidden');
+            }
+
+            if(date === "")
+            {
+                $('#date_input').attr("class", 'form-group has-error');
+                $('#date_error').html("Please input date of acquisition").removeAttr('hidden');
+            }
+
+            if(eqname !== "" && brand !== "" && acquisition !== "" && details !== "" && service_rate !== ""
+            && image !== "" && date !== "")
+            {
+                var fd = new FormData();
+                fd.append("name", eqname);
+                fd.append("brand", brand);
+                fd.append("acquisition_cost", acquisition);
+                fd.append("details", details);
+                fd.append("type", type)
+                fd.append("hourly_service_rate", service_rate);
+                fd.append('image', $('#eq_img_input')[0].files[0]);
+                fd.append('acquisition_date', date);
+                fd.append('status', 'AV');
+                $.ajax({
+                    type: "POST",
+                    url: "addequipment/",
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if(data === "success")
+                            window.location.reload()
+                    }
+                })
+            }
+        });
+
+		$(".number").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl/cmd+A
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: Ctrl/cmd+C
+            (e.keyCode === 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: Ctrl/cmd+X
+            (e.keyCode === 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
     });
+    });
+</script>
+
+<script type="text/javascript">
+            $('#dateInput .input-group.date').datepicker({
+                format: "yyyy-mm-dd",
+                endDate: 'today'
+            });
 </script>
 
 </html>

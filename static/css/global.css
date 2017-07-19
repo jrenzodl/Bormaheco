@@ -91,6 +91,10 @@ nav.navbar-fixed-top
 
 #login{margin-top: 5px}
 
+.btn-warning {background-color: #F4B50C;}
+
+.btn-warning, .btn-warning:hover, .btn-warning:active, .btn-warning:focus{color: #3F4643;}
+
 .navbar-nav > li > .dropdown > a#cart
 {
     cursor: pointer;
@@ -105,3 +109,4 @@ nav.navbar-fixed-top
 }
 
 h2{font-family: fontThree, sans-serif}
+

@@ -33,3 +33,6 @@ urlpatterns = [
 
     url(r'^$', views.homepage, name='mainpage')
 ]
+
+admin.site.site_header = "Bormaheco Administration"
+admin.site.site_title = "Bormaheco Inc. | Admin"

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'equipment.apps.EquipmentConfig',
     'rental.apps.RentalConfig',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +133,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = '/'
+
+ADMIN_SITE_HEADER = "Bormaheco Administraion"
