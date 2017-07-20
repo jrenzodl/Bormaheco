@@ -18,6 +18,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- Global Login -->
+    <script type="text/javascript"> var loginurl = {% url 'login' %};</script>
     <script src="{% static 'js/login.js' %}"></script>
 
     <link rel="icon" href="{% static 'images/icon.png' %}">
@@ -40,15 +41,19 @@
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                {% if request.user.is_superuser == False %}
                     <li>
                         <div class="dropdown">
                             <a id="cart" type="button" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-shopping-cart"></span></a>
                             <ul class="dropdown-menu cart" id="cartDropdown">
                                 {% get_cart request %}
+                                <a type="button" style="display:block; margin-top: 10px; margin-bottom: 5px"
+                                 href="{% url 'rental:checkout' %}" class="btn btn-warning text-center">Checkout</a>
                             </ul>
                         </div>
                     </li>
+                {% endif %}
                 {% if request.user.is_authenticated %}
                     <li>
                         <div class="dropdown">

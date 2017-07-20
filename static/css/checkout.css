@@ -1,0 +1,16 @@
+#mainpagebody
+{
+    margin-top: 120px
+}
+
+#cartlist
+{
+    height: 500px;
+    background-color: #FFFFFF;
+    padding: 0 0 0 0;
+    border-radius: 5px;
+    overflow: auto;
+    border: solid;
+    border-width: 1px;
+    border-color: #DDDDDD;
+}

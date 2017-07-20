@@ -106,7 +106,8 @@ nav.navbar-fixed-top
 .navbar-right .dropdown-menu
 {
     width: 365px;
+    height: 300px;
+    overflow: auto;
 }
 
 h2{font-family: fontThree, sans-serif}
-

@@ -56,7 +56,7 @@ $(document).ready(function () {
         (
             {
                 type: 'POST',
-                url: '../login/',
+                url: loginurl,
                 data:{
                     username: username,
                     password: password
