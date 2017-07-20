@@ -18,7 +18,7 @@ from django.contrib import admin
 from . import views
 from django.contrib.auth.views import logout
 from django.conf import settings
-
+app_name = 'equipment'
 urlpatterns = [
     url(r'^$', views.equipment_index, name='mainpage'),
 

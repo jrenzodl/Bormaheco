@@ -90,6 +90,11 @@ input[type='radio']{margin-right: 5px}
 	margin-top: 0;
 }
 
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover{
+	background-color: #F4B50C;
+	border-color: #DEA60C;
+}
+
 .modal-dialog{width:850px}
 
 #div2 input[type="submit"]

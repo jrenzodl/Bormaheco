@@ -11,8 +11,7 @@ import json
 
 def equipment_index(request):
     list_of_equipment = Equipment.objects.order_by('name')
-    wah = EquipmentForm()
-    return render(request, 'equipments.html', {'equipment': list_of_equipment, 'form': wah})
+    return render(request, 'equipments.html', {'equipment': list_of_equipment})
 
 
 def filter_equipment(request, types):
@@ -20,8 +19,8 @@ def filter_equipment(request, types):
         list_of_equipment = Equipment.objects.order_by('name')
     else:
         list_of_equipment = Equipment.objects.filter(type=types)
-    list_of_equipment = serializers.serialize('json', list_of_equipment)
-    return HttpResponse(list_of_equipment, content_type="application/json")
+
+    return render(request, 'equipments.html', {'equipment': list_of_equipment, 'types': types})
 
 
 def add_equipment(request):

@@ -52,6 +52,7 @@
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                {% if request.user.is_superuser == false %}
                     <li>
                         <div class="dropdown">
                             <a id="cart" type="button" data-toggle="dropdown">
@@ -60,6 +61,7 @@
                             </ul>
                         </div>
                     </li>
+                {% endif %}
                 {% if request.user.is_authenticated %}
                     <li>
                         <div class="dropdown">
@@ -102,29 +104,70 @@
         <div class="container-fluid">
             <div class="col-md-2" id="div2">
                 <h1 id="filterheader">Type</h1>
-                <form id="equipmentfilter">
-
-                    <label><input type="radio" name="equipmenttype" value="AL" checked="checked">All</label><br>
-                    <label><input type="radio" name="equipmenttype" value="AC">Air Compressor</label><br>
-                    <label><input type="radio" name="equipmenttype" value="BL">Backhoe Loader</label><br>
-                    <label><input type="radio" name="equipmenttype" value="BR">Breaker</label><br>
-                    <label><input type="radio" name="equipmenttype" value="BD">Bulldozer</label><br>
-                    <label><input type="radio" name="equipmenttype" value="CR">Crane</label><br>
-                    <label><input type="radio" name="equipmenttype" value="DT">Dump Truck</label><br>
-                    <label><input type="radio" name="equipmenttype" value="EX">Excavator</label><br>
-                    <label><input type="radio" name="equipmenttype" value="FT">Flatbed Trucks</label><br>
-                    <label><input type="radio" name="equipmenttype" value="FL">Forklifts</label><br>
-                    <label><input type="radio" name="equipmenttype" value="GS">Generating Sets</label><br>
-                    <label><input type="radio" name="equipmenttype" value="LB">Low Bed Trailer</label><br>
-                    <label><input type="radio" name="equipmenttype" value="MT">Manlift Trucks</label><br>
-                    <label><input type="radio" name="equipmenttype" value="MC">Motorcycles</label><br>
-                    <label><input type="radio" name="equipmenttype" value="PL">Payloader</label><br>
-                    <label><input type="radio" name="equipmenttype" value="PM">Prime Mover</label><br>
-                    <label><input type="radio" name="equipmenttype" value="RG">Road Grader</label><br>
-                    <label><input type="radio" name="equipmenttype" value="RR">Road Roller</label><br>
-                    <label><input type="radio" name="equipmenttype" value="SL">Skidsteer Loader</label><br>
-                    <label><input type="radio" name="equipmenttype" value="OT">Other</label>
-                </form>
+                    <div class="list-group">
+                        <a href="{% url 'equipment:filterequipment' types='AL' %}" class="list-group-item {% if types == 'AL'%}
+                        active
+                        {% elif types == null %}
+                        active
+                        {% endif %}">All</a>
+                        <a href="{% url 'equipment:filterequipment' types='AC' %}" class="list-group-item {% if types == 'AC'%}
+                        active
+                        {% endif %}">Air Compressors</a>
+                        <a href="{% url 'equipment:filterequipment' types='BL' %}" class="list-group-item {% if types == 'BL'%}
+                        active
+                        {% endif %}">Backhoe Loaders</a>
+                        <a href="{% url 'equipment:filterequipment' types='BR' %}" class="list-group-item {% if types == 'BR'%}
+                        active
+                        {% endif %}">Breakers</a>
+                        <a href="{% url 'equipment:filterequipment' types='BD' %}" class="list-group-item {% if types == 'BD'%}
+                        active
+                        {% endif %}">Bulldozers</a>
+                        <a href="{% url 'equipment:filterequipment' types='CR' %}" class="list-group-item {% if types == 'CR'%}
+                        active
+                        {% endif %}">Cranes</a>
+                        <a href="{% url 'equipment:filterequipment' types='DT' %}" class="list-group-item {% if types == 'DT'%}
+                        active
+                        {% endif %}">Dump Trucks</a>
+                        <a href="{% url 'equipment:filterequipment' types='EX' %}" class="list-group-item {% if types == 'EX'%}
+                        active
+                        {% endif %}">Excavators</a>
+                        <a href="{% url 'equipment:filterequipment' types='FT' %}" class="list-group-item {% if types == 'FT'%}
+                        active
+                        {% endif %}">Flatbed Trucks</a>
+                        <a href="{% url 'equipment:filterequipment' types='FL' %}" class="list-group-item {% if types == 'FL'%}
+                        active
+                        {% endif %}">Forklifts</a>
+                        <a href="{% url 'equipment:filterequipment' types='GS' %}" class="list-group-item {% if types == 'GS'%}
+                        active
+                        {% endif %}">Generating Sets</a>
+                        <a href="{% url 'equipment:filterequipment' types='LB' %}" class="list-group-item {% if types == 'LB'%}
+                        active
+                        {% endif %}">Low Bed Trailers</a>
+                        <a href="{% url 'equipment:filterequipment' types='MT' %}" class="list-group-item {% if types == 'MT'%}
+                        active
+                        {% endif %}">Manlift Trucks</a>
+                        <a href="{% url 'equipment:filterequipment' types='MC' %}" class="list-group-item {% if types == 'MC'%}
+                        active
+                        {% endif %}">Motorcycles</a>
+                        <a href="{% url 'equipment:filterequipment' types='PL' %}" class="list-group-item {% if types == 'PL'%}
+                        active
+                        {% endif %}">Payloaders</a>
+                        <a href="{% url 'equipment:filterequipment' types='PM' %}" class="list-group-item {% if types == 'PM'%}
+                        active
+                        {% endif %}">Prime Movers</a>
+                        <a href="{% url 'equipment:filterequipment' types='RG' %}" class="list-group-item {% if types == 'RG'%}
+                        active
+                        {% endif %}">Road Graders</a>
+                        <a href="{% url 'equipment:filterequipment' types='RR' %}" class="list-group-item {% if types == 'RR'%}
+                        active
+                        {% endif %}">Road Rollers</a>
+                        <a href="{% url 'equipment:filterequipment' types='SL' %}" class="list-group-item {% if types == 'SL'%}
+                        active
+                        {% endif %}">Skidsteer Loaders</a>
+                        <a href="{% url 'equipment:filterequipment' types='OT' %}" class="list-group-item {% if types == 'OT'%}
+                        active
+                        {% endif %}">Others</a>
+                    </div>
 
                 {% if request.user.is_superuser %}
                     <button type="button" data-toggle="modal"
@@ -247,6 +290,9 @@
             </div>
 
             <div class="col-md-10" id="div3">
+            {% if equipment.count == 0 %}
+                <h1 class="text-center">No Results!</h1>
+            {% else %}
                 {% for unit in equipment %}
                     <div class="col-md-3">
                         <div class="panel panel-primary" id="equipment{{ unit.id }}">
@@ -290,14 +336,16 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
+                                    {% if request.user.is_superuser == false %}
                                     <button type="button" class="btn btn-warning">Add to Cart</button>
+                                    {% endif %}
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 {% endfor %}
+            {% endif %}
             </div>
         </div>
     </div>
@@ -350,85 +398,6 @@
                     }
                 }
             });
-        });
-
-		$("input[type='radio']").on('change', function() {
-			var selected = $("[name='equipmenttype']:checked").val();
-
-			$.ajax
-			(
-				{
-					type: 'POST',
-					url: 'filterequipment/' + selected + '/',
-					data:{
-						selected: selected,
-                        csrfmiddlewaretoken: '{{ csrf_token }}'
-					},
-					success:[ function(data)
-					{
-						if(data.length === 0)
-						{
-							$("#div3").empty();
-							$("#div3").append('<h1 style="right:35%; top:50%; position:fixed;">No results</h1>');
-						}
-						else
-						{
-							$("#div3").empty();
-							for(var i = 0; i < data.length; i++ )
-							{
-								var datum = data[i];
-								var MEDIA_URL = "/static/media/" + datum.fields.image;
-
-								$('#div3').append('<div class="col-md-3">\
-                                    <div class="panel panel-primary" id="equipment' + JSON.stringify(datum.pk)+ '">\
-                                        <div class="panel-heading">' + datum.fields.name +'</div>\
-                                        <div class="panel-body">\
-                                            <div class="thumbnail">\
-                                                <img src="' + MEDIA_URL + '" class="img-responsive"\
-                                             style="width:100%" alt="Image"></div>\
-                                            </div>\
-                                        <div class="panel-footer text-center"><button type="button"  data-toggle="modal"\
-                                                                          data-target="#modal' + JSON.stringify(datum.pk)+ '"\
-                                                                                      class="btn btn-warning">View Details\
-                                            <span class="glyphicon glyphicon-search">\
-                                        </span></button></div>\
-                                    </div>\
-                                </div>\
-                                \
-                                <!-- Modal -->\
-                                <div id="modal' + JSON.stringify(datum.pk)+ '" class="modal fade" role="dialog">\
-                                    <div class="modal-dialog">\
-                                        <!-- Modal content-->\
-                                        <div class="modal-content">\
-                                            <div class="modal-header">\
-                                                <button type="button" class="close" data-dismiss="modal">&times;</button>\
-                                                <h4 class="modal-title">' + datum.fields.name +'</h4>\
-                                            </div>\
-                                            <div class="modal-body">\
-                                                <div class="row">\
-                                                    <div class="col-md-8">\
-                                                        <img class="img-responsive" alt="image" src="'+ MEDIA_URL +'"\
-                                                             style="width: 200%">\
-                                                    </div>\
-                                                    <div class="col-md-4" id="right-modal">\
-                                                        <p id="info"><strong>Brand: </strong>' + datum.fields.brand +'</p>\
-                                                        <p id="info"><strong>Type: </strong>' + datum.fields.type +'</p>\
-                                                        <p id="info"><strong>Details: </strong>' + datum.fields.details +'</p>\
-                                                    </div>\
-                                                </div>\
-                                            </div>\
-                                            <div class="modal-footer">\
-                                                <button type="button" class="btn btn-warning">Add to Cart</button>\
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>\
-                                            </div>\
-                                        </div>\
-                                    </div>\
-                                </div>');
-							}
-						}
-					}]
-				}
-			);
         });
 
         $("#submitEquipment").click(function(){
