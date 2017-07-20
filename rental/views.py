@@ -11,7 +11,16 @@ from django import template
 
 def add_to_cart(request, item_id):
     cart = request.session.get('cart', [])
+    if item_id in cart:
+        return redirect('equipment:mainpage')
+    else:
+        cart.append(item_id)
+        request.session['cart'] = cart
+        return redirect('equipment:mainpage')
 
-    cart.append(item_id)
+
+def delete_from_cart(request, item_id):
+    cart = request.session.get('cart', [])
+    cart.remove(item_id)
     request.session['cart'] = cart
     return redirect('equipment:mainpage')

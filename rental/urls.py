@@ -21,5 +21,7 @@ from . import views
 from django.views.generic import TemplateView
 app_name = 'rental'
 urlpatterns = [
-    url(r'^addtocart/(?P<item_id>\d+)', views.add_to_cart, name='addtocart')
+    url(r'^deletefromcart/(?P<item_id>\d+)', views.delete_from_cart, name='delete_from_cart'),
+
+    url(r'^addtocart/(?P<item_id>\d+)', views.add_to_cart, name='addtocart'),
 ]

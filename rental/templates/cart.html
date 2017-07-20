@@ -1,7 +1,27 @@
+{% load static %}
 {% if cart.count == 0 %}
     <h2 class="text-center">Your cart is empty!</h2>
 {% else %}
     {% for equipment in cart %}
-        <li> {{ equipment.name }} </li>
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-sm-4">
+                        <img style="height: 75px; width: 100px;" class="img-responsive"
+                             src="{% static equipment.image.url %}">
+                </div>
+                <div class="col-sm-6">
+                    <p style="margin: 15px -20px -15px"><strong>{{ equipment.name }}</strong></p>
+                    <p style="margin: 15px -20px -15px"><em>{{ equipment.get_type_display }}</em></p>
+                </div>
+                <div class="col-sm-1">
+                    <a href="{% url 'rental:delete_from_cart' item_id=equipment.id %}">
+                        <span style="top: 25px; right: -20px; font-size: 1.5em; color: #3F4643"
+                              class="glyphicon glyphicon-trash pull-right"></span>
+                    </a>
+                </div>
+            </div>
+        </li>
     {% endfor %}
+    <a type="button" style="display:block; margin-top: 10px; margin-bottom: 5px"
+       href="#" class="btn btn-warning text-center">Checkout</a>
 {% endif %}
