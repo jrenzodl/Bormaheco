@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rental.apps.RentalConfig',
     'accounts.apps.AccountsConfig',
     'equipment.apps.EquipmentConfig',
-    'rental.apps.RentalConfig',
     'django.contrib.humanize',
 ]
 
@@ -135,3 +135,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 LOGIN_REDIRECT_URL = '/'
 
 ADMIN_SITE_HEADER = "Bormaheco Administraion"
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True

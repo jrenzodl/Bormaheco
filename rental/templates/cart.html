@@ -1,0 +1,7 @@
+{% if cart.count == 0 %}
+    <h2 class="text-center">Your cart is empty!</h2>
+{% else %}
+    {% for equipment in cart %}
+        <li> {{ equipment.name }} </li>
+    {% endfor %}
+{% endif %}

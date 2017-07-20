@@ -22,6 +22,11 @@ def delete_equipment(request, primary_key):
     return redirect('equipment:mainpage')
 
 
+def get_equipment(request, eqid):
+    equipment = Equipment.objects.filter(id=eqid)
+    return HttpResponse(equipment)
+
+
 def filter_equipment(request, types):
     if types == "AL":
         list_of_equipment = Equipment.objects.order_by('name')

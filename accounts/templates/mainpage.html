@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     {% load staticfiles %}
+    {% load templatetags %}
     <meta charset="UTF-8">
     <title>Bormaheco Inc.</title>
     <!-- Imports JQuery -->
@@ -43,6 +44,7 @@
                             <a id="cart" type="button" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-shopping-cart"></span></a>
                             <ul class="dropdown-menu cart" id="cartDropdown">
+                                {% get_cart request %}
                             </ul>
                         </div>
                     </li>
@@ -205,24 +207,4 @@
         </div>
     </div>
 </body>
-
-<script>
-    $(document).ready(function () {
-        $("#cart").click(function () {
-            $.ajax({
-                type: "POST",
-                url: "rental/getcart/",
-                success: function (data) {
-                    if(data === "0")
-                    {
-                        var cart = $("#cartDropdown");
-                        cart.empty();
-                        cart.append('<h2 class="text-center">Your cart is empty!</h2>');
-                    }
-                }
-            })
-        })
-    })
-</script>
-
 </html>

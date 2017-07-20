@@ -27,4 +27,6 @@ urlpatterns = [
     url(r'^filterequipment/(?P<types>\D\D)/', views.filter_equipment, name='filterequipment'),
 
     url(r'^addequipment/', views.add_equipment, name='addequipment'),
+
+    url(r'^getequipment/(?P<eqid>\d+)', views.get_equipment, name='getequipment')
 ]
