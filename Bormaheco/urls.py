@@ -27,7 +27,7 @@ urlpatterns = [
 
     url(r'^rental/', include('rental.urls'), name='rental'),
 
-    url(r'^logout/', logout, {'next_page': settings.LOGIN_REDIRECT_URL}),
+    url(r'^logout/', logout, {'next_page': settings.LOGIN_REDIRECT_URL}, name='logout'),
 
     url(r'^login/', views.login_user, name='login'),
 

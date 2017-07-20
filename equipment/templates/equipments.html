@@ -4,6 +4,7 @@
     {% load staticfiles %}
     {% load humanize %}
     {% load templatetags %}
+    {% csrf_token %}
     <meta charset="UTF-8">
     <title>Bormaheco Inc. | Equipment</title>
     <!-- Imports JQuery -->
@@ -75,8 +76,7 @@
                                 {% if request.user.is_superuser %}
                                     <li><a href="../admin">Admin Page</a></li>
                                 {% endif %}
-                                <li><a href="#">CSS</a></li>
-                                <li><a href="../logout">Logout</a></li>
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
                             </ul>
                         </div></li>
                 {% else %}
