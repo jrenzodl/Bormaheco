@@ -337,7 +337,9 @@
                                 </div>
                                 <div class="modal-footer">
                                     {% if request.user.is_superuser == false %}
-                                    <button type="button" class="btn btn-warning">Add to Cart</button>
+                                        <button type="button" class="btn btn-warning">Add to Cart</button>
+                                    {% else %}
+                                        <a href="{% url 'equipment:deleteequipment' primary_key=unit.id %}" type="button" class="btn btn-danger">Delete</a>
                                     {% endif %}
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </div>

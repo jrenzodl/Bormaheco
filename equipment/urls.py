@@ -22,6 +22,8 @@ app_name = 'equipment'
 urlpatterns = [
     url(r'^$', views.equipment_index, name='mainpage'),
 
+    url(r'^deleteequipment/(?P<primary_key>\d+)', views.delete_equipment, name='deleteequipment'),
+
     url(r'^filterequipment/(?P<types>\D\D)/', views.filter_equipment, name='filterequipment'),
 
     url(r'^addequipment/', views.add_equipment, name='addequipment'),

@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from .forms import EquipmentForm
 from . import models
 import json
+from django.contrib.auth.decorators import user_passes_test
 
 # Create your views here.
 
@@ -12,6 +13,13 @@ import json
 def equipment_index(request):
     list_of_equipment = Equipment.objects.order_by('name')
     return render(request, 'equipments.html', {'equipment': list_of_equipment})
+
+
+@user_passes_test(lambda u: u.is_superuser, login_url='equipment:mainpage')
+def delete_equipment(request, primary_key):
+    equipment = Equipment.objects.filter(id=primary_key)
+    equipment.delete()
+    return redirect('equipment:mainpage')
 
 
 def filter_equipment(request, types):
@@ -23,6 +31,7 @@ def filter_equipment(request, types):
     return render(request, 'equipments.html', {'equipment': list_of_equipment, 'types': types})
 
 
+@user_passes_test(lambda u: u.is_superuser, login_url='equipment:mainpage')
 def add_equipment(request):
     if request.method == "POST":
         name = request.POST.get('name')
