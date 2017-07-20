@@ -48,8 +48,11 @@
                                 <span class="glyphicon glyphicon-shopping-cart"></span></a>
                             <ul class="dropdown-menu cart" id="cartDropdown">
                                 {% get_cart request %}
-                                <a type="button" style="display:block; margin-top: 10px; margin-bottom: 5px"
+                                {% cart_length request as num %}
+                                {% if num > 0 %}
+                                    <a type="button" style="display:block; margin-top: 10px; margin-bottom: 5px"
                                  href="{% url 'rental:checkout' %}" class="btn btn-warning text-center">Checkout</a>
+                                {% endif %}
                             </ul>
                         </div>
                     </li>
@@ -61,7 +64,7 @@
                                 {{ request.user.username }}
                                 <span id="arrow" class="glyphicon glyphicon-triangle-bottom"></span>
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul id="usertools" class="dropdown-menu">
                                 {% if request.user.is_superuser %}
                                     <li><a href="{% url 'admin:index' %}">Admin Page</a></li>
                                 {% endif %}
@@ -75,7 +78,7 @@
                                 Login
                                 <span id="arrow" class="glyphicon glyphicon-triangle-bottom"></span>
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul id="usertools" class="dropdown-menu">
                                 <li><label for="login_username_input">Username:</label>
                                 <input placeholder="Username" class="form-control" id="login_username_input"
                                        type="text"></li>

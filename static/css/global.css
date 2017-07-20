@@ -110,4 +110,9 @@ nav.navbar-fixed-top
     overflow: auto;
 }
 
+.navbar-right .dropdown-menu#usertools
+{
+    height: 170px;
+}
+
 h2{font-family: fontThree, sans-serif}

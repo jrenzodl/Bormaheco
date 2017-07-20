@@ -14,3 +14,17 @@
     border-width: 1px;
     border-color: #DDDDDD;
 }
+
+#information
+{
+    padding: 15px 0 0 0 ;
+    height: 500px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    border: solid;
+    border-width: 1px;
+    border-color: #DDDDDD;
+    margin-left: 5px;
+}
+
+.datepicker{top: 270px !important;}

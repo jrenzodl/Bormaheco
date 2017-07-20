@@ -17,6 +17,16 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <!-- Date Picker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js">
+    </script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
+
     <!-- Global Login -->
     <script type="text/javascript"> var loginurl = {% url 'login' %};</script>
     <script src="{% static 'js/login.js' %}"></script>
@@ -59,7 +69,7 @@
                                 {{ request.user.username }}
                                 <span id="arrow" class="glyphicon glyphicon-triangle-bottom"></span>
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu" id="usertools">
                                 {% if request.user.is_superuser %}
                                     <li><a href="{% url 'admin:index' %}">Admin Page</a></li>
                                 {% endif %}
@@ -73,7 +83,7 @@
                                 Login
                                 <span id="arrow" class="glyphicon glyphicon-triangle-bottom"></span>
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul id="usertools" class="dropdown-menu">
                                 <li><label for="login_username_input">Username:</label>
                                 <input placeholder="Username" class="form-control" id="login_username_input"
                                        type="text"></li>
@@ -94,6 +104,33 @@
         <div class="col-md-3" id="cartlist">
             {% get_cart request %}
         </div>
+        <div class="col-md-6" id="information">
+            <div class="col-md-8">
+                <div class="container-fluid" id="serviceform">
+                    <div class="form-group">
+                        <label class="control-label" for="location">Location:</label>
+                        <input class="form-control" id="location" type="text">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label" for="daterange">Date Range:</label>
+                        <div class="input-daterange input-group" id="datepicker">
+                            <input type="text" class="input-sm form-control" id="daterange" name="start" />
+                            <span class="input-group-addon">to</span>
+                            <input type="text" class="input-sm form-control" id="dateend" name="end" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
+<script type="text/javascript">
+            $('#serviceform .input-daterange').datepicker({
+                format: "yyyy-mm-dd",
+                startDate: "today",
+                orientation: "bottom auto",
+                autoclose: true
+            });
+</script>
 </html>
