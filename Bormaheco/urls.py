@@ -21,7 +21,7 @@ from django.conf import settings
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls, name='administration'),
 
     url(r'^equipment/', include('equipment.urls'), name='equipment'),
 
