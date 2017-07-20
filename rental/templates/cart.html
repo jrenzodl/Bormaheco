@@ -23,5 +23,5 @@
         </li>
     {% endfor %}
     <a type="button" style="display:block; margin-top: 10px; margin-bottom: 5px"
-       href="#" class="btn btn-warning text-center">Checkout</a>
+       href="{% url 'rental:checkout' %}" class="btn btn-warning text-center">Checkout</a>
 {% endif %}

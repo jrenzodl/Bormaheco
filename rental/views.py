@@ -9,6 +9,10 @@ from django import template
 # Create your views here.
 
 
+def checkout(request):
+    return render(request, 'checkout.html')
+
+
 def add_to_cart(request, item_id):
     cart = request.session.get('cart', [])
     if item_id in cart:
