@@ -56,8 +56,9 @@ $(document).ready(function () {
                 enddate: enddate,
                 comments: comments
             },
-            success: function(data){
-                window.location.reload()
+            success: function(){
+                    window.location.href = transaction;
+                    return false;
             }
         })
     };
@@ -141,7 +142,7 @@ $(document).ready(function () {
                     username: username
                 },
                 success: function (data) {
-                    if(data === false)
+                    if(data === "yes")
                     {
                         $('#reg_user_group').attr("class", 'form-group text-left has-error');
                         $('#reg_username_error').html("Username is taken").removeAttr('hidden');

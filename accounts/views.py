@@ -5,10 +5,12 @@ from accounts.models import UserAccount
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.hashers import make_password
 from rental.models import Inquiry, InquiryEquipment
 from equipment.models import Equipment
+from django.urls import reverse
+from rental.views import transactions
 
 # Create your views here.
 
@@ -58,16 +60,17 @@ def reqister(request):
         inquiryequipment.save()
         inquiryequipment.inquiry.add(inquiry)
 
-    return redirect('rental:transactions')
+    request.session['cart'] = []
+    return HttpResponse('1')
 
 
 def check_username(request):
     username = request.POST.get("username")
-    user = User.objects.filter(username=username)
-    if user is not None:
-        return HttpResponse(False)
+
+    if User.objects.filter(username=username).exists():
+        return HttpResponse("yes")
     else:
-        return HttpResponse(True)
+        return HttpResponse("no")
 
 
 def login_user_checkout(request):

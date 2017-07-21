@@ -26,6 +26,7 @@
     <!-- Global Login -->
     <script type="text/javascript">
         var loginurl = {% url 'login' %};
+        var transaction = "{% url 'rental:transactions' %}";
         var login_checkout_url = {% url 'checkout_login' %};
         var check_user_url = {% url 'usercheck' %};
         var register_url = {% url 'register' %};
