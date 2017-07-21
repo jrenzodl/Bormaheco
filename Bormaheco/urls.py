@@ -30,6 +30,8 @@ urlpatterns = [
 
     url(r'^logout/', logout, {'next_page': settings.LOGIN_REDIRECT_URL}, name='logout'),
 
+    url(r'^logincheckout/', views.login_user_checkout, name='checkout_login'),
+
     url(r'^login/', views.login_user, name='login'),
 
     url(r'^$', views.homepage, name='mainpage')

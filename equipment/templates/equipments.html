@@ -8,28 +8,21 @@
     <meta charset="UTF-8">
     <title>Bormaheco Inc. | Equipment</title>
     <!-- Imports JQuery -->
-    <script src="https://code.jquery.com/jquery-3.2.1.js"
-            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-            crossorigin="anonymous"></script>
+    <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
 
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js">
+    <!-- Date Picker -->
+    <script src="{% static 'js/bootstrap-datepicker.min.js' %}">
     </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js">
+    <script src="{% static 'js/bootstrap-datepicker.js' %}">
     </script>
-
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker3.min.css' %}">
 
     <!-- Global Login -->
     <script type="text/javascript"> var loginurl = {% url 'login' %};</script>
@@ -457,7 +450,7 @@
                 fd.append("brand", brand);
                 fd.append("acquisition_cost", acquisition);
                 fd.append("details", details);
-                fd.append("type", type)
+                fd.append("type", type);
                 fd.append("hourly_service_rate", service_rate);
                 fd.append('image', $('#eq_img_input')[0].files[0]);
                 fd.append('acquisition_date', date);

@@ -1,3 +1,5 @@
+body{overflow-x: hidden}
+
 #mainpagebody
 {
     margin-top: 120px
@@ -5,7 +7,7 @@
 
 #cartlist
 {
-    height: 500px;
+    height: 530px;
     background-color: #FFFFFF;
     padding: 0 0 0 0;
     border-radius: 5px;
@@ -18,7 +20,7 @@
 #information
 {
     padding: 15px 0 0 0 ;
-    height: 500px;
+    height: 530px;
     background-color: #FFFFFF;
     border-radius: 5px;
     border: solid;
@@ -27,4 +29,16 @@
     margin-left: 5px;
 }
 
-.datepicker{top: 270px !important;}
+.datepicker{top: 345px !important;}
+
+#remarks
+{
+    resize: none;
+    height: 100px;
+}
+
+#lasvegasmodal{
+    border-right-style: solid;
+    border-right-width: 2px;
+    border-color: #DDDDDD;
+}

@@ -4,6 +4,16 @@
 	src: url(../fonts/RobotoSlab-Bold.ttf);
 }
 
+.panel-primary > .panel-heading, .panel-primary, .modal-header{border-color: #DEA60C;}
+
+.panel-primary > .panel-heading, .modal-header
+{
+	border-radius: 2.5px 2.5px 0 0;
+	font-family: fontOne, serif;
+	color: #3F4643;
+	background-color: #F4B50C;
+}
+
 @font-face
 {
 	font-family: fontTwo;
@@ -106,7 +116,8 @@ nav.navbar-fixed-top
 .navbar-right .dropdown-menu
 {
     width: 365px;
-    height: 300px;
+    height: auto;
+    max-height: 300px;
     overflow: auto;
 }
 
