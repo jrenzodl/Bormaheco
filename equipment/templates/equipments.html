@@ -44,7 +44,7 @@
                 <li><a href="{% url 'mainpage' %}" id="navlink">Home</a></li>
                 <li><a href="{% url 'equipment:mainpage' %}" id="navlink">Equipment</a></li>
                 {% if request.user.is_authenticated %}
-                <li><a href="#" id="navlink">Transactions</a></li>
+                <li><a href="{% url 'rental:transactions' %}" id="navlink">Transactions</a></li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">

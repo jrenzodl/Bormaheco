@@ -22,6 +22,8 @@ from django.views.generic import TemplateView
 app_name = 'rental'
 urlpatterns = [
 
+    url(r'^transactions/', views.transactions, name='transactions'),
+
     url(r'^checkout/', views.checkout, name='checkout'),
 
     url(r'^deletefromcart/(?P<item_id>\d+)', views.delete_from_cart, name='delete_from_cart'),

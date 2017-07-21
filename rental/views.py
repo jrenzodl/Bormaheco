@@ -5,6 +5,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from equipment.models import Equipment
 from django import template
+from .models import Inquiry, InquiryEquipment
 
 # Create your views here.
 
@@ -28,3 +29,9 @@ def delete_from_cart(request, item_id):
     cart.remove(item_id)
     request.session['cart'] = cart
     return redirect('equipment:mainpage')
+
+
+def transactions(request):
+    loggedinuser = request.user
+    inquiries = Inquiry.objects.filter(customer=loggedinuser)
+    return render(request, 'transactions.html', {'inquiries': inquiries})
