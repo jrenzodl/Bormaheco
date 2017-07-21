@@ -9,7 +9,7 @@ class Inquiry(models.Model):
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
     sent_on = models.DateTimeField()
     STATUS_CODES = (
-        ('NQ', 'No Quotation'),
+        ('AQ', 'Awaiting Quotation'),
         ('AR', 'Awaiting Confirmation'),
         ('CO', 'Confirmed'),
     )
@@ -35,6 +35,7 @@ class Quotation(models.Model):
     )
     status = models.CharField(max_length=2, choices=STATUS_CODES)
     created_on = models.DateTimeField()
+    paid = models.BooleanField(default=False)
     transportation_cost = models.DecimalField(max_digits=12, decimal_places=2)
     comments = models.CharField(max_length=1000)
 

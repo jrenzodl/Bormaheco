@@ -32,7 +32,11 @@ urlpatterns = [
 
     url(r'^logincheckout/', views.login_user_checkout, name='checkout_login'),
 
+    url(r'^register/', views.reqister, name='register'),
+
     url(r'^login/', views.login_user, name='login'),
+
+    url(r'^checkuser/', views.check_username, name='usercheck'),
 
     url(r'^$', views.homepage, name='mainpage')
 ]

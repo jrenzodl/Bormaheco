@@ -24,8 +24,12 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker3.min.css' %}">
 
     <!-- Global Login -->
-    <script type="text/javascript"> var loginurl = {% url 'login' %};</script>
-    <script type="text/javascript"> var login_checkout_url = {% url 'checkout_login' %};</script>
+    <script type="text/javascript">
+        var loginurl = {% url 'login' %};
+        var login_checkout_url = {% url 'checkout_login' %};
+        var check_user_url = {% url 'usercheck' %};
+        var register_url = {% url 'register' %};
+    </script>
 
     <script src="{% static 'js/login.js' %}"></script>
     <script src="{% static 'js/regorlogin.js'%}"></script>
@@ -156,35 +160,35 @@
                                         <div class="container-fluid row">
                                             <div class="col-md-6" id="lasvegasmodal">
                                                 <h4>Register</h4>
-                                                    <div class="form-group text-left">
+                                                    <div class="form-group text-left" id="reg_user_group">
                                                         <label class="control-label" for="register_username">Username:</label>
                                                         <input class="form-control" id="register_username" type="text"
                                                                placeholder="Username">
                                                         <p class="text-danger" id="reg_username_error" hidden></p>
                                                     </div>
 
-                                                    <div class="form-group text-left">
+                                                    <div class="form-group text-left" id="reg_password_group">
                                                         <label class="control-label" for="register_password">Password:</label>
                                                         <input class="form-control" id="register_password" type="password"
                                                                placeholder="Password">
                                                         <p class="text-danger" id="reg_password_error" hidden></p>
                                                     </div>
 
-                                                    <div class="form-group text-left">
+                                                    <div class="form-group text-left" id="reg_password2_group">
                                                         <label class="control-label" for="register_password2">Re-type Password:</label>
                                                         <input class="form-control" id="register_password2" type="password"
                                                                placeholder="Re-type Password">
                                                         <p class="text-danger" id="reg_password2_error" hidden></p>
                                                     </div>
 
-                                                    <div class="form-group text-left">
+                                                    <div class="form-group text-left" id="reg_email_group">
                                                         <label class="control-label" for="register_email">E-mail Address:</label>
                                                         <input class="form-control" id="register_email" type="email"
                                                                placeholder="E-mail Address">
                                                         <p class="text-danger" id="reg_email_error" hidden></p>
                                                     </div>
 
-                                                    <div class="form-group text-left">
+                                                    <div class="form-group text-left" id="reg_company_group">
                                                         <label class="control-label" for="register_company">Company:</label>
                                                         <input class="form-control" id="register_company" type="text"
                                                                placeholder="Company">

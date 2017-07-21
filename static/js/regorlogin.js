@@ -33,6 +33,124 @@ $(document).ready(function () {
         }
     });
 
+    var createuser = function(){
+        var username = $("#register_username").val();
+        var password1 = $("#register_password").val();
+        var email = $("#register_email").val();
+        var company = $("#register_company").val();
+        var location = $("#location").val();
+        var startdate = $("#datestart").val();
+        var enddate = $("#dateend").val();
+        var comments = document.getElementById("remarks").value;
+
+        $.ajax({
+            type: 'POST',
+            url: register_url,
+            data:{
+                username: username,
+                password: password1,
+                email: email,
+                company: company,
+                location: location,
+                startdate: startdate,
+                enddate: enddate,
+                comments: comments
+            },
+            success: function(data){}
+        })
+    };
+
+    $("#register").click(function () {
+       var username = $("#register_username").val();
+       var password1 = $("#register_password").val();
+       var password2 = $("#register_password2").val();
+       var email = $("#register_email").val();
+       var company = $("#register_company").val();
+
+       var validemail = true;
+       var validpassword = true;
+
+       $('#reg_user_group').attr("class", 'form-group text-left');
+       $('#reg_username_error').attr('hidden', true);
+
+       $('#reg_password_group').attr("class", 'form-group text-left');
+       $('#reg_password_error').attr('hidden', true);
+
+       $('#reg_password2_group').attr("class", 'form-group text-left');
+       $('#reg_password2_error').attr('hidden', true);
+
+       $('#reg_email_group').attr("class", 'form-group text-left');
+       $('#reg_email_error').attr('hidden', true);
+
+       $('#reg_company_group').attr("class", 'form-group text-left');
+       $('#reg_company_error').attr('hidden', true);
+
+       if(username === "")
+       {
+           $('#reg_user_group').attr("class", 'form-group text-left has-error');
+           $('#reg_username_error').html("Please input username").removeAttr('hidden');
+       }
+
+       if(password1 === "")
+       {
+           $('#reg_password_group').attr("class", 'form-group text-left has-error');
+           $('#reg_password_error').html("Please input password").removeAttr('hidden');
+       }
+
+       if(password2 === "")
+       {
+           $('#reg_password2_group').attr("class", 'form-group text-left has-error');
+           $('#reg_password2_error').html("Please confirm password").removeAttr('hidden');
+       }
+
+       if(email === "")
+       {
+           $('#reg_email_group').attr("class", 'form-group text-left has-error');
+           $('#reg_email_error').html("Please input email").removeAttr('hidden');
+       }
+       else if( !(/(.+)@(.+){2,}\.(.+){2,}/.test(email)))
+       {
+           $('#reg_email_group').attr("class", 'form-group text-left has-error');
+           $('#reg_email_error').html("Please input valid email").removeAttr('hidden');
+           validemail = false;
+       }
+
+       if(company === "")
+       {
+           $('#reg_company_group').attr("class", 'form-group text-left has-error');
+           $('#reg_company_error').html("Please input company").removeAttr('hidden');
+       }
+
+       if(password1 !== password2)
+       {
+            $('#reg_password_group').attr("class", 'form-group text-left has-error');
+            $('#reg_password2_group').attr("class", 'form-group text-left has-error');
+            $('#reg_password2_error').html("Passwords do not match").removeAttr('hidden');
+            validpassword = false;
+       }
+
+        if(username !== "" && password1 !== "" && password2 !== "" && email !== "" && validemail === true &&
+            company !== "" && validpassword === true)
+        {
+            $.ajax({
+                type: 'POST',
+                url: check_user_url,
+                data: {
+                    username: username
+                },
+                success: function (data) {
+                    if(data === false)
+                    {
+                        $('#reg_user_group').attr("class", 'form-group text-left has-error');
+                        $('#reg_username_error').html("Username is taken").removeAttr('hidden');
+                    }
+                    else
+                        createuser();
+                }
+            });
+        }
+    });
+
     $("#login2").click(function() {
         var username = $("#username_login").val();
         var password = $("#password_login").val();
