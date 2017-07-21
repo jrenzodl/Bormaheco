@@ -56,7 +56,9 @@ $(document).ready(function () {
                 enddate: enddate,
                 comments: comments
             },
-            success: function(data){}
+            success: function(data){
+                window.location.reload()
+            }
         })
     };
 
