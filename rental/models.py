@@ -31,8 +31,7 @@ class Quotation(models.Model):
     STATUS_CODES = (
         ('PA', 'Accepted'),
         ('RE', 'Rejected'),
-        ('AW', 'Awaiting Confirmation'),
-    )
+        ('AW', 'Awaiting Confirmation'))
     status = models.CharField(max_length=2, choices=STATUS_CODES)
     created_on = models.DateTimeField()
     paid = models.BooleanField(default=False)

@@ -4,7 +4,10 @@ html{height: 100%}
 
 input[type='radio']{margin-right: 5px}
 
-#pagebody{margin-top: 80px}
+#pagebody{
+	margin-top: 80px;
+	overflow-y: scroll;
+}
 
 .text-danger{padding: 5px 0 0 10px;}
 

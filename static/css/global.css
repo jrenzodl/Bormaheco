@@ -125,7 +125,8 @@ nav.navbar-fixed-top
 
 .navbar-right .dropdown-menu#usertools
 {
-    height: 170px;
+    height: auto;
+    max-height: 170px;
 }
 
 h2{font-family: fontThree, sans-serif}

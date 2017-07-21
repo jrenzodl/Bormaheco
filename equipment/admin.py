@@ -5,8 +5,6 @@ from .models import *
 
 admin.site.register(Equipment)
 
-admin.site.register(EquipmentEngagement)
-
-admin.site.register(Maintenance)
+admin.site.register(MaintenanceTransaction)
 
 

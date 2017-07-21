@@ -13,5 +13,6 @@ class UserAccount(models.Model):
     USER_TYPE_CHOICES = (
         ('FI', 'Finance'),
         ('EM', 'Equipment Manager'),
+        ('MM', 'Maintenance Manager'),
         ('CU', 'Customer'))
     user_type = models.CharField(max_length=2, choices=USER_TYPE_CHOICES)

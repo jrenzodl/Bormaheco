@@ -27,7 +27,7 @@ $(document).ready(function () {
             $('#date_error').html("Please input a proper date range").removeAttr('hidden');
         }
 
-        if(location !== "")
+        if(location !== "" && startdate !== "" && enddate !== "")
         {
             $("#registermodal").modal();
         }

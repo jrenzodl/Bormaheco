@@ -34,8 +34,7 @@ class Equipment(models.Model):
     STATUS_CODES = (
         ('IE', 'In Engagement'),
         ('AV', 'Available'),
-        ('UM', 'Under Maintenance'),
-        ('US', 'Unserviceable'))
+        ('UM', 'Under Maintenance'))
     status = models.CharField(max_length=2, choices=STATUS_CODES)
     hourly_service_rate = models.DecimalField(max_digits=12, decimal_places=2)
     image = models.ImageField(upload_to="equipmentimages", default='../media/equipmentimages/defaultequipment.png')
@@ -56,21 +55,23 @@ class Equipment(models.Model):
             'imageurl': self.image.url,
         }
 
+# WAG TO
+#
+#    class EquipmentEngagement(models.Model):
+#       equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
+#        date = models.DateField()
+#        start_time = models.TimeField()
+#        end_time = models.TimeField()
+#
+#        def __str__(self):
+#            return '{}, {}'.format(self.equipment.name, self.date)
 
-class EquipmentEngagement(models.Model):
+
+class MaintenanceTransaction(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
-    date = models.DateField()
-    start_time = models.TimeField()
-    end_time = models.TimeField()
-
-    def __str__(self):
-        return '{}, {}'.format(self.equipment.name, self.date)
-
-
-class Maintenance(models.Model):
-    equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
-    maintenance_date = models.DateField()
+    start_date = models.DateField()
+    end_date = models.DateField()
     cost = models.DecimalField(max_digits=12, decimal_places=2)
 
     def __str__(self):
-        return '{}, {}'.format(self.equipment.name, self.maintenance_date)
+        return '{}, {}'.format(self.equipment.name, self.start_date)
