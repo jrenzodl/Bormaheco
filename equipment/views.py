@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import *
 from django.core import serializers
 from django.http import HttpResponse
-from .forms import EquipmentForm
+from accounts.models import User, UserAccount
 from . import models
 import json
 from django.contrib.auth.decorators import user_passes_test
@@ -12,7 +12,15 @@ from django.contrib.auth.decorators import user_passes_test
 
 def equipment_index(request):
     list_of_equipment = Equipment.objects.order_by('name')
-    return render(request, 'equipments.html', {'equipment': list_of_equipment})
+    user = request.user
+    if user.is_anonymous or user.is_superuser:
+        return render(request, 'equipments.html', {'equipment': list_of_equipment})
+    else:
+        useraccount = UserAccount.objects.get(user=user)
+        if useraccount.user_type == "MM":
+            return render(request, 'maintenanceequipment.html', {'equipment': list_of_equipment})
+        else:
+            return render(request, 'equipments.html', {'equipment': list_of_equipment})
 
 
 @user_passes_test(lambda u: u.is_superuser, login_url='equipment:mainpage')

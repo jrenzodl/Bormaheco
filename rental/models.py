@@ -22,7 +22,7 @@ class Inquiry(models.Model):
 
 class InquiryEquipment(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
-    inquiry = models.ManyToManyField(Inquiry)
+    inquiry = models.ForeignKey(Inquiry, on_delete=models.CASCADE)
 
 
 class Quotation(models.Model):
@@ -41,5 +41,5 @@ class Quotation(models.Model):
 
 class QuotationEquipment(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
-    inquiry = models.ManyToManyField(Quotation)
+    inquiry = models.ForeignKey(Inquiry, on_delete=models.CASCADE)
 

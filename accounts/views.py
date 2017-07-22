@@ -11,6 +11,7 @@ from rental.models import Inquiry, InquiryEquipment
 from equipment.models import Equipment
 from django.urls import reverse
 from rental.views import transactions
+from django.utils import timezone
 
 # Create your views here.
 
@@ -32,14 +33,14 @@ def login_user(request):
 
 def reqister(request):
     username = request.POST.get("username")
-    password = make_password(request.POST.get("password"))
+    password = request.POST.get("password")
     email = request.POST.get("email")
     company = request.POST.get("company")
     location = request.POST.get("location")
     startdate = request.POST.get("startdate")
     enddate = request.POST.get("enddate")
     comments = request.POST.get("comments")
-    datetimenow = datetime.datetime.now()
+    datetimenow = timezone.now()
 
     user = User(username=username, email=email)
     user.set_password(password)
@@ -55,10 +56,8 @@ def reqister(request):
     cart = request.session.get('cart', [])
     equipment = Equipment.objects.filter(id__in=cart)
     for unit in equipment:
-        inquiryequipment = InquiryEquipment()
-        inquiryequipment.equipment = unit
+        inquiryequipment = InquiryEquipment(equipment=unit, inquiry=inquiry)
         inquiryequipment.save()
-        inquiryequipment.inquiry.add(inquiry)
 
     request.session['cart'] = []
     return HttpResponse('1')
@@ -76,9 +75,25 @@ def check_username(request):
 def login_user_checkout(request):
     username = request.POST.get("username")
     password = request.POST.get("password")
+    location = request.POST.get("location")
+    startdate = request.POST.get("startdate")
+    enddate = request.POST.get("enddate")
+    comments = request.POST.get("comments")
+    datetimenow = timezone.now()
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
+        inquiry = Inquiry(location=location, start_date=startdate, end_date=enddate, sent_on=datetimenow,
+                          comments=comments, customer=user, status="AQ")
+        inquiry.save()
+
+        cart = request.session.get('cart', [])
+        equipment = Equipment.objects.filter(id__in=cart)
+        for unit in equipment:
+            inquiryequipment = InquiryEquipment(equipment=unit, inquiry=inquiry)
+            inquiryequipment.save()
+
+        request.session['cart'] = []
         return HttpResponse(True)
     else:
         return HttpResponse(False)

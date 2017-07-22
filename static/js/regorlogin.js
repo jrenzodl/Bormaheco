@@ -157,6 +157,10 @@ $(document).ready(function () {
     $("#login2").click(function() {
         var username = $("#username_login").val();
         var password = $("#password_login").val();
+        var location = $("#location").val();
+        var startdate = $("#datestart").val();
+        var enddate = $("#dateend").val();
+        var comments = document.getElementById("remarks").value;
 
         $('#login_username_group').attr("class", 'form-group text-left');
         $('#login_username_error').html("Please input username").attr('hidden', true);
@@ -186,12 +190,19 @@ $(document).ready(function () {
                     url: login_checkout_url,
                     data:{
                         username: username,
-                        password: password
+                        password: password,
+                        location: location,
+                        startdate: startdate,
+                        enddate: enddate,
+                        comments: comments
                     },
                     success:[ function(data)
                     {
                         if(data === "True")
-                            window.location.reload();
+                        {
+                            window.location.href = transaction;
+                            return false;
+                        }
                         else
                         {
                             $('#login_username_group').attr("class", 'form-group text-left has-error');
@@ -201,6 +212,48 @@ $(document).ready(function () {
                     }]
                 }
             )
+        }
+    });
+
+    $("#loggedincheckout").click(function () {
+        var location = $("#location").val();
+        var startdate = $("#datestart").val();
+        var enddate = $("#dateend").val();
+        var comments = document.getElementById("remarks").value;
+
+        $('#location_group').attr("class", 'form-group');
+        $('#location_error').html("Please input a location").attr('hidden', true);
+
+        $('#date_group').attr("class", 'form-group');
+        $('#date_error').html("Please input a location").attr('hidden', true);
+
+        if(location === "")
+        {
+            $('#location_group').attr("class", 'form-group has-error');
+            $('#location_error').html("Please input a location").removeAttr('hidden');
+        }
+        if(startdate === "" || enddate === "")
+        {
+            $('#date_group').attr("class", 'form-group has-error');
+            $('#date_error').html("Please input a proper date range").removeAttr('hidden');
+        }
+
+        if(location !== "" && startdate !== "" && enddate !== "")
+        {
+            $.ajax({
+                type: 'POST',
+                url: checkout,
+                data:{
+                    location: location,
+                    comments: comments,
+                    startdate: startdate,
+                    enddate: enddate
+                },
+                success: function(){
+                    window.location.href = transaction;
+                    return false;
+                }
+            })
         }
     });
 });

@@ -30,6 +30,7 @@
         var login_checkout_url = {% url 'checkout_login' %};
         var check_user_url = {% url 'usercheck' %};
         var register_url = {% url 'register' %};
+        var checkout = "{% url 'rental:checkout_cart' %}";
     </script>
 
     <script src="{% static 'js/login.js' %}"></script>
@@ -143,7 +144,8 @@
                 </div>
                 <div class="text-center">
                     {% if request.user.is_authenticated %}
-
+                        <button class="btn btn-warning text-center"
+                                style="margin-top: -5px" id="loggedincheckout">Checkout</button>
                     {% else %}
                         <button class="btn btn-warning text-center" style="margin-top: -5px" id="modalbutton"
                                 data-toggle="modal">Checkout</button>
@@ -198,6 +200,7 @@
                                                 <button type="button" class="btn btn-warning" id="register">
                                                     Register</button>
                                             </div>
+
                                             <div class="col-md-6" style="margin-top: 15%">
                                                 <h4>Log-In</h4>
                                                     <div class="form-group text-left" id="login_username_group">
@@ -219,14 +222,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             </div>
                         </div>
+                </div>
                     {% endif %}
-                {% else %}
+            {% else %}
                 <h1 style="margin-top: 30%" class="text-center">Add stuff to your cart via the Equipment menu!</h1>
-                {% endif %}
-            </div>
+            {% endif %}
         </div>
     </div>
 </body>
