@@ -36,6 +36,7 @@ class Equipment(models.Model):
         ('AV', 'Available'),
         ('UM', 'Under Maintenance'))
     status = models.CharField(max_length=2, choices=STATUS_CODES)
+    hours_worked = models.IntegerField(default=0)
     hourly_service_rate = models.DecimalField(max_digits=12, decimal_places=2)
     image = models.ImageField(upload_to="equipmentimages", default='../media/equipmentimages/defaultequipment.png')
 
@@ -70,8 +71,8 @@ class Equipment(models.Model):
 class MaintenanceTransaction(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
     start_date = models.DateField()
-    end_date = models.DateField()
-    cost = models.DecimalField(max_digits=12, decimal_places=2)
+    end_date = models.DateField(null=True)
+    cost = models.DecimalField(max_digits=12, decimal_places=2, null=True)
 
     def __str__(self):
         return '{}, {}'.format(self.equipment.name, self.start_date)

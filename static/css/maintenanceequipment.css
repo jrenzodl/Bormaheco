@@ -1,0 +1,45 @@
+#equipmenttable{
+    max-height: 550px;
+    overflow: auto;
+    padding: 0;
+}
+
+#rightmost{
+    border-left: solid;
+    border-width: 1px;
+    border-color: #DDDDDD;
+    border-right: none;
+}
+
+.table > tbody > tr > th, .table > tbody > tr > th#rightmost{
+    vertical-align: middle;
+    font-family: fontOne, serif;
+    font-size: 1.5em;
+    text-align: center;
+    background-color: #F4B50C;
+    border: solid;
+    border-color: #DEA60C;
+    border-width: 1px;
+}
+
+.table > tbody > tr > th#rightmost{
+    border-left: solid;
+    border-width: 1px;
+    border-color: #DEA60C;
+    border-right: none;
+}
+
+#header, #header2{
+    border-top: solid;
+    border-top-width: 1px;
+    border-color: #DEA60C;
+}
+
+#header2{
+    border-left: none;
+}
+
+.table > tbody > tr > td{
+    vertical-align: middle;
+    font-family: fontThree, sans-serif;
+}

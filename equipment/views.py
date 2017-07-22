@@ -6,6 +6,7 @@ from accounts.models import User, UserAccount
 from . import models
 import json
 from django.contrib.auth.decorators import user_passes_test
+from django.utils import timezone
 
 # Create your views here.
 
@@ -18,6 +19,8 @@ def equipment_index(request):
     else:
         useraccount = UserAccount.objects.get(user=user)
         if useraccount.user_type == "MM":
+            list_of_equipment = Equipment.objects.extra(select={'is_top': 'hours_worked >= 300'})
+            list_of_equipment = list_of_equipment.extra(order_by=['-is_top'])
             return render(request, 'maintenanceequipment.html', {'equipment': list_of_equipment})
         else:
             return render(request, 'equipments.html', {'equipment': list_of_equipment})
@@ -63,3 +66,12 @@ def add_equipment(request):
         equipment.save()
 
         return HttpResponse("success")
+
+
+def start_maintenance(request, primary_key):
+    equipment = Equipment.objects.get(id=primary_key)
+    unfinishedmaintenance = MaintenanceTransaction(equipment=equipment, start_date=timezone.now())
+    equipment.hours_worked = 0
+    equipment.save()
+    unfinishedmaintenance.save()
+    return redirect("equipment:mainpage")

@@ -16,3 +16,6 @@ class UserAccount(models.Model):
         ('MM', 'Maintenance Manager'),
         ('CU', 'Customer'))
     user_type = models.CharField(max_length=2, choices=USER_TYPE_CHOICES)
+
+    def __str__(self):
+        return '{}: {}'.format(self.get_user_type_display(), self.user.username)
