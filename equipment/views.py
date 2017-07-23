@@ -19,9 +19,11 @@ def equipment_index(request):
     else:
         useraccount = UserAccount.objects.get(user=user)
         if useraccount.user_type == "MM":
+            list_of_maintenance = MaintenanceTransaction.objects.order_by('-start_date')
             list_of_equipment = Equipment.objects.extra(select={'is_top': 'hours_worked >= 300'})
             list_of_equipment = list_of_equipment.extra(order_by=['-is_top'])
-            return render(request, 'maintenanceequipment.html', {'equipment': list_of_equipment})
+            return render(request, 'maintenanceequipment.html', {'equipment': list_of_equipment,
+                                                                 'maintenance': list_of_maintenance})
         else:
             return render(request, 'equipments.html', {'equipment': list_of_equipment})
 
@@ -72,6 +74,19 @@ def start_maintenance(request, primary_key):
     equipment = Equipment.objects.get(id=primary_key)
     unfinishedmaintenance = MaintenanceTransaction(equipment=equipment, start_date=timezone.now())
     equipment.hours_worked = 0
+    equipment.status = "UM"
     equipment.save()
     unfinishedmaintenance.save()
+    return redirect("equipment:mainpage")
+
+
+def end_maintenance(request):
+    primary_key = request.POST.get('id')
+    equipment = Equipment.objects.get(id=primary_key)
+    equipment.status = 'AV'
+    equipment.save()
+    latest_maintenance = MaintenanceTransaction.objects.filter(equipment=equipment).latest("start_date")
+    latest_maintenance.end_date = timezone.now()
+    latest_maintenance.cost = request.POST.get('cost')
+    latest_maintenance.save()
     return redirect("equipment:mainpage")

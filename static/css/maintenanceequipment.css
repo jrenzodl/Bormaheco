@@ -43,3 +43,8 @@
     vertical-align: middle;
     font-family: fontThree, sans-serif;
 }
+
+a{
+    color: #3F4643;
+    cursor: pointer;
+}
