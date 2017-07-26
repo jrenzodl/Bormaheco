@@ -51,20 +51,29 @@
                 <li><a href="{% url 'mainpage' %}" id="navlink">Home</a></li>
                 <li><a href="{% url 'equipment:mainpage' %}" id="navlink">Equipment</a></li>
                 {% if request.user.is_authenticated %}
-                <li><a href="{% url 'rental:transactions' %}" id="navlink">Transactions</a></li>
+                    {% if request.user.user_type == CU or request.user.user_type == FI or request.user.user_type == EM %}
+                        <li><a href="{% url 'rental:transactions' %}" id="navlink">Transactions</a></li>
+                    {% endif %}
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.is_superuser == False %}
+                    {% if request.user.useraccount.user_type == 'CU' or request.user.useraccount.user_type == Null %}
                     <li>
                         <div class="dropdown">
                             <a id="cart" type="button" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-shopping-cart"></span></a>
                             <ul class="dropdown-menu cart" id="cartDropdown">
                                 {% get_cart request %}
+                                {% cart_length request as num %}
+                                {% if num > 0 %}
+                                    <a type="button" style="display:block; margin-top: 10px; margin-bottom: 5px"
+                                 href="{% url 'rental:checkout' %}" class="btn btn-warning text-center">Checkout</a>
+                                {% endif %}
                             </ul>
                         </div>
                     </li>
+                    {% endif %}
                 {% endif %}
                 {% if request.user.is_authenticated %}
                     <li>

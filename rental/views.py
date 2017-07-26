@@ -5,8 +5,10 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from equipment.models import Equipment
 from django import template
-from .models import Inquiry, InquiryEquipment
+from .models import Inquiry, InquiryEquipment, Quotation
 from django.utils import timezone
+from itertools import chain
+from operator import attrgetter
 
 # Create your views here.
 
@@ -35,7 +37,24 @@ def delete_from_cart(request, item_id):
 def transactions(request):
     loggedinuser = request.user
     inquiries = Inquiry.objects.filter(customer=loggedinuser)
-    return render(request, 'transactions.html', {'inquiries': inquiries})
+    quotations = Quotation.objects.filter(inquiry__customer=loggedinuser)
+    combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
+    return render(request, 'transactions.html', {'transactions': combined_transactions})
+
+
+def transactionsfiltered(request, transaction_type):
+    loggedinuser = request.user
+    if transaction_type == 'QU':
+        quotations = Quotation.objects.filter(inquiry__customer=loggedinuser).order_by("-sent_on")
+        return render(request, 'transactions.html', {'transactions': quotations, 'transaction_type': 'QU'})
+    else:
+        inquiries = Inquiry.objects.filter(customer=loggedinuser).order_by("-sent_on")
+        return render(request, 'transactions.html', {'transactions': inquiries, 'transaction_type': 'IN'})
+
+
+#def transactionitem(request, transaction_type, report, pk):
+#    loggedinuser = request.user
+
 
 
 def checkout_cart(request):

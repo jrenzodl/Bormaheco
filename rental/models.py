@@ -12,12 +12,12 @@ class Inquiry(models.Model):
         ('AQ', 'Awaiting Quotation'),
         ('AR', 'Awaiting Confirmation'),
         ('CO', 'Confirmed'),
-    )
+        ('RE', 'Rejected'))
     status = models.CharField(max_length=2, choices=STATUS_CODES)
     start_date = models.DateField()
     end_date = models.DateField()
     location = models.CharField(max_length=100)
-    comments = models.CharField(max_length=1000)
+    comments = models.CharField(max_length=1000, blank=True)
 
     def __str__(self):
         return '{}:{} - {}'.format(self.get_status_display(), self.customer.username, self.sent_on)
@@ -40,13 +40,13 @@ class Quotation(models.Model):
         ('RE', 'Rejected'),
         ('AW', 'Awaiting Confirmation'))
     status = models.CharField(max_length=2, choices=STATUS_CODES)
-    created_on = models.DateTimeField()
+    sent_on = models.DateTimeField()
     paid = models.BooleanField(default=False)
     transportation_cost = models.DecimalField(max_digits=12, decimal_places=2)
-    comments = models.CharField(max_length=1000)
+    comments = models.CharField(max_length=1000, blank=True)
 
     def __str__(self):
-        return '{}:{} - {}'.format(self.get_status_display(), self.created_by.username, self.created_on)
+        return '{}:{} - {}'.format(self.get_status_display(), self.created_by.username, self.sent_on)
 
 
 class QuotationEquipment(models.Model):

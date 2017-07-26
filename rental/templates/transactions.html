@@ -21,6 +21,7 @@
 
     <link rel="icon" href="{% static 'images/icon.png' %}">
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'css/transactions.css' %}">
 </head>
 <body>
     <nav class="navbar navbar-fixed-top">
@@ -34,11 +35,14 @@
                 <li><a href="{% url 'mainpage' %}" id="navlink">Home</a></li>
                 <li><a href="{% url 'equipment:mainpage' %}" id="navlink">Equipment</a></li>
                 {% if request.user.is_authenticated %}
-                <li><a href="{% url 'rental:transactions' %}" id="navlink">Transactions</a></li>
+                    {% if request.user.user_type == CU or request.user.user_type == FI or request.user.user_type == EM %}
+                        <li><a href="{% url 'rental:transactions' %}" id="navlink">Transactions</a></li>
+                    {% endif %}
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.is_superuser == False %}
+                   {% if request.user.useraccount.user_type == 'CU' or request.user.useraccount.user_type == Null %}
                     <li>
                         <div class="dropdown">
                             <a id="cart" type="button" data-toggle="dropdown">
@@ -53,6 +57,7 @@
                             </ul>
                         </div>
                     </li>
+                    {% endif %}
                 {% endif %}
                 {% if request.user.is_authenticated %}
                     <li>
@@ -91,7 +96,48 @@
         </div>
     </nav>
 
-    <div class="row" id="mainpagebody">
+    <div class="container-fluid row" id="mainpagebody">
+        <span class="col-md-1"></span>
+        <div class="col-md-4" id="listofitems">
+            <ul class="nav nav-tabs">
+                <li class="{% if transaction_type == 'AL' %}
+                active {% elif transaction_type == null %} active
+                {% endif %}"><a href="{% url 'rental:transactions' %}">All</a></li>
+                <li class="{% if transaction_type == 'IN' %}
+                active{% endif %}"><a href="{% url 'rental:filtered_transactions' transaction_type="IN" %}">Inquiries</a></li>
+                <li class="{% if transaction_type == 'QU' %}
+                active{% endif %}"><a href="{% url 'rental:filtered_transactions' transaction_type="QU" %}">Quotations</a></li>
+            </ul>
+            <div class="list-group">
+                {% for item in transactions %}
+                    {% if item|to_class_name == 'Inquiry' %}
+                        <a href="#" class="list-group-item"><strong>Inquiry: </strong>{{ item.sent_on}}
+                            {% if item.status == 'AQ' %}
+                                <span class="glyphicon glyphicon-hourglass pull-right" title="Awaiting Quotation"></span>
+                            {% elif item.status == 'AR'%}
+                                <span class="glyphicon glyphicon-euro pull-right" title="Awaiting Confirmation"></span>
+                            {% elif item.status == 'CO'%}
+                                <span class="glyphicon glyphicon-ok-sign pull-right" title="Confirmed!"></span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-remove-sign pull-right" title="Rejected"></span>
+                            {% endif %}
+                        </a>
+                    {% else %}
+                        <a class="list-group-item"><strong>Quotation: </strong>{{ item.sent_on}}
+                        {% if item.status == 'AW' %}
+                                <span class="glyphicon glyphicon-euro pull-right" title="Awaiting Confirmation"></span>
+                            {% elif item.status == 'PA'%}
+                                <span class="glyphicon glyphicon-ok-sign pull-right" title="Confirmed!"></span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-remove-sign pull-right" title="Rejected"></span>
+                            {% endif %}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6" id="infofield">
+
+        </div>
     </div>
 </body>
 </html>

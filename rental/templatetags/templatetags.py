@@ -16,3 +16,8 @@ def get_cart(request):
 def cart_length(request):
     cart = request.session.get('cart', [])
     return len(cart)
+
+
+@register.filter
+def to_class_name(value):
+    return value.__class__.__name__

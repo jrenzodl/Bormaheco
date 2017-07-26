@@ -20,10 +20,13 @@ def equipment_index(request):
         useraccount = UserAccount.objects.get(user=user)
         if useraccount.user_type == "MM":
             list_of_maintenance = MaintenanceTransaction.objects.order_by('-start_date')
-            list_of_equipment = Equipment.objects.extra(select={'is_top': 'hours_worked >= 300'})
-            list_of_equipment = list_of_equipment.extra(order_by=['-is_top'])
-            return render(request, 'maintenanceequipment.html', {'equipment': list_of_equipment,
-                                                                 'maintenance': list_of_maintenance})
+            needsmaintenance = Equipment.objects.filter(hours_worked__gte=300)
+            undermaintenance = Equipment.objects.filter(status="UM")
+            equipment = Equipment.objects.filter(status="AV").filter(hours_worked__lt=300)
+            return render(request, 'maintenanceequipment.html', {'equipment': needsmaintenance,
+                                                                 'maintenance': list_of_maintenance,
+                                                                 'undermaintenance': undermaintenance,
+                                                                 'normal': equipment})
         else:
             return render(request, 'equipments.html', {'equipment': list_of_equipment})
 

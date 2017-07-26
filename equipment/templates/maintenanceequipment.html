@@ -49,11 +49,13 @@
                 <li><a href="{% url 'mainpage' %}" id="navlink">Home</a></li>
                 <li><a href="{% url 'equipment:mainpage' %}" id="navlink">Equipment</a></li>
                 {% if request.user.is_authenticated %}
-                <li><a href="{% url 'rental:transactions' %}" id="navlink">Transactions</a></li>
+                    {% if request.user.user_type == CU or request.user.user_type == FI or request.user.user_type == EM %}
+                        <li><a href="{% url 'rental:transactions' %}" id="navlink">Transactions</a></li>
+                    {% endif %}
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                {% if request.user.is_superuser == False %}
+                {% if request.user.is_superuser == False and request.user.user_type != EM and request.user.user_type != MM and request.user.user_type != FI %}
                     <li>
                         <div class="dropdown">
                             <a id="cart" type="button" data-toggle="dropdown">
@@ -146,7 +148,7 @@
                                                                             <td>In Progress</td>
                                                                             {% else %}
                                                                             <td>{{ unit.end_date }}</td>
-                                                                            <td>P{{ unit.cost|intcomma }}</td>
+                                                                            <td class="text-right">P{{ unit.cost|intcomma }}</td>
                                                                         {% endif %}
                                                                     </tr>
                                                                 {% endif %}
@@ -166,7 +168,175 @@
                                 <td id="rightmost">{{ equipment.get_status_display }}</td>
                                 <td><button href="#" type="button" data-toggle="modal"
                                             data-target="#costmodal{{ equipment.id }}"
-                                            class="btn btn-warning pull-right">End</button></td>
+                                            class="btn btn-warning pull-right">End Maintenance</button></td>
+                                <!-- Modal -->
+                                <div id="costmodal{{ equipment.id }}" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">End Maintenance: {{ equipment.name }}</h4>
+                                            </div>
+
+                                            <div class="modal-body" id="{{ equipment.id }}">
+                                                <div class="container row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group text-left" id="cost_group{{ equipment.id }}">
+                                                            <label class="control-label"
+                                                                   for="cost_input">Cost:</label>
+                                                            <input class="form-control number" id="cost_input{{ equipment.id }}"
+                                                                   type="text" placeholder="Cost">
+                                                            <p class="text-danger" id="cost_error{{ equipment.id }}" hidden></p>
+                                                        </div>
+                                                        <button type="button" class="btn btn-warning submitcost"
+                                                                id="submit">Enter</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <td id="rightmost">{{ equipment.get_status_display }}</td>
+                                <td></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    {% for equipment in undermaintenance %}
+                        <tr>
+                            <td><a href="#historymodal{{ equipment.id }}" data-toggle="modal">{{ equipment.name }}</a>
+
+                            <!-- Modal -->
+                                <div id="historymodal{{ equipment.id }}" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">{{ equipment.name }} Maintenance History</h4>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div class="container-fluid row">
+                                                    <div class="panel panel-default">
+                                                        <table class="table table-striped table-bordered">
+                                                            <tr>
+                                                                <th>Start Date</th>
+                                                                <th>End Date</th>
+                                                                <th>Cost</th>
+                                                            </tr>
+                                                            {% for unit in maintenance %}
+                                                                {% if unit.equipment.id == equipment.id %}
+                                                                    <tr>
+                                                                        <td>{{ unit.start_date }}</td>
+                                                                        {% if unit.end_date == null %}
+                                                                            <td>In Progress</td>
+                                                                            {% else %}
+                                                                            <td>{{ unit.end_date }}</td>
+                                                                            <td class="text-right">P{{ unit.cost|intcomma }}</td>
+                                                                        {% endif %}
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div></td>
+                            {% if equipment.hours_worked >= 300 %}
+                                <td id="rightmost">Needs Maintenance: {{ equipment.hours_worked }} hours worked</td>
+                                <td><a href="{% url 'equipment:start_maintenance' primary_key=equipment.id %}"
+                                       type="button" class="btn btn-warning pull-right">Start Maintenance</a></td>
+                            {% elif equipment.status == "UM" %}
+                                <td id="rightmost">{{ equipment.get_status_display }}</td>
+                                <td><button href="#" type="button" data-toggle="modal"
+                                            data-target="#costmodal{{ equipment.id }}"
+                                            class="btn btn-warning pull-right end">End Maintenance</button></td>
+                                <!-- Modal -->
+                                <div id="costmodal{{ equipment.id }}" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">End Maintenance: {{ equipment.name }}</h4>
+                                            </div>
+
+                                            <div class="modal-body" id="{{ equipment.id }}">
+                                                <div class="container row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group text-left" id="cost_group{{ equipment.id }}">
+                                                            <label class="control-label"
+                                                                   for="cost_input">Cost:</label>
+                                                            <input class="form-control number" id="cost_input{{ equipment.id }}"
+                                                                   type="text" placeholder="Cost">
+                                                            <p class="text-danger" id="cost_error{{ equipment.id }}" hidden></p>
+                                                        </div>
+                                                        <button type="button" class="btn btn-warning submitcost"
+                                                                id="submit">Enter</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <td id="rightmost">{{ equipment.get_status_display }}</td>
+                                <td></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    {% for equipment in normal %}
+                        <tr>
+                            <td><a href="#historymodal{{ equipment.id }}" data-toggle="modal">{{ equipment.name }}</a>
+
+                            <!-- Modal -->
+                                <div id="historymodal{{ equipment.id }}" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">{{ equipment.name }} Maintenance History</h4>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <div class="container-fluid row">
+                                                    <div class="panel panel-default">
+                                                        <table class="table table-striped table-bordered">
+                                                            <tr>
+                                                                <th>Start Date</th>
+                                                                <th>End Date</th>
+                                                                <th>Cost</th>
+                                                            </tr>
+                                                            {% for unit in maintenance %}
+                                                                {% if unit.equipment.id == equipment.id %}
+                                                                    <tr>
+                                                                        <td>{{ unit.start_date }}</td>
+                                                                        {% if unit.end_date == null %}
+                                                                            <td>In Progress</td>
+                                                                            {% else %}
+                                                                            <td>{{ unit.end_date }}</td>
+                                                                            <td class="text-right">P{{ unit.cost|intcomma }}</td>
+                                                                        {% endif %}
+                                                                    </tr>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div></td>
+                            {% if equipment.hours_worked >= 300 %}
+                                <td id="rightmost">Needs Maintenance: {{ equipment.hours_worked }} hours worked</td>
+                                <td><a href="{% url 'equipment:start_maintenance' primary_key=equipment.id %}"
+                                       type="button" class="btn btn-warning pull-right">Start Maintenance</a></td>
+                            {% elif equipment.status == "UM" %}
+                                <td id="rightmost">{{ equipment.get_status_display }}</td>
+                                <td><button href="#" type="button" data-toggle="modal"
+                                            data-target="#costmodal{{ equipment.id }}"
+                                            class="btn btn-warning pull-right">End Maintenance</button></td>
                                 <!-- Modal -->
                                 <div id="costmodal{{ equipment.id }}" class="modal fade" role="dialog">
                                     <div class="modal-dialog">
