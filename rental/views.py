@@ -47,14 +47,45 @@ def transactionsfiltered(request, transaction_type):
     if transaction_type == 'QU':
         quotations = Quotation.objects.filter(inquiry__customer=loggedinuser).order_by("-sent_on")
         return render(request, 'transactions.html', {'transactions': quotations, 'transaction_type': 'QU'})
-    else:
+    elif transaction_type == 'IN':
         inquiries = Inquiry.objects.filter(customer=loggedinuser).order_by("-sent_on")
         return render(request, 'transactions.html', {'transactions': inquiries, 'transaction_type': 'IN'})
+    elif transaction_type == 'AL':
+        inquiries = Inquiry.objects.filter(customer=loggedinuser)
+        quotations = Quotation.objects.filter(inquiry__customer=loggedinuser)
+        combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
+        return render(request, 'transactions.html', {'transactions': combined_transactions})
 
 
-#def transactionitem(request, transaction_type, report, pk):
-#    loggedinuser = request.user
-
+def transactionitem(request, transaction_type, report, pk):
+    loggedinuser = request.user
+    pk = int(pk)
+    if transaction_type == "AL":
+        inquiries = Inquiry.objects.filter(customer=loggedinuser)
+        quotations = Quotation.objects.filter(inquiry__customer=loggedinuser)
+        combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
+        if report == "QU":
+            quotation = Quotation.objects.get(id=pk)
+            return render(request, 'transactions.html', {'transactions': combined_transactions,
+                                                         'transaction_type': transaction_type, 'details': quotation,
+                                                         'index': pk})
+        elif report == "IN":
+            inquiry = Inquiry.objects.get(id=pk)
+            return render(request, 'transactions.html',
+                          {'transactions': combined_transactions, 'transaction_type': transaction_type,
+                           'details': inquiry, 'index': pk})
+    elif transaction_type == "QU":
+        quotations = Quotation.objects.filter(inquiry__customer=loggedinuser).order_by("-sent_on")
+        quotation = Quotation.objects.get(id=pk)
+        return render(request, 'transactions.html',
+                      {'transactions': quotations, 'transaction_type': transaction_type,
+                       'details': quotation, 'index': pk})
+    elif transaction_type == "IN":
+        inquiries = Inquiry.objects.filter(customer=loggedinuser).order_by("-sent_on")
+        inquiry = Inquiry.objects.get(id=pk)
+        return render(request, 'transactions.html',
+                      {'transactions': inquiries, 'transaction_type': transaction_type, 'details': inquiry,
+                       'index': pk})
 
 
 def checkout_cart(request):
@@ -76,3 +107,10 @@ def checkout_cart(request):
 
     request.session['cart'] = []
     return redirect("rental:transactions")
+
+
+def confirmpayment(request, pk):
+    quotation = Quotation.objects.get(id=pk)
+    quotation.paid = True
+    quotation.save()
+    return redirect('rental:getitem', transaction_type="QU", report="QU", pk=pk)

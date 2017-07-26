@@ -22,6 +22,15 @@ class Inquiry(models.Model):
     def __str__(self):
         return '{}:{} - {}'.format(self.get_status_display(), self.customer.username, self.sent_on)
 
+    def related_quotation(self):
+        if self.quotation:
+            return self.quotation
+        else:
+            return 'null'
+
+    def getallequipment(self):
+        return self.inquiryequipment_set.all()
+
 
 class InquiryEquipment(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
@@ -48,6 +57,26 @@ class Quotation(models.Model):
     def __str__(self):
         return '{}:{} - {}'.format(self.get_status_display(), self.created_by.username, self.sent_on)
 
+    def getprice(self):
+        equipment = self.quotationequipment_set
+        totalprice = 0
+        date = self.inquiry.end_date - self.inquiry.start_date
+        date = (date.days + 1) * 24
+        for unit in equipment.all():
+            totalprice += unit.equipment.hourly_service_rate
+        totalprice = totalprice * date
+        return totalprice
+
+    def gettotalrental(self):
+        equipment = self.quotationequipment_set
+        totalprice = 0
+        for unit in equipment.all():
+            totalprice += unit.equipment.hourly_service_rate
+        return totalprice
+
+    def getallequipment(self):
+        return self.quotationequipment_set.all()
+
 
 class QuotationEquipment(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)
@@ -55,4 +84,4 @@ class QuotationEquipment(models.Model):
 
     def __str__(self):
         return '{}:{} - {}: {}'.format(self.quotation.get_status_display(), self.quotation.created_by.username,
-                                       self.quotation.created_on, self.equipment.name)
+                                       self.quotation.sent_on, self.equipment.name)

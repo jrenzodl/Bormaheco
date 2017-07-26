@@ -24,9 +24,12 @@ urlpatterns = [
 
     url(r'^checkout_cart/', views.checkout_cart, name='checkout_cart'),
 
-    url(r'^transactions/(?P<transaction_type>\D\D)', views.transactionsfiltered, name='filtered_transactions'),
+    url(r'^transactions/(?P<transaction_type>\D\D)$', views.transactionsfiltered, name='filtered_transactions'),
 
-    #url(r'^transactions/(?P<transaction_type>\D\D)/(?P<report>\D\D)(?P<pk>\d+)'),
+    url(r'^transactions/(?P<transaction_type>\D\D)/(?P<report>\D\D)/(?P<pk>\d+)', views.transactionitem,
+        name='getitem'),
+
+    url(r'^confirmpayment/(?P<pk>\d+)', views.confirmpayment, name='confirmpayment'),
 
     url(r'^transactions/', views.transactions, name='transactions'),
 

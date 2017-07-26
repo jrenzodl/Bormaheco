@@ -3,6 +3,7 @@
 <head>
     {% load staticfiles %}
     {% load templatetags %}
+    {% load humanize %}
     {% csrf_token %}
     <meta charset="UTF-8">
     <title>Bormaheco Inc. | Transactions</title>
@@ -102,7 +103,7 @@
             <ul class="nav nav-tabs">
                 <li class="{% if transaction_type == 'AL' %}
                 active {% elif transaction_type == null %} active
-                {% endif %}"><a href="{% url 'rental:transactions' %}">All</a></li>
+                {% endif %}"><a href="{% url 'rental:filtered_transactions' transaction_type='AL' %}">All</a></li>
                 <li class="{% if transaction_type == 'IN' %}
                 active{% endif %}"><a href="{% url 'rental:filtered_transactions' transaction_type="IN" %}">Inquiries</a></li>
                 <li class="{% if transaction_type == 'QU' %}
@@ -111,7 +112,9 @@
             <div class="list-group">
                 {% for item in transactions %}
                     {% if item|to_class_name == 'Inquiry' %}
-                        <a href="#" class="list-group-item"><strong>Inquiry: </strong>{{ item.sent_on}}
+                        <a href="{% url 'rental:getitem' transaction_type='IN' report="IN" pk=item.id %}"
+                           class="list-group-item {% if item.id == index %}
+                           active{% endif %}"><strong>Inquiry: </strong>{{ item.sent_on }}
                             {% if item.status == 'AQ' %}
                                 <span class="glyphicon glyphicon-hourglass pull-right" title="Awaiting Quotation"></span>
                             {% elif item.status == 'AR'%}
@@ -123,7 +126,8 @@
                             {% endif %}
                         </a>
                     {% else %}
-                        <a class="list-group-item"><strong>Quotation: </strong>{{ item.sent_on}}
+                        <a href="{% url 'rental:getitem' transaction_type='QU' report='QU' pk=item.id %}"
+                           class="list-group-item {% if item.id == index %}active{% endif %}"><strong>Quotation: </strong>{{ item.sent_on}}
                         {% if item.status == 'AW' %}
                                 <span class="glyphicon glyphicon-euro pull-right" title="Awaiting Confirmation"></span>
                             {% elif item.status == 'PA'%}
@@ -136,7 +140,112 @@
             </div>
         </div>
         <div class="col-md-6" id="infofield">
-
+            {% if details == null %}
+                <h1 class="text-center" style="margin-top: 35%">Choose an inquiry or quotation!</h1>
+            {% elif details|to_class_name == 'Quotation' %}
+                <h1 class="text-center">Quotation</h1>
+                <div class="container-fluid">
+                    <table class="table" style="font-size: 1em">
+                        <tr>
+                            <td class="col-md-4" id="left"><strong>Created by: </strong></td>
+                            <td>{{ details.created_by.username }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reference inquiry: </strong></td>
+                            <td><a href="{% url 'rental:getitem' transaction_type="IN" report="IN" pk=details.inquiry.id %}">
+                                {{ details.inquiry.id }}
+                            </a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Status: </strong></td>
+                            <td>{{ details.get_status_display }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sent on: </strong></td>
+                            <td>{{ details.sent_on }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cost:</strong></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>Rental:</strong></td>
+                            <td class="text-right">P{{ details.gettotalrental }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>Transportation:</strong></td>
+                            <td class="text-right">P{{ details.transportation_cost|intcomma }}</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>Total:</strong></td>
+                            <td class="text-right">P{{ details.getprice|intcomma }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Comments:</strong></td>
+                            <td>{{ details.comments }}</td>
+                        </tr>
+                    </table>
+                    <h4 style="margin-top: -15px">Equipment:</h4>
+                    <div id="equipmentwell">
+                        {% for unit in details.getallequipment %}
+                            <div class="well">{{ unit.equipment.name }}</div>
+                        {% endfor %}
+                    </div>
+                    {% if details.paid == True and details.status == "AW" %}
+                        <a id="confirmbutton" class="btn btn-warning disabled center-block"
+                        title="You have already confirmed payment">Confirm Payment</a>
+                    {% elif details.paid == False and details.status == "AW" %}
+                        <a id="confirmbutton" class="btn btn-warning center-block"
+                        href="{% url 'rental:confirmpayment' pk=details.id %}">Confirm Payment</a>
+                    {% endif %}
+                </div>
+            {% elif details|to_class_name == 'Inquiry' %}
+                <h1 class="text-center">Inquiry</h1>
+                <div class="container-fluid">
+                    <table class="table" style="font-size: 1em">
+                        <tr>
+                            <td class="col-md-4" id="leftinq"><strong>Created by: </strong></td>
+                            <td>{{ details.customer.username }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reference quotation: </strong></td>
+                            <td>{% if details.related_quotation %}
+                                <a href="{% url 'rental:getitem' transaction_type="QU" report="QU" pk=details.related_quotation.id %}">
+                                {{ details.related_quotation.id }}
+                            </a>
+                                {% else %}
+                                N/A
+                                {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Status: </strong></td>
+                            <td>{{ details.get_status_display }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Start date: </strong></td>
+                            <td>{{ details.start_date }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>End Date:</strong></td>
+                            <td>{{ details.end_date }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Location: </strong></td>
+                            <td>{{ details.location }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Comments:</strong></td>
+                            <td>{{ details.comments }}</td>
+                        </tr>
+                    </table>
+                    <h4 style="margin-top: -15px">Equipment:</h4>
+                    <div id="equipmentwell">
+                        {% for unit in details.getallequipment %}
+                            <div class="well">{{ unit.equipment.name }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 </body>

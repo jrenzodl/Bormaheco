@@ -42,7 +42,36 @@
     border-color: #DDDDDD;
     border-width: 1px;
     border-radius: 5px;
-    height: 541px;
+    height: 542px;
     margin-top: 3px;
     margin-left: 5px;
+    font-family: fontThree, sans-serif;
+    overflow-y: auto;
+}
+
+#infofield p{
+    padding: 5px 0 0 0;
+    font-size: 1.2em;
+}
+
+#equipmentwell{
+    border: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: #E2E2E2;
+    background-color: #FAFAFA;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.well{
+    margin-bottom: 0;
+}
+
+#left{width: 145px}
+
+#leftinq{width: 156px}
+
+#confirmbutton{
+    margin-bottom: 10px;
 }
