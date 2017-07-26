@@ -31,7 +31,7 @@ urlpatterns = [
 
     url(r'^confirmpayment/(?P<pk>\d+)', views.confirmpayment, name='confirmpayment'),
 
-    url(r'^transactions/', views.transactions, name='transactions'),
+    url(r'^transactions$', views.transactions, name='transactions'),
 
     url(r'^checkout/', views.checkout, name='checkout'),
 

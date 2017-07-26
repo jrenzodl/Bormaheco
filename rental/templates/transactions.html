@@ -112,7 +112,7 @@
             <div class="list-group">
                 {% for item in transactions %}
                     {% if item|to_class_name == 'Inquiry' %}
-                        <a href="{% url 'rental:getitem' transaction_type='IN' report="IN" pk=item.id %}"
+                        <a href="{% url 'rental:getitem' transaction_type=transaction_type report="IN" pk=item.id %}"
                            class="list-group-item {% if item.id == index %}
                            active{% endif %}"><strong>Inquiry: </strong>{{ item.sent_on }}
                             {% if item.status == 'AQ' %}
@@ -126,7 +126,7 @@
                             {% endif %}
                         </a>
                     {% else %}
-                        <a href="{% url 'rental:getitem' transaction_type='QU' report='QU' pk=item.id %}"
+                        <a href="{% url 'rental:getitem' transaction_type=transaction_type report='QU' pk=item.id %}"
                            class="list-group-item {% if item.id == index %}active{% endif %}"><strong>Quotation: </strong>{{ item.sent_on}}
                         {% if item.status == 'AW' %}
                                 <span class="glyphicon glyphicon-euro pull-right" title="Awaiting Confirmation"></span>

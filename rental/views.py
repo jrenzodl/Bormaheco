@@ -39,7 +39,7 @@ def transactions(request):
     inquiries = Inquiry.objects.filter(customer=loggedinuser)
     quotations = Quotation.objects.filter(inquiry__customer=loggedinuser)
     combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
-    return render(request, 'transactions.html', {'transactions': combined_transactions})
+    return render(request, 'transactions.html', {'transactions': combined_transactions, 'transaction_type': "AL"})
 
 
 def transactionsfiltered(request, transaction_type):
@@ -54,7 +54,7 @@ def transactionsfiltered(request, transaction_type):
         inquiries = Inquiry.objects.filter(customer=loggedinuser)
         quotations = Quotation.objects.filter(inquiry__customer=loggedinuser)
         combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
-        return render(request, 'transactions.html', {'transactions': combined_transactions})
+        return render(request, 'transactions.html', {'transactions': combined_transactions, 'transaction_type': 'AL'})
 
 
 def transactionitem(request, transaction_type, report, pk):
