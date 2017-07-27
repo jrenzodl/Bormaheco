@@ -19,6 +19,8 @@ from accounts import views
 from django.contrib.auth.views import logout
 from django.conf import settings
 from django.views.generic import TemplateView
+from django.conf.urls import handler400, handler403, handler404, handler500
+
 
 urlpatterns = [
 
@@ -38,7 +40,9 @@ urlpatterns = [
 
     url(r'^checkuser/', views.check_username, name='usercheck'),
 
-    url(r'^$', views.homepage, name='mainpage')
+    url(r'^$', views.homepage, name='mainpage'),
+
+    url(r'^error/', TemplateView.as_view(template_name='notallowed.html'), name='errorpage'),
 ]
 
 admin.site.site_header = "Bormaheco Administration"

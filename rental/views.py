@@ -9,14 +9,19 @@ from .models import Inquiry, InquiryEquipment, Quotation
 from django.utils import timezone
 from itertools import chain
 from operator import attrgetter
+from django.contrib.auth.decorators import user_passes_test
 
 # Create your views here.
 
 
+@user_passes_test(lambda u: u.is_anonymous or (u.useraccount.user_type != "MM" and u.useraccount.user_type != "FI" and
+                  u.useraccount.user_type != "EM" and u.is_superuser() is False), login_url='errorpage')
 def checkout(request):
     return render(request, 'checkout.html')
 
 
+@user_passes_test(lambda u: u.is_anonymous or (u.useraccount.user_type != "MM" and u.useraccount.user_type != "FI" and
+                  u.useraccount.user_type != "EM" and u.is_superuser() is False), login_url='errorpage')
 def add_to_cart(request, item_id):
     cart = request.session.get('cart', [])
     if item_id in cart:
@@ -27,6 +32,8 @@ def add_to_cart(request, item_id):
         return redirect('equipment:mainpage')
 
 
+@user_passes_test(lambda u: u.is_anonymous or (u.useraccount.user_type != "MM" and u.useraccount.user_type != "FI" and
+                  u.useraccount.user_type != "EM" and u.is_superuser() is False), login_url='errorpage')
 def delete_from_cart(request, item_id):
     cart = request.session.get('cart', [])
     cart.remove(item_id)
@@ -34,60 +41,120 @@ def delete_from_cart(request, item_id):
     return redirect('equipment:mainpage')
 
 
+@user_passes_test(lambda u: u.is_anonymous() is False, login_url='errorpage')
 def transactions(request):
     loggedinuser = request.user
-    inquiries = Inquiry.objects.filter(customer=loggedinuser)
-    quotations = Quotation.objects.filter(inquiry__customer=loggedinuser)
-    combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
-    return render(request, 'transactions.html', {'transactions': combined_transactions, 'transaction_type': "AL"})
-
-
-def transactionsfiltered(request, transaction_type):
-    loggedinuser = request.user
-    if transaction_type == 'QU':
-        quotations = Quotation.objects.filter(inquiry__customer=loggedinuser).order_by("-sent_on")
-        return render(request, 'transactions.html', {'transactions': quotations, 'transaction_type': 'QU'})
-    elif transaction_type == 'IN':
-        inquiries = Inquiry.objects.filter(customer=loggedinuser).order_by("-sent_on")
-        return render(request, 'transactions.html', {'transactions': inquiries, 'transaction_type': 'IN'})
-    elif transaction_type == 'AL':
+    if loggedinuser.useraccount.user_type == "CU":
         inquiries = Inquiry.objects.filter(customer=loggedinuser)
         quotations = Quotation.objects.filter(inquiry__customer=loggedinuser)
         combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
-        return render(request, 'transactions.html', {'transactions': combined_transactions, 'transaction_type': 'AL'})
+        return render(request, 'transactions.html', {'transactions': combined_transactions, 'transaction_type': "AL"})
+    elif loggedinuser.useraccount.user_type == "EM":
+        inquiries = Inquiry.objects.all()
+        quotations = Quotation.objects.all()
+        combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
+        return render(request, 'transactions.html', {'transactions': combined_transactions, 'transaction_type': "AL"})
+    else:
+        return redirect('errorpage')
 
 
+@user_passes_test(lambda u: u.is_anonymous() is False, login_url='errorpage')
+def transactionsfiltered(request, transaction_type):
+    loggedinuser = request.user
+    if loggedinuser.useraccount.user_type == "CU":
+        if transaction_type == 'QU':
+            quotations = Quotation.objects.filter(inquiry__customer=loggedinuser).order_by("-sent_on")
+            return render(request, 'transactions.html', {'transactions': quotations, 'transaction_type': 'QU'})
+        elif transaction_type == 'IN':
+            inquiries = Inquiry.objects.filter(customer=loggedinuser).order_by("-sent_on")
+            return render(request, 'transactions.html', {'transactions': inquiries, 'transaction_type': 'IN'})
+        elif transaction_type == 'AL':
+            inquiries = Inquiry.objects.filter(customer=loggedinuser)
+            quotations = Quotation.objects.filter(inquiry__customer=loggedinuser)
+            combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
+            return render(request, 'transactions.html', {'transactions': combined_transactions,
+                                                         'transaction_type': 'AL'})
+    elif loggedinuser.useraccount.user_type == "EM":
+        if transaction_type == 'QU':
+            quotations = Quotation.objects.order_by("-sent_on").all()
+            return render(request, 'transactions.html', {'transactions': quotations, 'transaction_type': 'QU'})
+        elif transaction_type == 'IN':
+            inquiries = Inquiry.objects.order_by("-sent_on").all()
+            return render(request, 'transactions.html', {'transactions': inquiries, 'transaction_type': 'IN'})
+        elif transaction_type == 'AL':
+            inquiries = Inquiry.objects.all()
+            quotations = Quotation.objects.all()
+            combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
+            return render(request, 'transactions.html', {'transactions': combined_transactions,
+                                                         'transaction_type': 'AL'})
+    else:
+        return redirect('errorpage')
+
+
+@user_passes_test(lambda u: u.is_anonymous() is False, login_url='errorpage')
 def transactionitem(request, transaction_type, report, pk):
     loggedinuser = request.user
     pk = int(pk)
-    if transaction_type == "AL":
-        inquiries = Inquiry.objects.filter(customer=loggedinuser)
-        quotations = Quotation.objects.filter(inquiry__customer=loggedinuser)
-        combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
-        if report == "QU":
+    if loggedinuser.useraccount.user_type == "CU":
+        if transaction_type == "AL":
+            inquiries = Inquiry.objects.filter(customer=loggedinuser)
+            quotations = Quotation.objects.filter(inquiry__customer=loggedinuser)
+            combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
+            if report == "QU":
+                quotation = Quotation.objects.get(id=pk)
+                return render(request, 'transactions.html', {'transactions': combined_transactions,
+                                                             'transaction_type': transaction_type, 'details': quotation,
+                                                             'index': pk})
+            elif report == "IN":
+                inquiry = Inquiry.objects.get(id=pk)
+                return render(request, 'transactions.html',
+                              {'transactions': combined_transactions, 'transaction_type': transaction_type,
+                               'details': inquiry, 'index': pk})
+        elif transaction_type == "QU":
+            quotations = Quotation.objects.filter(inquiry__customer=loggedinuser).order_by("-sent_on")
             quotation = Quotation.objects.get(id=pk)
-            return render(request, 'transactions.html', {'transactions': combined_transactions,
-                                                         'transaction_type': transaction_type, 'details': quotation,
-                                                         'index': pk})
-        elif report == "IN":
+            return render(request, 'transactions.html',
+                          {'transactions': quotations, 'transaction_type': transaction_type,
+                           'details': quotation, 'index': pk})
+        elif transaction_type == "IN":
+            inquiries = Inquiry.objects.filter(customer=loggedinuser).order_by("-sent_on")
             inquiry = Inquiry.objects.get(id=pk)
             return render(request, 'transactions.html',
-                          {'transactions': combined_transactions, 'transaction_type': transaction_type,
-                           'details': inquiry, 'index': pk})
-    elif transaction_type == "QU":
-        quotations = Quotation.objects.filter(inquiry__customer=loggedinuser).order_by("-sent_on")
-        quotation = Quotation.objects.get(id=pk)
-        return render(request, 'transactions.html',
-                      {'transactions': quotations, 'transaction_type': transaction_type,
-                       'details': quotation, 'index': pk})
-    elif transaction_type == "IN":
-        inquiries = Inquiry.objects.filter(customer=loggedinuser).order_by("-sent_on")
-        inquiry = Inquiry.objects.get(id=pk)
-        return render(request, 'transactions.html',
-                      {'transactions': inquiries, 'transaction_type': transaction_type, 'details': inquiry,
-                       'index': pk})
+                          {'transactions': inquiries, 'transaction_type': transaction_type, 'details': inquiry,
+                           'index': pk})
+    elif loggedinuser.useraccount.user_type == "EM":
+        if transaction_type == "AL":
+            inquiries = Inquiry.objects.all()
+            quotations = Quotation.objects.all()
+            combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
+            if report == "QU":
+                quotation = Quotation.objects.get(id=pk)
+                return render(request, 'transactions.html', {'transactions': combined_transactions,
+                                                             'transaction_type': transaction_type, 'details': quotation,
+                                                             'index': pk})
+            elif report == "IN":
+                inquiry = Inquiry.objects.get(id=pk)
+                return render(request, 'transactions.html',
+                              {'transactions': combined_transactions, 'transaction_type': transaction_type,
+                               'details': inquiry, 'index': pk})
+        elif transaction_type == "QU":
+            quotations = Quotation.objects.order_by("-sent_on").all()
+            quotation = Quotation.objects.get(id=pk)
+            return render(request, 'transactions.html',
+                          {'transactions': quotations, 'transaction_type': transaction_type,
+                           'details': quotation, 'index': pk})
+        elif transaction_type == "IN":
+            inquiries = Inquiry.objects.order_by("-sent_on").all()
+            inquiry = Inquiry.objects.get(id=pk)
+            return render(request, 'transactions.html',
+                          {'transactions': inquiries, 'transaction_type': transaction_type, 'details': inquiry,
+                           'index': pk})
+    else:
+        return redirect('errorpage')
 
 
+@user_passes_test(lambda u: u.is_anonymous or (u.useraccount.user_type != "MM" and u.useraccount.user_type != "FI" and
+                  u.useraccount.user_type != "EM" and u.is_superuser() is False), login_url='errorpage')
 def checkout_cart(request):
     location = request.POST.get("location")
     startdate = request.POST.get("startdate")
@@ -109,8 +176,12 @@ def checkout_cart(request):
     return redirect("rental:transactions")
 
 
+@user_passes_test(lambda u: u.useraccount.user_type == "CU", login_url='errorpage')
 def confirmpayment(request, pk):
     quotation = Quotation.objects.get(id=pk)
-    quotation.paid = True
-    quotation.save()
-    return redirect('rental:getitem', transaction_type="QU", report="QU", pk=pk)
+    if quotation.inquiry.customer == request.user:
+        quotation.paid = True
+        quotation.save()
+        return redirect('rental:getitem', transaction_type="QU", report="QU", pk=pk)
+    else:
+        return redirect('errorpage')

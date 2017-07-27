@@ -65,7 +65,7 @@ class Quotation(models.Model):
         for unit in equipment.all():
             totalprice += unit.equipment.hourly_service_rate
         totalprice = totalprice * date
-        return totalprice
+        return totalprice + self.transportation_cost
 
     def gettotalrental(self):
         equipment = self.quotationequipment_set

@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.dateparse import parse_date
 
 # Create your models here.
 
@@ -55,6 +56,26 @@ class Equipment(models.Model):
             'hourly_service_rate': self.hourly_service_rate,
             'imageurl': self.image.url,
         }
+
+    def checkconflict(self, index):
+        from rental.models import Inquiry
+        inquiry2 = Inquiry.objects.get(id=index)
+        inquiries = self.inquiryequipment_set.all().exclude(inquiry_id=index)
+        if self.status == "UM":
+            return True
+
+        if inquiry2.status == "AQ":
+            for inquiryequipment in inquiries:
+                if inquiryequipment.inquiry.status == "CO":
+                    test_start = inquiryequipment.inquiry.start_date
+                    test_end = inquiryequipment.inquiry.end_date
+                    if test_start <= inquiry2.start_date <= test_end:
+                        return True
+                    if test_start <= inquiry2.end_date <= test_end:
+                        return True
+
+        return False
+
 
 # WAG TO
 #

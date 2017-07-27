@@ -21,3 +21,8 @@ def cart_length(request):
 @register.filter
 def to_class_name(value):
     return value.__class__.__name__
+
+
+@register.filter
+def checkconflict(obj, index):
+    return obj.checkconflict(index)
