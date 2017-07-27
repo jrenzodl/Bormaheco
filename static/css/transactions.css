@@ -75,3 +75,9 @@
 #confirmbutton{
     margin-bottom: 10px;
 }
+
+textarea{resize: none}
+
+#checkbox{
+    margin-left: 15px;
+}

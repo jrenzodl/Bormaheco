@@ -35,6 +35,10 @@ urlpatterns = [
 
     url(r'^checkout/', views.checkout, name='checkout'),
 
+    url(r'^rejectinquiry/(?P<pk>\d+)', views.reject_inquiry, name='rejectinquiry'),
+
+    url(r'^createquotation', views.create_quotation, name='create_quotation'),
+
     url(r'^deletefromcart/(?P<item_id>\d+)', views.delete_from_cart, name='delete_from_cart'),
 
     url(r'^addtocart/(?P<item_id>\d+)', views.add_to_cart, name='addtocart'),

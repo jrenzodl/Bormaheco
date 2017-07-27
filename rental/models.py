@@ -31,6 +31,15 @@ class Inquiry(models.Model):
     def getallequipment(self):
         return self.inquiryequipment_set.all()
 
+    def has_conflict(self):
+        list_of_equipment = self.inquiryequipment_set.all()
+        for list_of_equipment in list_of_equipment:
+            result = list_of_equipment.equipment.checkconflict(self.id)
+            if result is True:
+                return True
+
+        return False
+
 
 class InquiryEquipment(models.Model):
     equipment = models.ForeignKey(Equipment, on_delete=models.CASCADE)

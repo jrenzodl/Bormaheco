@@ -5,7 +5,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from equipment.models import Equipment
 from django import template
-from .models import Inquiry, InquiryEquipment, Quotation
+from .models import Inquiry, InquiryEquipment, Quotation, QuotationEquipment
 from django.utils import timezone
 from itertools import chain
 from operator import attrgetter
@@ -15,13 +15,13 @@ from django.contrib.auth.decorators import user_passes_test
 
 
 @user_passes_test(lambda u: u.is_anonymous or (u.useraccount.user_type != "MM" and u.useraccount.user_type != "FI" and
-                  u.useraccount.user_type != "EM" and u.is_superuser() is False), login_url='errorpage')
+                  u.useraccount.user_type != "EM" and u.is_superuser is False), login_url='errorpage')
 def checkout(request):
     return render(request, 'checkout.html')
 
 
 @user_passes_test(lambda u: u.is_anonymous or (u.useraccount.user_type != "MM" and u.useraccount.user_type != "FI" and
-                  u.useraccount.user_type != "EM" and u.is_superuser() is False), login_url='errorpage')
+                  u.useraccount.user_type != "EM" and u.is_superuser is False), login_url='errorpage')
 def add_to_cart(request, item_id):
     cart = request.session.get('cart', [])
     if item_id in cart:
@@ -33,7 +33,7 @@ def add_to_cart(request, item_id):
 
 
 @user_passes_test(lambda u: u.is_anonymous or (u.useraccount.user_type != "MM" and u.useraccount.user_type != "FI" and
-                  u.useraccount.user_type != "EM" and u.is_superuser() is False), login_url='errorpage')
+                  u.useraccount.user_type != "EM" and u.is_superuser is False), login_url='errorpage')
 def delete_from_cart(request, item_id):
     cart = request.session.get('cart', [])
     cart.remove(item_id)
@@ -93,6 +93,7 @@ def transactionsfiltered(request, transaction_type):
 
 @user_passes_test(lambda u: u.is_anonymous() is False, login_url='errorpage')
 def transactionitem(request, transaction_type, report, pk):
+    allequipment = Equipment.objects.all()
     loggedinuser = request.user
     pk = int(pk)
     if loggedinuser.useraccount.user_type == "CU":
@@ -104,24 +105,24 @@ def transactionitem(request, transaction_type, report, pk):
                 quotation = Quotation.objects.get(id=pk)
                 return render(request, 'transactions.html', {'transactions': combined_transactions,
                                                              'transaction_type': transaction_type, 'details': quotation,
-                                                             'index': pk})
+                                                             'index': pk, 'equipment':allequipment})
             elif report == "IN":
                 inquiry = Inquiry.objects.get(id=pk)
                 return render(request, 'transactions.html',
                               {'transactions': combined_transactions, 'transaction_type': transaction_type,
-                               'details': inquiry, 'index': pk})
+                               'details': inquiry, 'index': pk, 'equipment':allequipment})
         elif transaction_type == "QU":
             quotations = Quotation.objects.filter(inquiry__customer=loggedinuser).order_by("-sent_on")
             quotation = Quotation.objects.get(id=pk)
             return render(request, 'transactions.html',
                           {'transactions': quotations, 'transaction_type': transaction_type,
-                           'details': quotation, 'index': pk})
+                           'details': quotation, 'index': pk, 'equipment':allequipment})
         elif transaction_type == "IN":
             inquiries = Inquiry.objects.filter(customer=loggedinuser).order_by("-sent_on")
             inquiry = Inquiry.objects.get(id=pk)
             return render(request, 'transactions.html',
                           {'transactions': inquiries, 'transaction_type': transaction_type, 'details': inquiry,
-                           'index': pk})
+                           'index': pk, 'equipment':allequipment})
     elif loggedinuser.useraccount.user_type == "EM":
         if transaction_type == "AL":
             inquiries = Inquiry.objects.all()
@@ -131,30 +132,30 @@ def transactionitem(request, transaction_type, report, pk):
                 quotation = Quotation.objects.get(id=pk)
                 return render(request, 'transactions.html', {'transactions': combined_transactions,
                                                              'transaction_type': transaction_type, 'details': quotation,
-                                                             'index': pk})
+                                                             'index': pk, 'equipment':allequipment})
             elif report == "IN":
                 inquiry = Inquiry.objects.get(id=pk)
                 return render(request, 'transactions.html',
                               {'transactions': combined_transactions, 'transaction_type': transaction_type,
-                               'details': inquiry, 'index': pk})
+                               'details': inquiry, 'index': pk, 'equipment':allequipment})
         elif transaction_type == "QU":
             quotations = Quotation.objects.order_by("-sent_on").all()
             quotation = Quotation.objects.get(id=pk)
             return render(request, 'transactions.html',
                           {'transactions': quotations, 'transaction_type': transaction_type,
-                           'details': quotation, 'index': pk})
+                           'details': quotation, 'index': pk, 'equipment':allequipment})
         elif transaction_type == "IN":
             inquiries = Inquiry.objects.order_by("-sent_on").all()
             inquiry = Inquiry.objects.get(id=pk)
             return render(request, 'transactions.html',
                           {'transactions': inquiries, 'transaction_type': transaction_type, 'details': inquiry,
-                           'index': pk})
+                           'index': pk, 'equipment':allequipment})
     else:
         return redirect('errorpage')
 
 
 @user_passes_test(lambda u: u.is_anonymous or (u.useraccount.user_type != "MM" and u.useraccount.user_type != "FI" and
-                  u.useraccount.user_type != "EM" and u.is_superuser() is False), login_url='errorpage')
+                  u.useraccount.user_type != "EM" and u.is_superuser is False), login_url='errorpage')
 def checkout_cart(request):
     location = request.POST.get("location")
     startdate = request.POST.get("startdate")
@@ -185,3 +186,40 @@ def confirmpayment(request, pk):
         return redirect('rental:getitem', transaction_type="QU", report="QU", pk=pk)
     else:
         return redirect('errorpage')
+
+
+@user_passes_test(lambda u: u.useraccount.user_type == "EM", login_url='errorpage')
+def create_quotation(request):
+    cost = request.POST.get("cost")
+    inquiryid = int(request.POST.get('inquiryid'))
+    listofequipment = request.POST.getlist('listofequipment[]')
+    comments = request.POST.get('comments')
+    inquiry = Inquiry.objects.get(id=inquiryid)
+    inquiry.status = "AR"
+    inquiry.save()
+    quotation = Quotation()
+    quotation.created_by = request.user
+    quotation.inquiry = inquiry
+    quotation.transportation_cost = cost
+    quotation.comments = comments
+    quotation.sent_on = timezone.now()
+    quotation.status = "AW"
+    quotation.save()
+
+    for x in listofequipment:
+        equipment = Equipment.objects.get(id=x)
+        qe = QuotationEquipment(equipment=equipment, quotation=quotation)
+        qe.save()
+
+    return HttpResponse(True)
+
+
+@user_passes_test(lambda u: u.useraccount.user_type == "EM", login_url='errorpage')
+def reject_inquiry(request, pk):
+    inquiry = Inquiry.objects.get(id=pk)
+    inquiry.status = "RE"
+    inquiry.save()
+    inquiries = Inquiry.objects.all()
+    quotations = Quotation.objects.all()
+    combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
+    return render(request, 'transactions.html', {'transactions': combined_transactions, 'transaction_type': "AL"})

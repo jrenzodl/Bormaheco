@@ -17,9 +17,12 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
     <!-- Global Login -->
-    <script type="text/javascript"> var loginurl = {% url 'login' %};</script>
+    <script type="text/javascript">
+        var loginurl = {% url 'login' %};
+        var createquotation = '{% url "rental:create_quotation" %}';
+    </script>
     <script src="{% static 'js/login.js' %}"></script>
-
+    <script src="{% static 'js/transactions.js' %}"></script>
     <link rel="icon" href="{% static 'images/icon.png' %}">
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
     <link rel="stylesheet" href="{% static 'css/transactions.css' %}">
@@ -210,6 +213,7 @@
             {% elif details|to_class_name == 'Inquiry' %}
                 <h1 class="text-center">Inquiry</h1>
                 <div class="container-fluid">
+                    <p hidden id="detailsid">{{ index }}</p>
                     <table class="table" style="font-size: 1em">
                         <tr>
                             <td class="col-md-4" id="leftinq"><strong>Created by: </strong></td>
@@ -262,9 +266,100 @@
                             {% endif %}>{{ unit.equipment.name }}</div>
                         {% endfor %}
                     </div>
+                    {% if request.user.useraccount.user_type == "EM" %}
+                        {% if details.status == "AQ" %}
+                            <a id="confirmbutton" class="btn btn-warning center-block" data-toggle="modal"
+                            data-target="#confirmmodal{{ index }}">Create Quotation</a>
+
+                            <!-- Modal -->
+                            <div id="confirmmodal{{ index }}" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title text-center">Create Quotation for Inquiry</h4>
+                                        </div>
+                                        <div class="modal-body container-fluid">
+                                            {% if details.has_conflict %}
+                                                <div class="alert alert-danger">
+                                                    This inquiry has equipment that is either under maintenance or is in engagement
+                                                </div>
+                                            {% endif %}
+                                            <div class="form-group" id="cost_group">
+                                                <label class="control-label" for="cost">Transportation Cost:</label>
+                                                <input class="form-control number" id="cost" placeholder="Transportation Cost">
+                                                <p class="text-danger" id="cost_error" hidden></p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label" for="remarks">Comments:</label>
+                                                <textarea class="form-control" id="remarks" placeholder="Input any extra remarks..."></textarea>
+                                            </div>
+
+                                            <label>Equipment:</label>
+                                            <div class="form-group" id="checkbox">
+                                                {% for unit in details.getallequipment %}
+                                                    <div class="checkbox">
+                                                        <label><input class="check" id="eq{{ forloop.counter0 }}" type="checkbox"
+                                                                      value="{{ unit.equipment.id }}"
+                                                                {% if unit.equipment|checkconflict:index == True %}
+                                                                disabled
+                                                                {% else %}
+                                                                checked
+                                                                {% endif %}>{{ unit.equipment.name }}</label>
+                                                        {% if unit.equipment|checkconflict:index == True %}
+                                                            <div class="form-group">
+                                                                <label for="replace{{ forloop.counter0 }}">Replace with:</label>
+                                                                <select class="form-control" id="replace{{ forloop.counter0 }}">
+                                                                    <option value="x">None</option>
+                                                                    {% for a in equipment %}
+                                                                        {% if a|checkconflict:index == False %}
+                                                                            {% if a.type == unit.equipment.type %}
+                                                                                <option value="{{ a.id }}">{{ a.name }}</option>
+                                                                            {% endif %}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-warning" id="sendquotation">Send Quotation</button>
+                                            <a href="{% url 'rental:rejectinquiry' pk=index %}" type="button" class="btn btn-danger">Reject Inquiry</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endif %}
                 </div>
             {% endif %}
         </div>
     </div>
 </body>
+<script type="text/javascript">
+    $(".number").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+             // Allow: Ctrl/cmd+A
+            (e.keyCode === 65 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: Ctrl/cmd+C
+            (e.keyCode === 67 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: Ctrl/cmd+X
+            (e.keyCode === 88 && (e.ctrlKey === true || e.metaKey === true)) ||
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+</script>
 </html>
