@@ -108,24 +108,24 @@ def transactionitem(request, transaction_type, report, pk):
                 quotation = Quotation.objects.get(id=pk)
                 return render(request, 'transactions.html', {'transactions': combined_transactions,
                                                              'transaction_type': transaction_type, 'details': quotation,
-                                                             'index': pk, 'equipment':allequipment})
+                                                             'index': pk, 'equipment': allequipment})
             elif report == "IN":
                 inquiry = Inquiry.objects.get(id=pk)
                 return render(request, 'transactions.html',
                               {'transactions': combined_transactions, 'transaction_type': transaction_type,
-                               'details': inquiry, 'index': pk, 'equipment':allequipment})
+                               'details': inquiry, 'index': pk, 'equipment': allequipment})
         elif transaction_type == "QU":
             quotations = Quotation.objects.filter(inquiry__customer=loggedinuser).order_by("-sent_on")
             quotation = Quotation.objects.get(id=pk)
             return render(request, 'transactions.html',
                           {'transactions': quotations, 'transaction_type': transaction_type,
-                           'details': quotation, 'index': pk, 'equipment':allequipment})
+                           'details': quotation, 'index': pk, 'equipment': allequipment})
         elif transaction_type == "IN":
             inquiries = Inquiry.objects.filter(customer=loggedinuser).order_by("-sent_on")
             inquiry = Inquiry.objects.get(id=pk)
             return render(request, 'transactions.html',
                           {'transactions': inquiries, 'transaction_type': transaction_type, 'details': inquiry,
-                           'index': pk, 'equipment':allequipment})
+                           'index': pk, 'equipment': allequipment})
     elif loggedinuser.useraccount.user_type == "EM":
         if transaction_type == "AL":
             inquiries = Inquiry.objects.all()
@@ -135,24 +135,24 @@ def transactionitem(request, transaction_type, report, pk):
                 quotation = Quotation.objects.get(id=pk)
                 return render(request, 'transactions.html', {'transactions': combined_transactions,
                                                              'transaction_type': transaction_type, 'details': quotation,
-                                                             'index': pk, 'equipment':allequipment})
+                                                             'index': pk, 'equipment': allequipment})
             elif report == "IN":
                 inquiry = Inquiry.objects.get(id=pk)
                 return render(request, 'transactions.html',
                               {'transactions': combined_transactions, 'transaction_type': transaction_type,
-                               'details': inquiry, 'index': pk, 'equipment':allequipment})
+                               'details': inquiry, 'index': pk, 'equipment': allequipment})
         elif transaction_type == "QU":
             quotations = Quotation.objects.order_by("-sent_on").all()
             quotation = Quotation.objects.get(id=pk)
             return render(request, 'transactions.html',
                           {'transactions': quotations, 'transaction_type': transaction_type,
-                           'details': quotation, 'index': pk, 'equipment':allequipment})
+                           'details': quotation, 'index': pk, 'equipment': allequipment})
         elif transaction_type == "IN":
             inquiries = Inquiry.objects.order_by("-sent_on").all()
             inquiry = Inquiry.objects.get(id=pk)
             return render(request, 'transactions.html',
                           {'transactions': inquiries, 'transaction_type': transaction_type, 'details': inquiry,
-                           'index': pk, 'equipment':allequipment})
+                           'index': pk, 'equipment': allequipment})
     else:
         return redirect('errorpage')
 

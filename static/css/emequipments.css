@@ -1,0 +1,36 @@
+#pagebody{
+    margin-top: 90px;
+}
+
+h1{
+    font-size: 2.5em;
+}
+
+.table > tbody > tr > th{
+    vertical-align: middle;
+    font-family: fontOne, serif;
+    font-size: 1.5em;
+    text-align: center;
+    background-color: #F4B50C;
+    border: solid;
+    border-color: #DEA60C;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+#tablecontainer1{
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+#WAH
+{
+    margin-top: 30px;
+    border: solid;
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: #DEDEE3;
+    background-color: #F2F3F8;
+    height: 540px;
+    overflow-y: auto;
+}

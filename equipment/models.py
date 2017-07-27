@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils.dateparse import parse_date
+from django.utils import timezone
+from itertools import chain
+from operator import attrgetter
 
 # Create your models here.
 
@@ -75,6 +78,23 @@ class Equipment(models.Model):
                         return True
 
         return False
+
+    def has_engagement(self):
+        from rental.models import Inquiry
+        inquiries = Inquiry.objects.filter(inquiryequipment__equipment=self).filter(start_date__lte=timezone.now()).\
+            filter(end_date__gte=timezone.now()).filter(status="CO")
+        if not inquiries:
+            return False
+        else:
+            return True
+
+    def get_previous_transactions(self):
+        from rental.models import Inquiry
+        inquiries = Inquiry.objects.filter(inquiryequipment__equipment=self).filter(end_date__lt=timezone.now()).\
+            filter(status="CO")
+        maintenance = MaintenanceTransaction.objects.filter(equipment=self).filter(end_date__lt=timezone.now())
+        combined = sorted(chain(inquiries, maintenance), key=attrgetter('end_date'), reverse=True)
+        return combined
 
 
 # WAG TO

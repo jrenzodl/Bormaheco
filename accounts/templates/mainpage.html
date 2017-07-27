@@ -33,7 +33,10 @@
             </div>
             <ul class="nav navbar-nav">
                 <li><a href="{% url 'mainpage' %}" id="navlink">Home</a></li>
+                {% if request.user.useraccount.user_type == "FI" %}
+                {% else %}
                 <li><a href="{% url 'equipment:mainpage' %}" id="navlink">Equipment</a></li>
+                {% endif %}
                 {% if request.user.is_authenticated %}
                     {% if request.user.user_type == CU or request.user.user_type == FI or request.user.user_type == EM %}
                         <li><a href="{% url 'rental:transactions' %}" id="navlink">Transactions</a></li>

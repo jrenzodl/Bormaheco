@@ -22,6 +22,12 @@ app_name = 'equipment'
 urlpatterns = [
     url(r'^$', views.equipment_index, name='mainpage'),
 
+    url(r'^equipmentdetails(?P<pk>\d+)', views.get_em_equipment, name='getemequipment'),
+
+    url(r'^dispatch/(?P<pk>\d+)', views.dispatch, name='dispatch'),
+
+    url(r'^recall/(?P<pk>\d+)', views.recall, name='recall'),
+
     url(r'^end_maintenance/', views.end_maintenance, name='end_maintenance'),
 
     url(r'^start_maintenance/(?P<primary_key>\d+)', views.start_maintenance, name='start_maintenance'),

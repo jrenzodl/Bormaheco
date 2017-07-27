@@ -116,7 +116,7 @@
                 {% for item in transactions %}
                     {% if item|to_class_name == 'Inquiry' %}
                         <a href="{% url 'rental:getitem' transaction_type=transaction_type report="IN" pk=item.id %}"
-                           class="list-group-item {% if item.id == index %}
+                           class="list-group-item {% if item.id == index and details|to_class_name == 'Inquiry' %}
                            active{% endif %}"><strong>Inquiry: </strong>{{ item.sent_on }}
                             {% if request.user.useraccount.user_type == "EM" %}
                              - {{ item.customer.username }}
@@ -133,7 +133,7 @@
                         </a>
                     {% else %}
                         <a href="{% url 'rental:getitem' transaction_type=transaction_type report='QU' pk=item.id %}"
-                           class="list-group-item {% if item.id == index %}active{% endif %}"><strong>Quotation: </strong>{{ item.sent_on}}
+                           class="list-group-item {% if item.id == index and details|to_class_name == 'Quotation' %}active{% endif %}"><strong>Quotation: </strong>{{ item.sent_on}}
                             {% if request.user.useraccount.user_type == "EM" %}
                              - {{ item.inquiry.customer.username }}
                            {% endif %}

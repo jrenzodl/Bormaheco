@@ -244,7 +244,7 @@
                                         </div>
                                     </div>
                                 </div></td>
-                            {% if equipment.hours_worked >= 300 %}
+                            {% if equipment.hours_worked >= 300 and equipment.status == "AV" %}
                                 <td id="rightmost">Needs Maintenance: {{ equipment.hours_worked }} hours worked</td>
                                 <td><a href="{% url 'equipment:start_maintenance' primary_key=equipment.id %}"
                                        type="button" class="btn btn-warning pull-right">Start Maintenance</a></td>
