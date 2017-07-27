@@ -19,7 +19,6 @@ from accounts import views
 from django.contrib.auth.views import logout
 from django.conf import settings
 from django.views.generic import TemplateView
-from django.conf.urls import handler400, handler403, handler404, handler500
 
 
 urlpatterns = [

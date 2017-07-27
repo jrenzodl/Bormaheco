@@ -33,6 +33,8 @@ urlpatterns = [
 
     url(r'^transactions/$', views.transactions, name='transactions'),
 
+    url(r'^confirm_payment_finance/(?P<pk>\d+)', views.confirm_payment_finance, name='financeconfirm'),
+
     url(r'^checkout/', views.checkout, name='checkout'),
 
     url(r'^rejectinquiry/(?P<pk>\d+)', views.reject_inquiry, name='rejectinquiry'),

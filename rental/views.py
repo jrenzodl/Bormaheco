@@ -54,6 +54,9 @@ def transactions(request):
         quotations = Quotation.objects.all()
         combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
         return render(request, 'transactions.html', {'transactions': combined_transactions, 'transaction_type': "AL"})
+    elif loggedinuser.useraccount.user_type == "FI":
+        quotations = Quotation.objects.all().order_by('-sent_on')
+        return render(request, 'finance.html', {'quotations': quotations})
     else:
         return redirect('errorpage')
 
@@ -223,3 +226,15 @@ def reject_inquiry(request, pk):
     quotations = Quotation.objects.all()
     combined_transactions = sorted(chain(inquiries, quotations), key=attrgetter('sent_on'), reverse=True)
     return render(request, 'transactions.html', {'transactions': combined_transactions, 'transaction_type': "AL"})
+
+
+@user_passes_test(lambda u: u.useraccount.user_type == "FI", login_url='errorpage')
+def confirm_payment_finance(request, pk):
+    quotation = Quotation.objects.get(id=pk)
+    quotation.status = "PA"
+    quotation.save()
+    inquiry = quotation.inquiry
+    inquiry.status = "CO"
+    inquiry.save()
+    return redirect('rental:transactions')
+

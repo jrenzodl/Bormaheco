@@ -1,0 +1,15 @@
+.table > tbody > tr > th{
+    vertical-align: middle;
+    font-family: fontOne, serif;
+    font-size: 1.5em;
+    text-align: center;
+    background-color: #F4B50C;
+    border: solid;
+    border-color: #DEA60C;
+    border-width: 1px;
+    border-radius: 10px;
+}
+
+.table{
+    border-radius: 10px;
+}
