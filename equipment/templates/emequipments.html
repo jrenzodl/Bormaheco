@@ -161,7 +161,7 @@
                     </tr>
                     <tr>
                         <td><strong>ROI:</strong></td>
-                        <td>Tuts I forgot ROI formula hahhaha</td>
+                        <td>{% widthratio unit.get_roi 1 100 %}%</td>
                     </tr>
                     <tr>
                         <td></td>
@@ -184,7 +184,9 @@
                             <tr>
                                 <td><strong>Start date: </strong>{{ y.start_date }}<br><strong>End date:</strong>
                                 {{ y.end_date }}</td>
-                                <td class="text-center">In Engagement</td>
+                                <td class="text-center"><a style="text-decoration: none; color: black"
+                                        href="{% url 'rental:getitem' transaction_type="IN" report="IN" pk=y.id %}">
+                                    Engagement <span class="glyphicon glyphicon-search"></span></a></td>
                             </tr>
                         {% else %}
                             <tr>

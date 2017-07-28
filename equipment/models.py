@@ -96,6 +96,26 @@ class Equipment(models.Model):
         combined = sorted(chain(inquiries, maintenance), key=attrgetter('end_date'), reverse=True)
         return combined
 
+    def get_roi(self):
+        from rental.models import Quotation
+        quotation = Quotation.objects.filter(quotationequipment__equipment=self).filter(paid=True).filter(status="PA")
+        income = 0
+        for x in quotation:
+            days = x.inquiry.end_date - x.inquiry.start_date
+            days = (days.days + 1) * 24
+            income = income + (days * self.hourly_service_rate)
+
+        maintenance = MaintenanceTransaction.objects.filter(equipment=self).filter(end_date__lte=timezone.now())
+        maintenance_cost = 0
+        for y in maintenance:
+            maintenance_cost = maintenance_cost + y.cost
+
+        print(maintenance_cost)
+
+        roi = (income - (maintenance_cost + self.acquisition_cost))/(maintenance_cost + self.acquisition_cost)
+
+        return roi
+
 
 # WAG TO
 #
