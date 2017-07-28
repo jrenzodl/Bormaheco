@@ -12,6 +12,7 @@ from rental.models import Inquiry
 # Create your views here.
 
 
+@user_passes_test(lambda u: u.is_anonymous or u.useraccount.user_type != "FI", login_url='errorpage')
 def equipment_index(request):
     list_of_equipment = Equipment.objects.order_by('name')
     user = request.user
@@ -46,12 +47,14 @@ def get_equipment(request, eqid):
     return HttpResponse(equipment)
 
 
+@user_passes_test(lambda u: u.useraccount.user_type == "EM", login_url='errorpage')
 def get_em_equipment(request, pk):
     list_of_equipment = Equipment.objects.order_by('name')
     unit = Equipment.objects.get(id=pk)
     return render(request, 'emequipments.html', {'equipment': list_of_equipment, 'unit':unit})
 
 
+@user_passes_test(lambda u: u.is_anonymous or u.useraccount.user_type != "FI", login_url='errorpage')
 def filter_equipment(request, types):
     if types == "AL":
         list_of_equipment = Equipment.objects.order_by('name')
@@ -82,6 +85,7 @@ def add_equipment(request):
         return HttpResponse("success")
 
 
+@user_passes_test(lambda u: u.useraccount.user_type == "MM", login_url='errorpage')
 def start_maintenance(request, primary_key):
     equipment = Equipment.objects.get(id=primary_key)
     unfinishedmaintenance = MaintenanceTransaction(equipment=equipment, start_date=timezone.now())
@@ -92,6 +96,7 @@ def start_maintenance(request, primary_key):
     return redirect("equipment:mainpage")
 
 
+@user_passes_test(lambda u: u.useraccount.user_type == "MM", login_url='errorpage')
 def end_maintenance(request):
     primary_key = request.POST.get('id')
     equipment = Equipment.objects.get(id=primary_key)
@@ -104,6 +109,7 @@ def end_maintenance(request):
     return redirect("equipment:mainpage")
 
 
+@user_passes_test(lambda u: u.useraccount.user_type == "EM", login_url='errorpage')
 def dispatch(request, pk):
     equipment = Equipment.objects.get(id=pk)
     inquiries = Inquiry.objects.filter(inquiryequipment__equipment=equipment).filter(start_date__lte=timezone.now()). \
@@ -116,6 +122,7 @@ def dispatch(request, pk):
     return redirect("equipment:mainpage")
 
 
+@user_passes_test(lambda u: u.useraccount.user_type == "EM", login_url='errorpage')
 def recall(request, pk):
     equipment = Equipment.objects.get(id=pk)
     equipment.status = "AV"
