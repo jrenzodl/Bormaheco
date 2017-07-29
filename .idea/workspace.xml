@@ -4,7 +4,7 @@
     <list default="true" id="fdb13fab-97ed-4efd-acec-f1258114c02b" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/equipment/views.py" afterPath="$PROJECT_DIR$/equipment/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rental/views.py" afterPath="$PROJECT_DIR$/rental/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -101,10 +101,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/equipment/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
+            <state relative-caret-position="-1190">
               <caret line="14" column="61" lean-forward="false" selection-start-line="14" selection-start-column="61" selection-end-line="14" selection-end-column="61" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
@@ -145,11 +145,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/rental/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2227">
-              <caret line="142" column="66" lean-forward="false" selection-start-line="142" selection-start-column="66" selection-end-line="142" selection-end-column="66" />
+            <state relative-caret-position="-2049">
+              <caret line="100" column="16" lean-forward="false" selection-start-line="100" selection-start-column="16" selection-end-line="100" selection-end-column="16" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
@@ -226,11 +226,11 @@
         <option value="$PROJECT_DIR$/equipment/templates/maintenanceequipment.html" />
         <option value="$PROJECT_DIR$/static/css/emequipments.css" />
         <option value="$PROJECT_DIR$/equipment/urls.py" />
-        <option value="$PROJECT_DIR$/rental/views.py" />
         <option value="$PROJECT_DIR$/rental/templates/transactions.html" />
         <option value="$PROJECT_DIR$/equipment/models.py" />
         <option value="$PROJECT_DIR$/equipment/templates/emequipments.html" />
         <option value="$PROJECT_DIR$/equipment/views.py" />
+        <option value="$PROJECT_DIR$/rental/views.py" />
       </list>
     </option>
   </component>
@@ -854,7 +854,14 @@
       <option name="project" value="LOCAL" />
       <updated>1501248458429</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="Fixed user permission">
+      <created>1501301257421</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1501301257424</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TodoView">
@@ -923,7 +930,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Completed add to cart and view cart functionalities" />
     <MESSAGE value="Implemented &quot;remove from cart&quot;" />
     <MESSAGE value="&quot;Fixed&quot; CSRF and fixed Logout" />
     <MESSAGE value="Fixed the urls na pramis" />
@@ -948,7 +954,8 @@
     <MESSAGE value="Finished all the screens with only ROI missing" />
     <MESSAGE value="Implemented ROI" />
     <MESSAGE value="Updated user permissions" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated user permissions" />
+    <MESSAGE value="Fixed user permission" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed user permission" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1154,6 +1161,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1462">
           <caret line="99" column="0" lean-forward="false" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1239,16 +1247,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rental/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2227">
-          <caret line="142" column="66" lean-forward="false" selection-start-line="142" selection-start-column="66" selection-end-line="142" selection-end-column="66" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/equipment/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -1309,8 +1307,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/equipment/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
+        <state relative-caret-position="-1190">
           <caret line="14" column="61" lean-forward="false" selection-start-line="14" selection-start-column="61" selection-end-line="14" selection-end-column="61" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rental/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2049">
+          <caret line="100" column="16" lean-forward="false" selection-start-line="100" selection-start-column="16" selection-end-line="100" selection-end-column="16" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>
