@@ -12,7 +12,7 @@ from rental.models import Inquiry
 # Create your views here.
 
 
-@user_passes_test(lambda u: u.is_anonymous or u.useraccount.user_type != "FI", login_url='errorpage')
+@user_passes_test(lambda u: u.is_anonymous or u.is_superuser or u.useraccount.user_type != "FI", login_url='errorpage')
 def equipment_index(request):
     list_of_equipment = Equipment.objects.order_by('name')
     user = request.user
