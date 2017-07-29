@@ -41,6 +41,7 @@ class Equipment(models.Model):
         ('UM', 'Under Maintenance'))
     status = models.CharField(max_length=2, choices=STATUS_CODES)
     hours_worked = models.IntegerField(default=0)
+    total_hours_worked = models.IntegerField(default=0)
     hourly_service_rate = models.DecimalField(max_digits=12, decimal_places=2)
     image = models.ImageField(upload_to="equipmentimages", default='../media/equipmentimages/defaultequipment.png')
 

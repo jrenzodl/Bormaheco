@@ -54,7 +54,7 @@ def get_em_equipment(request, pk):
     return render(request, 'emequipments.html', {'equipment': list_of_equipment, 'unit':unit})
 
 
-@user_passes_test(lambda u: u.is_anonymous or u.useraccount.user_type != "FI", login_url='errorpage')
+@user_passes_test(lambda u: u.is_superuser or u.is_anonymous or u.useraccount.user_type != "FI", login_url='errorpage')
 def filter_equipment(request, types):
     if types == "AL":
         list_of_equipment = Equipment.objects.order_by('name')
@@ -118,6 +118,7 @@ def dispatch(request, pk):
     date = (date.days + 1) * 24
     equipment.status = "IE"
     equipment.hours_worked = equipment.hours_worked + date
+    equipment.total_hours_worked = equipment.total_hours_worked + date
     equipment.save()
     return redirect("equipment:mainpage")
 

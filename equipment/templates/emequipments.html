@@ -160,6 +160,10 @@
                         <td>{{ unit.hours_worked }} hours</td>
                     </tr>
                     <tr>
+                        <td><strong>Total Hours Worked:</strong></td>
+                        <td>{{ unit.total_hours_worked }} hours</td>
+                    </tr>
+                    <tr>
                         <td><strong>ROI:</strong></td>
                         <td>{% widthratio unit.get_roi 1 100 %}%</td>
                     </tr>
