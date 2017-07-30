@@ -111,8 +111,6 @@ class Equipment(models.Model):
         for y in maintenance:
             maintenance_cost = maintenance_cost + y.cost
 
-        print(maintenance_cost)
-
         roi = (income - (maintenance_cost + self.acquisition_cost))/(maintenance_cost + self.acquisition_cost)
 
         return roi
