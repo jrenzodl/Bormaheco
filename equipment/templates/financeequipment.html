@@ -21,7 +21,7 @@
 
     <link rel="icon" href="{% static 'images/icon.png' %}">
     <link rel="stylesheet" href="{% static 'css/global.css' %}">
-    <link rel="stylesheet" href="{% static 'css/finance.css' %}">
+    <link rel="stylesheet" href="{% static 'css/financeequipment.css' %}">
 </head>
 <body>
     <nav class="navbar navbar-fixed-top">
@@ -37,6 +37,11 @@
                 {% if request.user.is_authenticated %}
                     {% if request.user.useraccount.user_type == "CU" or request.user.useraccount.user_type == "FI" or request.user.useraccount.user_type == "EM" %}
                         <li><a href="{% url 'rental:transactions' %}" id="navlink">Transactions</a></li>
+                    {% endif %}
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                    {% if request.user.useraccount.user_type == "EM" %}
+                        <li><a href="{% url 'rental:rentalreports' %}" id="navlink">Rental Reports</a></li>
                     {% endif %}
                 {% endif %}
             </ul>
@@ -97,28 +102,30 @@
     </nav>
 
     <div class="row" id="mainpagebody">
-        <span class="col-md-1"></span>
-        <div class="col-md-10 row">
+        <span class="col-md-2"></span>
+        <div class="col-md-8">
+            <h1 class="text-center">Equipment ROI Report <br><small>as of {{ date }}</small></h1>
             <table class="table table-bordered table-striped">
                 <tr>
-                    <th>Company</th>
-                    <th>Username</th>
-                    <th>Dates</th>
-                    <th>Status</th>
+                    <th>Equipment Name</th>
+                    <th>ROI</th>
+                    <th>Remarks</th>
                 </tr>
-                {% for x in quotations %}
+                {% for unit in equipment %}
                     <tr>
-                        <td>{{ x.inquiry.customer.username }}</td>
-                        <td>{{ x.inquiry.customer.useraccount.company }}</td>
-                        <td><strong>Service Date: </strong>{{ x.inquiry.start_date }} - {{ x.inquiry.end_date }} <br> <strong>Sent on: </strong>{{ x.sent_on }}</td>
-                        <td class="text-center">{{ x.get_status_display }} / <strong>Paid: </strong>{{ x.paid }}
-                        {% if x.paid == True and x.status == "AW" %}
-                            <br><a style="margin-top: 5px" href="{% url 'rental:financeconfirm' pk=x.id %}"
-                                   type="button" class="btn btn-warning">Confirm Payment</a>
-                        {% endif %}</td>
+                        <td>{{ unit.name }}</td>
+                        <td class="text-center">{% widthratio unit.get_roi 1 100 %}%</td>
+                        {% if unit.get_roi < 0 %}
+                            <td style="background-color: #ce0000; border-color: darkred">Poor</td>
+                            {% elif unit.get_roi >= 0 and unit.get_roi < 0.10 %}
+                            <td style="background-color: orange; border-color: darkorange">Satisfactory</td>
+                            {% else %}
+                            <td style="background-color: darkgreen; border-color: #004d00">Good</td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </table>
+        <h1 class="text-center">End of Report</h1>
         </div>
     </div>
 </body>

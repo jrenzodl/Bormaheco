@@ -238,3 +238,18 @@ def confirm_payment_finance(request, pk):
     inquiry.save()
     return redirect('rental:transactions')
 
+
+@user_passes_test(lambda u: u.useraccount.user_type == "EM", login_url='errorpage')
+def view_rental_reports(request):
+    start_date = request.GET.get("start")
+    end_date = request.GET.get("end")
+    if start_date is None or end_date is None:
+        return render(request, "rentalreport.html")
+    else:
+        quotations = Quotation.objects.filter(inquiry__status='CO').filter(inquiry__start_date__gte=start_date).\
+            filter(inquiry__start_date__lte=end_date).order_by("-inquiry__start_date")
+        total_price = 0
+        for x in quotations:
+            total_price = total_price + x.gettotalrental()
+        return render(request, "rentalreport.html", {"service": quotations, "start_date": start_date,
+                                                     "end_date": end_date, "total_price": total_price})

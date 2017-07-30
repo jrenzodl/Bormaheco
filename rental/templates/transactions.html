@@ -39,8 +39,13 @@
                 <li><a href="{% url 'mainpage' %}" id="navlink">Home</a></li>
                 <li><a href="{% url 'equipment:mainpage' %}" id="navlink">Equipment</a></li>
                 {% if request.user.is_authenticated %}
-                    {% if request.user.user_type == CU or request.user.user_type == FI or request.user.user_type == EM %}
+                    {% if request.user.useraccount.user_type == "CU" or request.user.useraccount.user_type == "FI" or request.user.useraccount.user_type == "EM" %}
                         <li><a href="{% url 'rental:transactions' %}" id="navlink">Transactions</a></li>
+                    {% endif %}
+                {% endif %}
+                {% if request.user.is_authenticated %}
+                    {% if request.user.useraccount.user_type == "EM" %}
+                        <li><a href="{% url 'rental:rentalreports' %}" id="navlink">Rental Reports</a></li>
                     {% endif %}
                 {% endif %}
             </ul>

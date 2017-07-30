@@ -1,3 +1,19 @@
+#pagebody{
+    margin-top: 120px;
+}
+
+.datepicker{
+    top: 192px !important;
+}
+
+#submitbutton{
+    margin-top: 5px;
+}
+
+.table{
+    margin-top: 10px;
+}
+
 .table > tbody > tr > th{
     vertical-align: middle;
     font-family: fontOne, serif;
@@ -7,8 +23,4 @@
     border: solid;
     border-color: #DEA60C;
     border-width: 1px;
-}
-
-.table{
-    border-radius: 10px;
 }

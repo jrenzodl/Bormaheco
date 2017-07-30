@@ -44,4 +44,6 @@ urlpatterns = [
     url(r'^deletefromcart/(?P<item_id>\d+)', views.delete_from_cart, name='delete_from_cart'),
 
     url(r'^addtocart/(?P<item_id>\d+)', views.add_to_cart, name='addtocart'),
+
+    url(r'^reports/$', views.view_rental_reports, name='rentalreports'),
 ]
