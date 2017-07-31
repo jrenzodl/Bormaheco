@@ -65,7 +65,7 @@ def filter_equipment(request, types):
     return render(request, 'equipments.html', {'equipment': list_of_equipment, 'types': types})
 
 
-@user_passes_test(lambda u: u.is_superuser, login_url='equipment:mainpage')
+@user_passes_test(lambda u: u.is_superuser or u.useraccount.user_type == "EM", login_url='equipment:mainpage')
 def add_equipment(request):
     if request.method == "POST":
         name = request.POST.get('name')

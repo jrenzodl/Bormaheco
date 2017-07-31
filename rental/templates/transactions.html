@@ -20,7 +20,7 @@
     <script type="text/javascript">
         var loginurl = {% url 'login' %};
         var createquotation = '{% url "rental:create_quotation" %}';
-        var transaction = {% url 'rental:transactions' %};
+        var transaction = "{% url 'rental:transactions' %}";
     </script>
     <script src="{% static 'js/login.js' %}"></script>
     <script src="{% static 'js/transactions.js' %}"></script>

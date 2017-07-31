@@ -26,7 +26,7 @@
 
     <!-- Global Login -->
     <script type="text/javascript"> var loginurl = {% url 'login' %};
-    var addequipment = {% url 'equipment:addequipment' %};</script>
+                                    </script>
     <script src="{% static 'js/login.js' %}"></script>
 
     <link rel="icon" href="{% static 'images/icon.png' %}">
@@ -328,6 +328,7 @@
 </body>
 <script>
     $(document).ready(function(){
+        var addequipment = '{% url 'equipment:addequipment' %}';
         $("#submitEquipment").click(function(){
             var eqname = $('#eq_name_input').val();
             var brand = $('#eq_brand_input').val();
