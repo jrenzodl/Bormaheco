@@ -214,7 +214,7 @@ def create_quotation(request):
         qe = QuotationEquipment(equipment=equipment, quotation=quotation)
         qe.save()
 
-    return HttpResponse(True)
+    return redirect('rental:transactions')
 
 
 @user_passes_test(lambda u: u.useraccount.user_type == "EM", login_url='errorpage')
