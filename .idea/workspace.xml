@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdb13fab-97ed-4efd-acec-f1258114c02b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/equipment/templates/emequipments.html" afterPath="$PROJECT_DIR$/equipment/templates/emequipments.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/equipment/views.py" afterPath="$PROJECT_DIR$/equipment/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rental/templates/transactions.html" afterPath="$PROJECT_DIR$/rental/templates/transactions.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -538,13 +534,6 @@
       <option name="presentableId" value="Default" />
       <updated>1499054467147</updated>
     </task>
-    <task id="LOCAL-00001" summary="Initial Commit">
-      <created>1499054921150</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1499054921150</updated>
-    </task>
     <task id="LOCAL-00002" summary="Changed Timezone to Asia/Singapore">
       <created>1499355451483</created>
       <option name="number" value="00002" />
@@ -881,7 +870,14 @@
       <option name="project" value="LOCAL" />
       <updated>1501465562670</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="Fixed something">
+      <created>1501465955680</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1501465955681</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TodoView">
