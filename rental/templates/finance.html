@@ -99,18 +99,21 @@
     <div class="row" id="mainpagebody">
         <span class="col-md-1"></span>
         <div class="col-md-10 row">
+            <h1>Payment Transactions</h1>
             <table class="table table-bordered table-striped">
                 <tr>
                     <th>Company</th>
                     <th>Username</th>
-                    <th>Dates</th>
+                    <th>Sent On</th>
+                    <th>Service Date</th>
                     <th>Status</th>
                 </tr>
                 {% for x in quotations %}
                     <tr>
                         <td>{{ x.inquiry.customer.username }}</td>
                         <td>{{ x.inquiry.customer.useraccount.company }}</td>
-                        <td><strong>Service Date: </strong>{{ x.inquiry.start_date }} - {{ x.inquiry.end_date }} <br> <strong>Sent on: </strong>{{ x.sent_on }}</td>
+                        <td>{{ x.sent_on }}</td>
+                        <td>{{ x.inquiry.start_date }} - {{ x.inquiry.end_date }}</td>
                         <td class="text-center">{{ x.get_status_display }} / <strong>Paid: </strong>{{ x.paid }}
                         {% if x.paid == True and x.status == "AW" %}
                             <br><a style="margin-top: 5px" href="{% url 'rental:financeconfirm' pk=x.id %}"
