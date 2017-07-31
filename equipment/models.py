@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils.dateparse import parse_date
 from django.utils import timezone
 from itertools import chain
 from operator import attrgetter
