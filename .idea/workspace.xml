@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fdb13fab-97ed-4efd-acec-f1258114c02b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/accounts/templates/mainpage.html" afterPath="$PROJECT_DIR$/accounts/templates/mainpage.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/equipment/templates/equipments.html" afterPath="$PROJECT_DIR$/equipment/templates/equipments.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/rental/templates/finance.html" afterPath="$PROJECT_DIR$/rental/templates/finance.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/login.js" afterPath="$PROJECT_DIR$/static/js/login.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,7 +32,7 @@
         <entry file="file://$PROJECT_DIR$/rental/templates/transactions.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-4709">
-              <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+              <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -68,7 +64,7 @@
         <entry file="file://$PROJECT_DIR$/static/js/transactions.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
-              <caret line="26" column="12" lean-forward="true" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="91" />
+              <caret line="26" column="12" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="91" />
               <folding />
             </state>
           </provider>
@@ -78,7 +74,7 @@
         <entry file="file://$PROJECT_DIR$/equipment/templates/equipments.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
-              <caret line="92" column="59" lean-forward="true" selection-start-line="92" selection-start-column="59" selection-end-line="92" selection-end-column="59" />
+              <caret line="92" column="59" lean-forward="false" selection-start-line="92" selection-start-column="59" selection-end-line="92" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -88,7 +84,7 @@
         <entry file="file://$PROJECT_DIR$/accounts/templates/mainpage.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="136">
-              <caret line="87" column="0" lean-forward="true" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+              <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -97,8 +93,8 @@
       <file leaf-file-name="login.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/static/js/login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="74">
-              <caret line="45" column="30" lean-forward="true" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
+            <state relative-caret-position="244">
+              <caret line="55" column="21" lean-forward="true" selection-start-line="55" selection-start-column="21" selection-end-line="55" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -200,8 +196,8 @@
         <option value="$PROJECT_DIR$/rental/templates/transactions.html" />
         <option value="$PROJECT_DIR$/rental/templates/finance.html" />
         <option value="$PROJECT_DIR$/equipment/templates/equipments.html" />
-        <option value="$PROJECT_DIR$/static/js/login.js" />
         <option value="$PROJECT_DIR$/accounts/templates/mainpage.html" />
+        <option value="$PROJECT_DIR$/static/js/login.js" />
       </list>
     </option>
   </component>
@@ -559,13 +555,6 @@
       <option name="presentableId" value="Default" />
       <updated>1499054467147</updated>
     </task>
-    <task id="LOCAL-00003" summary="Added User Account Model">
-      <created>1499355473383</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1499355473383</updated>
-    </task>
     <task id="LOCAL-00004" summary="Added User Account Model">
       <created>1499355490396</created>
       <option name="number" value="00004" />
@@ -902,7 +891,14 @@
       <option name="project" value="LOCAL" />
       <updated>1501465964073</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="TAPOS NA">
+      <created>1501467100559</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1501467100559</updated>
+    </task>
+    <option name="localTasksCounter" value="53" />
     <servers />
   </component>
   <component name="TodoView">
@@ -971,7 +967,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="FIXED THE ADMIN URLS" />
     <MESSAGE value="Fixed Cart" />
     <MESSAGE value="Added fields in the checkout form (incomplete)" />
     <MESSAGE value="Improved Checkout Screen" />
@@ -996,7 +991,8 @@
     <MESSAGE value="Added ROI reports and rental reports" />
     <MESSAGE value="Removed printing from the console" />
     <MESSAGE value="Fixed something" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed something" />
+    <MESSAGE value="TAPOS NA" />
+    <option name="LAST_COMMIT_MESSAGE" value="TAPOS NA" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1350,7 +1346,7 @@
     <entry file="file://$PROJECT_DIR$/static/js/transactions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
-          <caret line="26" column="12" lean-forward="true" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="91" />
+          <caret line="26" column="12" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="91" />
           <folding />
         </state>
       </provider>
@@ -1358,7 +1354,7 @@
     <entry file="file://$PROJECT_DIR$/rental/templates/transactions.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4709">
-          <caret line="14" column="0" lean-forward="true" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <caret line="14" column="0" lean-forward="false" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1366,7 +1362,7 @@
     <entry file="file://$PROJECT_DIR$/equipment/templates/equipments.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
-          <caret line="92" column="59" lean-forward="true" selection-start-line="92" selection-start-column="59" selection-end-line="92" selection-end-column="59" />
+          <caret line="92" column="59" lean-forward="false" selection-start-line="92" selection-start-column="59" selection-end-line="92" selection-end-column="59" />
           <folding />
         </state>
       </provider>
@@ -1374,15 +1370,15 @@
     <entry file="file://$PROJECT_DIR$/accounts/templates/mainpage.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
-          <caret line="87" column="0" lean-forward="true" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+          <caret line="87" column="0" lean-forward="false" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/js/login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74">
-          <caret line="45" column="30" lean-forward="true" selection-start-line="45" selection-start-column="30" selection-end-line="45" selection-end-column="30" />
+        <state relative-caret-position="244">
+          <caret line="55" column="21" lean-forward="true" selection-start-line="55" selection-start-column="21" selection-end-line="55" selection-end-column="21" />
           <folding />
         </state>
       </provider>

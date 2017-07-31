@@ -54,7 +54,7 @@ $(document).ready(function () {
                         window.location.reload();
                     else
                     {
-                        $('#login_error').html("Please input transportation cost").removeAttr('hidden');
+                        $('#login_error').html("Invalid Credentials").removeAttr('hidden');
                         $("#logindiv").attr('class', 'dropdown has-error');
                     }
                 }]
