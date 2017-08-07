@@ -40,6 +40,10 @@ input[type='radio']{margin-right: 5px}
 	padding-left: 15%;
 }
 
+.panel-primary > .panel-heading{
+	height: 60px;
+}
+
 .panel-primary > .panel-heading, .panel-primary, .modal-header{border-color: #DEA60C;}
 
 #right-modal{margin-top: 20px}

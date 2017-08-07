@@ -250,6 +250,6 @@ def view_rental_reports(request):
             filter(inquiry__start_date__lte=end_date).order_by("-inquiry__start_date")
         total_price = 0
         for x in quotations:
-            total_price = total_price + x.gettotalrental()
+            total_price = total_price + x.getprice()
         return render(request, "rentalreport.html", {"service": quotations, "start_date": start_date,
                                                      "end_date": end_date, "total_price": total_price})

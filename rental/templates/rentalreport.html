@@ -143,7 +143,7 @@
                         <td>{{ report.inquiry.location}}</td>
                         <td><strong>Start Date: </strong>{{ report.inquiry.start_date }}<br>
                             <strong>End Date: </strong>{{ report.inquiry.end_date }}</td>
-                        <td class="text-right">P{{ report.gettotalrental|intcomma }}</td>
+                        <td class="text-right">P{{ report.getprice|intcomma }}</td>
                     </tr>
                 {% empty %}
                 <h1 class="text-center">No Service Details for those Dates</h1>
